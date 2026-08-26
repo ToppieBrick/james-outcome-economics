@@ -1,32 +1,57 @@
 [
   {
-    "id": "seed-alpha",
-    "name": "Seed Provider Alpha",
+    "id": "firecrawl-x402-search",
+    "name": "Firecrawl x402 Search",
     "taskClasses": ["structured-research"],
     "listedPrice": 0.01,
-    "livePrice": 0.012,
-    "successProbability": 0.72,
-    "latencyMs": 1800,
-    "evidence": "Synthetic seed data for MVP validation only. Replace with observed benchmark results before commercial use."
+    "livePrice": null,
+    "successProbability": null,
+    "latencyMs": null,
+    "observedPaidAttempts": 0,
+    "evidence": "Observed public listing: Firecrawl v2 x402 search at US$0.01/call. No paid James outcome observations yet."
   },
   {
-    "id": "seed-beta",
-    "name": "Seed Provider Beta",
+    "id": "agentutility-search",
+    "name": "AgentUtility Search",
     "taskClasses": ["structured-research"],
-    "listedPrice": 0.018,
-    "livePrice": 0.018,
-    "successProbability": 0.93,
-    "latencyMs": 2400,
-    "evidence": "Synthetic seed data for MVP validation only. Replace with observed benchmark results before commercial use."
+    "listedPrice": 0.01,
+    "livePrice": null,
+    "successProbability": null,
+    "latencyMs": null,
+    "observedPaidAttempts": 0,
+    "evidence": "Observed public listing: search/web-search/search-web at US$0.01/call. No paid James outcome observations yet."
   },
   {
-    "id": "seed-gamma",
-    "name": "Seed Provider Gamma",
+    "id": "anicca-web-search",
+    "name": "Anicca Web Search",
     "taskClasses": ["structured-research"],
-    "listedPrice": 0.008,
-    "livePrice": 0.009,
-    "successProbability": 0.48,
-    "latencyMs": 1300,
-    "evidence": "Synthetic seed data for MVP validation only. Replace with observed benchmark results before commercial use."
+    "listedPrice": 0.01,
+    "livePrice": null,
+    "successProbability": null,
+    "latencyMs": null,
+    "observedPaidAttempts": 0,
+    "evidence": "Observed public listing: /web-search at US$0.01/call and /research below US$0.01. No paid James outcome observations yet."
+  },
+  {
+    "id": "agent-judgment-search",
+    "name": "Agent Judgment & Synthesis Search",
+    "taskClasses": ["structured-research"],
+    "listedPrice": 0.001,
+    "livePrice": null,
+    "successProbability": null,
+    "latencyMs": null,
+    "observedPaidAttempts": 0,
+    "evidence": "Observed public listing around US$0.001/call. Earlier public activity showed no recent buyers. No paid James outcome observations yet."
+  },
+  {
+    "id": "you-x402-search",
+    "name": "You.com x402 Search",
+    "taskClasses": ["structured-research"],
+    "listedPrice": 0.005,
+    "livePrice": null,
+    "successProbability": null,
+    "latencyMs": null,
+    "observedPaidAttempts": 0,
+    "evidence": "Observed official x402 documentation: US$0.005/call for /v1/search and /v1/agents/search; livecrawl adds US$0.001/result. No paid James outcome observations yet."
   }
 ]
