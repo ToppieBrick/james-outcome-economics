@@ -1,0 +1,29 @@
+{
+  "observedAt": "2026-08-26",
+  "taskClass": "structured-research",
+  "providers": [
+    {
+      "provider": "agentutility",
+      "endpoint": "https://x402.agentutility.ai/search",
+      "method": "POST",
+      "listedPriceUsd": 0.01,
+      "liveQuoteObserved": false,
+      "paidExecutionObserved": false,
+      "evidence": "x402scan and provider documentation list search/web-search/search-web at $0.01. Provider docs state x402 payment uses USDC on Base and requires an EVM private key controlling funded USDC."
+    },
+    {
+      "provider": "Anicca",
+      "endpoint": "/web-search",
+      "method": "GET",
+      "listedPriceUsd": 0.01,
+      "liveQuoteObserved": false,
+      "paidExecutionObserved": false,
+      "evidence": "x402scan lists /web-search at $0.01 and /research below $0.01; recent public activity shows paid transactions, but no benchmark call has been executed by James."
+    }
+  ],
+  "executionBlocker": {
+    "status": "blocked_no_machine_wallet",
+    "requiredCapability": "A non-custodial EVM wallet private key available to the benchmark runner, funded with USDC on Base. The runner must be able to sign x402 transferWithAuthorization payloads and retry HTTP 402 responses with the X-PAYMENT header.",
+    "recommendedImplementation": "Use @x402/fetch + @x402/evm + viem in a controlled benchmark runner. Store the private key only as a Vercel encrypted environment variable (for example X402_PRIVATE_KEY), never in GitHub. Fund only the benchmark allowance."
+  }
+}
