@@ -10,8 +10,11 @@ module.exports = function handler(req, res) {
     });
 
     res.status(200).json({
-      model: 'outcome-economics-v0.1',
-      warning: 'MVP currently uses synthetic seed data. Do not treat results as production recommendations.',
+      model: 'outcome-economics-v0.2',
+      status: ranked.length ? 'observed-outcome-ranking' : 'awaiting-paid-outcomes',
+      warning: ranked.length
+        ? undefined
+        : 'Synthetic seed rankings have been removed. James will not rank providers until paid benchmark outcomes are observed.',
       count: ranked.length,
       results: ranked,
     });
