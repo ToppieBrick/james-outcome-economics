@@ -1,7 +1,16 @@
 {
-  "observedAt": "2026-08-26",
+  "observedAt": "2026-08-27",
   "taskClass": "structured-research",
   "providers": [
+    {
+      "provider": "Firecrawl",
+      "endpoint": "https://api.firecrawl.dev/v2/x402/search",
+      "method": "POST",
+      "listedPriceUsd": 0.01,
+      "liveQuoteObserved": false,
+      "paidExecutionObserved": false,
+      "evidence": "x402scan Composer currently surfaces Firecrawl x402 search at US$0.01/call. Firecrawl search returns structured title/url/description fields suitable for deterministic acceptance testing."
+    },
     {
       "provider": "agentutility",
       "endpoint": "https://x402.agentutility.ai/search",
@@ -9,21 +18,44 @@
       "listedPriceUsd": 0.01,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "x402scan and provider documentation list search/web-search/search-web at $0.01. Provider docs state x402 payment uses USDC on Base and requires an EVM private key controlling funded USDC."
+      "evidence": "x402scan currently lists search, search-web and web-search at US$0.01/call. No paid James call has been executed."
     },
     {
       "provider": "Anicca",
-      "endpoint": "/web-search",
+      "endpoint": "https://anicca.example/web-search",
       "method": "GET",
       "listedPriceUsd": 0.01,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "x402scan lists /web-search at $0.01 and /research below $0.01; recent public activity shows paid transactions, but no benchmark call has been executed by James."
+      "evidence": "x402scan lists /web-search at US$0.01 and /research below US$0.01; no paid James benchmark call has been executed. Replace placeholder host with seller canonical host before execution."
+    },
+    {
+      "provider": "Agent Judgment & Synthesis",
+      "endpoint": "provider-discovery-required",
+      "method": "GET",
+      "listedPriceUsd": 0.001,
+      "liveQuoteObserved": false,
+      "paidExecutionObserved": false,
+      "evidence": "Public x402 listings observed at US$0.001/call with zero displayed recent buyer activity in earlier checks. Canonical execution endpoint must be resolved before benchmark execution."
+    },
+    {
+      "provider": "You.com",
+      "endpoint": "https://api.you.com/v1/search",
+      "method": "GET",
+      "listedPriceUsd": 0.005,
+      "liveQuoteObserved": false,
+      "paidExecutionObserved": false,
+      "evidence": "Official You.com x402 documentation currently lists /v1/search and /v1/agents/search at US$0.005/call, with livecrawl adding US$0.001 per result."
     }
   ],
+  "marketContext": {
+    "webSearchProvidersCatalogued": 43,
+    "source": "402radar, 2026-08-11",
+    "implication": "Search is sufficiently substitutable for a cost-per-acceptable-outcome benchmark, but generic price/health ranking is already competitive."
+  },
   "executionBlocker": {
-    "status": "blocked_no_machine_wallet",
-    "requiredCapability": "A non-custodial EVM wallet private key available to the benchmark runner, funded with USDC on Base. The runner must be able to sign x402 transferWithAuthorization payloads and retry HTTP 402 responses with the X-PAYMENT header.",
-    "recommendedImplementation": "Use @x402/fetch + @x402/evm + viem in a controlled benchmark runner. Store the private key only as a Vercel encrypted environment variable (for example X402_PRIVATE_KEY), never in GitHub. Fund only the benchmark allowance."
+    "status": "blocked_no_constrained_x402_payment_capability",
+    "requiredCapability": "A purpose-specific x402 purchase tool backed by an isolated low-value wallet/signer. The LLM must not receive or be able to reveal a raw private key. The payment layer must enforce Base + USDC only, an approved-provider allowlist, per-call and session spend caps, no arbitrary transfer method, audit logging, and a kill switch.",
+    "recommendedImplementation": "First preference: a managed agent wallet/MCP or isolated signer that exposes only bounded x402 purchase operations. Start on testnet where supported, then fund a dedicated mainnet operating wallet with only the benchmark allowance. Do not place a general-purpose wallet private key in James prompts, repository files, logs, Airtable, Drive, or agent-readable configuration."
   }
 }
