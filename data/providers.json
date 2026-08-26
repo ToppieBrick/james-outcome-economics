@@ -1,0 +1,32 @@
+[
+  {
+    "id": "seed-alpha",
+    "name": "Seed Provider Alpha",
+    "taskClasses": ["structured-research"],
+    "listedPrice": 0.01,
+    "livePrice": 0.012,
+    "successProbability": 0.72,
+    "latencyMs": 1800,
+    "evidence": "Synthetic seed data for MVP validation only. Replace with observed benchmark results before commercial use."
+  },
+  {
+    "id": "seed-beta",
+    "name": "Seed Provider Beta",
+    "taskClasses": ["structured-research"],
+    "listedPrice": 0.018,
+    "livePrice": 0.018,
+    "successProbability": 0.93,
+    "latencyMs": 2400,
+    "evidence": "Synthetic seed data for MVP validation only. Replace with observed benchmark results before commercial use."
+  },
+  {
+    "id": "seed-gamma",
+    "name": "Seed Provider Gamma",
+    "taskClasses": ["structured-research"],
+    "listedPrice": 0.008,
+    "livePrice": 0.009,
+    "successProbability": 0.48,
+    "latencyMs": 1300,
+    "evidence": "Synthetic seed data for MVP validation only. Replace with observed benchmark results before commercial use."
+  }
+]
