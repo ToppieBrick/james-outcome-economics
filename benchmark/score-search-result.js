@@ -1,8 +1,16 @@
 'use strict';
 
-function hostname(url) {
-  try { return new URL(url).hostname.toLowerCase().replace(/^www\./, ''); }
-  catch { return null; }
+function parseUrl(url) {
+  try {
+    const parsed = new URL(url);
+    return {
+      hostname: parsed.hostname.toLowerCase().replace(/^www\./, ''),
+      protocol: parsed.protocol,
+      isHttp: parsed.protocol === 'http:' || parsed.protocol === 'https:'
+    };
+  } catch {
+    return null;
+  }
 }
 
 function domainMatches(host, allowed) {
@@ -15,16 +23,32 @@ function scoreSearchResult(task, payload, criteria) {
 
   if (results.length < criteria.minimumResults) reasons.push('fewer_than_minimum_results');
 
-  const valid = results.filter((r) =>
+  const fieldValid = results.filter((r) =>
     criteria.requiredFieldsPerResult.every((f) => typeof r?.[f] === 'string' && r[f].trim())
   );
-  if (valid.length < results.length) reasons.push('missing_required_fields');
+  if (fieldValid.length < results.length) reasons.push('missing_required_fields');
 
-  const hosts = valid.map((r) => hostname(r.url)).filter(Boolean);
+  const invalidOrNonHttp = criteria.requireHttpUrls
+    ? fieldValid.filter((r) => {
+        const parsed = parseUrl(r.url);
+        return !parsed || !parsed.isHttp;
+      })
+    : [];
+  if (invalidOrNonHttp.length > 0) reasons.push('invalid_or_non_http_url');
+
+  const valid = criteria.requireHttpUrls
+    ? fieldValid.filter((r) => {
+        const parsed = parseUrl(r.url);
+        return parsed && parsed.isHttp;
+      })
+    : fieldValid;
+
+  const hosts = valid.map((r) => parseUrl(r.url)?.hostname).filter(Boolean);
   if (new Set(hosts).size < criteria.minimumDistinctDomains) reasons.push('fewer_than_minimum_distinct_domains');
 
   const authoritative = valid.filter((r) => {
-    const host = hostname(r.url);
+    const parsed = parseUrl(r.url);
+    const host = parsed?.hostname;
     if (!host || !domainMatches(host, task.authoritativeDomains || [])) return false;
     const terms = task.requiredUrlTerms || [];
     return terms.every((term) => r.url.toLowerCase().includes(term.toLowerCase()));
