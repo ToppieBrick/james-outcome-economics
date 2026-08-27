@@ -9,6 +9,7 @@ const criteria = {
   requiredFieldsPerResult: ['title', 'url'],
   minimumDistinctDomains: 2,
   minimumAuthoritativeMatches: 1,
+  requireHttpUrls: true,
 };
 
 const task = {
@@ -69,4 +70,18 @@ test('missing fields and insufficient domain diversity are independently observa
   assert.equal(result.pass, false);
   assert.ok(result.reasons.includes('missing_required_fields'));
   assert.ok(result.reasons.includes('fewer_than_minimum_distinct_domains'));
+});
+
+test('non-HTTP authoritative URLs cannot satisfy the benchmark contract', () => {
+  const payload = { results: [
+    { title: 'Fake API docs', url: 'ftp://platform.openai.com/docs/api-reference' },
+    { title: 'Guide', url: 'https://example.com/api-guide' },
+    { title: 'Reference', url: 'https://example.org/api-reference' },
+  ] };
+  const result = scoreSearchResult(task, payload, criteria);
+  assert.equal(result.pass, false);
+  assert.ok(result.reasons.includes('invalid_or_non_http_url'));
+  assert.ok(result.reasons.includes('no_authoritative_match'));
+  assert.equal(result.metrics.authoritativeMatches, 0);
+  assert.equal(result.metrics.validResultCount, 2);
 });
