@@ -58,16 +58,23 @@ function normalizeUsd(candidate) {
   return n;
 }
 
-async function preflight(provider, query) {
-  const url = typeof provider.url === 'function' ? provider.url(query) : provider.url;
+function median(values) {
+  const nums = values.filter(Number.isFinite).sort((a, b) => a - b);
+  if (!nums.length) return null;
+  const mid = Math.floor(nums.length / 2);
+  return nums.length % 2 ? nums[mid] : Math.round((nums[mid - 1] + nums[mid]) / 2);
+}
+
+async function preflight(provider, task) {
+  const url = typeof provider.url === 'function' ? provider.url(task.query) : provider.url;
   const options = {
     method: provider.method,
-    headers: { 'accept': 'application/json' },
+    headers: { accept: 'application/json' },
     redirect: 'manual',
   };
   if (provider.method === 'POST') {
     options.headers['content-type'] = 'application/json';
-    options.body = JSON.stringify(provider.body(query));
+    options.body = JSON.stringify(provider.body(task.query));
   }
 
   const started = performance.now();
@@ -91,8 +98,12 @@ async function preflight(provider, query) {
   const candidates = collectPaymentCandidates(bodyJson, []);
   for (const obj of headerObjects) collectPaymentCandidates(obj, candidates);
   const liveQuoteUsd = candidates.map(normalizeUsd).find((v) => Number.isFinite(v) && v >= 0) ?? null;
+  const priceDriftUsd = liveQuoteUsd == null ? null : Number((liveQuoteUsd - provider.listedPriceUsd).toFixed(6));
 
   return {
+    taskId: task.id,
+    intent: task.intent,
+    query: task.query,
     provider: provider.provider,
     endpoint: url,
     listedPriceUsd: provider.listedPriceUsd,
@@ -100,28 +111,53 @@ async function preflight(provider, query) {
     preflightLatencyMs: latencyMs,
     liveQuoteObserved: liveQuoteUsd != null,
     liveQuoteUsd,
+    priceDriftUsd,
     paymentCandidates: candidates.slice(0, 5),
     paidExecutionObserved: false,
     attempts: 0,
     pass: null,
     effectiveCostPerAcceptableResultUsd: null,
     error,
-    note: 'Zero-spend preflight only. HTTP 402 quote/latency is not a paid outcome and must not be used as success evidence.'
+    note: 'Zero-spend preflight only. HTTP 402 quote/latency is not a paid outcome and must not be used as success evidence.',
   };
+}
+
+function summarize(observations) {
+  return providers.map((provider) => {
+    const rows = observations.filter((row) => row.provider === provider.provider);
+    const quoteRows = rows.filter((row) => row.liveQuoteObserved);
+    const driftRows = quoteRows.filter((row) => row.priceDriftUsd !== 0);
+    return {
+      provider: provider.provider,
+      tasksProbed: rows.length,
+      http402Count: rows.filter((row) => row.httpStatus === 402).length,
+      quoteObservedCount: quoteRows.length,
+      quoteCoverage: rows.length ? Number((quoteRows.length / rows.length).toFixed(3)) : 0,
+      medianPreflightLatencyMs: median(rows.map((row) => row.preflightLatencyMs)),
+      listedPriceUsd: provider.listedPriceUsd,
+      distinctLiveQuotesUsd: [...new Set(quoteRows.map((row) => row.liveQuoteUsd))],
+      priceDriftObservationCount: driftRows.length,
+      errors: rows.filter((row) => row.error).length,
+    };
+  });
 }
 
 async function main() {
   const benchmark = JSON.parse(fs.readFileSync(TASK_FILE, 'utf8'));
-  const query = benchmark.tasks[0].query;
   const observations = [];
-  for (const provider of providers) observations.push(await preflight(provider, query));
+  for (const task of benchmark.tasks) {
+    for (const provider of providers) observations.push(await preflight(provider, task));
+  }
 
   const output = {
     observedAt: new Date().toISOString(),
+    benchmarkVersion: benchmark.benchmarkVersion,
     taskClass: benchmark.taskClass,
-    preflightTaskId: benchmark.tasks[0].id,
-    query,
+    tasksProbed: benchmark.tasks.length,
+    providersProbed: providers.length,
+    totalPreflightRequests: observations.length,
     spendUsd: 0,
+    summary: summarize(observations),
     observations,
   };
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2) + '\n');
