@@ -1,15 +1,15 @@
 {
-  "observedAt": "2026-08-27",
+  "observedAt": "2026-08-28",
   "taskClass": "structured-research",
   "providers": [
     {
       "provider": "Firecrawl",
-      "endpoint": "https://api.firecrawl.dev/v2/x402/search",
+      "endpoint": "https://api.firecrawl.dev/v1/x402/search",
       "method": "POST",
       "listedPriceUsd": 0.01,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "x402scan Composer currently surfaces Firecrawl x402 search at US$0.01/call. Firecrawl search returns structured title/url/description fields suitable for deterministic acceptance testing."
+      "evidence": "Canonical x402 endpoint revalidated from Coinbase's Firecrawl x402 case study. Public catalogue evidence has surfaced search near US$0.01/call. No paid James call has been executed."
     },
     {
       "provider": "agentutility",
@@ -18,7 +18,7 @@
       "listedPriceUsd": 0.01,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "x402scan currently lists search, search-web and web-search at US$0.01/call. No paid James call has been executed."
+      "evidence": "AgentUtility's current official catalogue lists structured search/web-search at US$0.01/call with title, URL, snippet and domain output. No paid James call has been executed."
     },
     {
       "provider": "Anicca",
@@ -27,7 +27,7 @@
       "listedPriceUsd": 0.01,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "x402scan lists /web-search at US$0.01 and /research below US$0.01; no paid James benchmark call has been executed. Replace placeholder host with seller canonical host before execution."
+      "evidence": "Public x402 listings show /web-search at US$0.01 and /research below US$0.01. Replace placeholder host with seller canonical host before paid execution."
     },
     {
       "provider": "Agent Judgment & Synthesis",
@@ -45,12 +45,23 @@
       "listedPriceUsd": 0.005,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "Official You.com x402 documentation currently lists /v1/search and /v1/agents/search at US$0.005/call, with livecrawl adding US$0.001 per result."
+      "evidence": "Official You.com x402 documentation lists search at US$0.005/call, with livecrawl adding US$0.001 per requested result."
+    },
+    {
+      "provider": "anybrowse",
+      "endpoint": "https://anybrowse.dev/serp/search",
+      "method": "POST",
+      "listedPriceUsd": 0.002,
+      "freeTrialAvailable": true,
+      "freeTrialLimit": "10 searches/day without signup",
+      "liveQuoteObserved": false,
+      "paidExecutionObserved": false,
+      "evidence": "Official anybrowse docs specify structured title/url/snippet search results, 10 free searches/day, and x402 pay-per-use at US$0.002/search on Base. Free responses may validate schema/scoring only and must not enter paid outcome economics."
     }
   ],
   "marketContext": {
     "webSearchProvidersCatalogued": 43,
-    "source": "402radar, 2026-08-11",
+    "source": "402radar, August 2026 observation",
     "implication": "Search is sufficiently substitutable for a cost-per-acceptable-outcome benchmark, but generic price/health ranking is already competitive."
   },
   "executionBlocker": {
