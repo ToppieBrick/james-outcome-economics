@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "test": "node --test",
-    "benchmark:preflight": "node benchmark/preflight-quotes.js"
+    "benchmark:preflight": "node benchmark/preflight-quotes.js",
+    "benchmark:trial:anybrowse": "node benchmark/trial-observation-anybrowse.js"
   },
   "engines": {
     "node": ">=20"
