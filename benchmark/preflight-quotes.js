@@ -6,7 +6,7 @@ const TASK_FILE = path.join(__dirname, 'structured-research.json');
 const OUTPUT_FILE = path.join(__dirname, 'preflight.latest.json');
 
 const providers = [
-  { provider: 'Firecrawl', listedPriceUsd: 0.01, method: 'POST', url: 'https://api.firecrawl.dev/v2/x402/search', body: (q) => ({ query: q, limit: 5, sources: ['web'] }) },
+  { provider: 'Firecrawl', listedPriceUsd: 0.01, method: 'POST', url: 'https://api.firecrawl.dev/v1/x402/search', body: (q) => ({ query: q, limit: 5, sources: ['web'] }) },
   { provider: 'AgentUtility', listedPriceUsd: 0.01, method: 'POST', url: 'https://x402.agentutility.ai/search', body: (q) => ({ query: q }) },
   { provider: 'You.com', listedPriceUsd: 0.005, method: 'GET', url: (q) => `https://api.you.com/v1/search?query=${encodeURIComponent(q)}` },
 ];
