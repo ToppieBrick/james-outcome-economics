@@ -6,10 +6,12 @@
       "provider": "Firecrawl",
       "endpoint": "https://api.firecrawl.dev/v1/x402/search",
       "method": "POST",
-      "listedPriceUsd": 0.01,
+      "listedPriceUsd": null,
+      "listedPriceStatus": "conflicting-public-evidence",
+      "publicPriceObservationsUsd": [0.01, 0.05],
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "Canonical x402 endpoint revalidated from Coinbase's Firecrawl x402 case study. Public catalogue evidence has surfaced search near US$0.01/call. No paid James call has been executed."
+      "evidence": "Canonical x402 endpoint is confirmed by Coinbase's Firecrawl x402 case study, but current public price evidence conflicts: earlier/third-party x402 observations place search near US$0.01 while Signal402 currently lists US$0.05/search. Firecrawl's standard account pricing is credit-based rather than x402 pay-per-use. Do not use a sticker-price baseline for Firecrawl until an actual HTTP 402 quote is observed."
     },
     {
       "provider": "agentutility",
@@ -36,7 +38,7 @@
       "listedPriceUsd": 0.001,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "Public x402 listings observed at US$0.001/call with zero displayed recent buyer activity in earlier checks. Canonical execution endpoint must be resolved before benchmark execution."
+      "evidence": "Public x402 listings observed at US$0.001/call with zero displayed recent buyer activity in current checks. Canonical execution endpoint must be resolved before benchmark execution."
     },
     {
       "provider": "You.com",
