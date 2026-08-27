@@ -5,12 +5,16 @@ function readiness(provider) {
     && provider.endpoint.startsWith('http')
     && !provider.endpoint.includes('.example');
   const priceObserved = Number.isFinite(Number(provider.listedPriceUsd));
+  const sourceBackedPrice = priceObserved
+    && Array.isArray(provider.evidenceSources)
+    && provider.evidenceSources.length > 0;
   const liveQuoteObserved = provider.liveQuoteObserved === true;
   const paidExecutionObserved = provider.paidExecutionObserved === true;
 
   return {
     endpointResolved,
     priceObserved,
+    sourceBackedPrice,
     liveQuoteObserved,
     paidExecutionObserved,
     paidBenchmarkReady: endpointResolved && liveQuoteObserved && paidExecutionObserved,
@@ -28,16 +32,20 @@ module.exports = function handler(req, res) {
     executionEligibility: provider.executionEligibility ?? null,
     freeTrialAvailable: provider.freeTrialAvailable === true,
     freeTrialLimit: provider.freeTrialLimit ?? null,
+    directoryServerUrl: provider.directoryServerUrl ?? null,
+    observedTraction: provider.observedTraction ?? null,
+    evidenceSources: provider.evidenceSources ?? [],
     evidence: provider.evidence,
     readiness: readiness(provider),
   }));
 
   const resolved = providers.filter((p) => p.readiness.endpointResolved).length;
+  const sourceBackedPrices = providers.filter((p) => p.readiness.sourceBackedPrice).length;
   const liveQuoted = providers.filter((p) => p.readiness.liveQuoteObserved).length;
   const paidObserved = providers.filter((p) => p.readiness.paidExecutionObserved).length;
 
   res.status(200).json({
-    model: 'outcome-economics-v0.2',
+    model: 'outcome-economics-v0.2.1',
     evidenceType: 'observed-public-and-benchmark-evidence',
     syntheticSeedData: false,
     observedAt: observed.observedAt,
@@ -45,6 +53,7 @@ module.exports = function handler(req, res) {
     summary: {
       providersTracked: providers.length,
       endpointsResolved: resolved,
+      sourceBackedListedPrices: sourceBackedPrices,
       liveQuotesObserved: liveQuoted,
       paidExecutionsObserved: paidObserved,
       rankingReady: paidObserved > 0,
@@ -52,6 +61,6 @@ module.exports = function handler(req, res) {
     providers,
     marketContext: observed.marketContext,
     executionBlocker: observed.executionBlocker,
-    warning: 'Listed/public prices and unpaid preflight evidence are not paid outcome evidence. /api/rank remains empty until real paid benchmark outcomes are observed.',
+    warning: 'Listed/public prices and unpaid preflight evidence are not paid outcome evidence. Source-backed listed prices improve provenance but do not satisfy the paid benchmark gate. /api/rank remains empty until real paid benchmark outcomes are observed.',
   });
 };
