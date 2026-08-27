@@ -12,6 +12,7 @@
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
       "executionEligibility": "unresolved-nonstandard-x402-risk",
+      "evidenceSources": [],
       "evidence": "Coinbase confirms the canonical x402 endpoint and that price is quoted via HTTP 402. Signal402, refreshed every six hours, currently distinguishes Firecrawl scrape at US$0.01 from search at US$0.05. A separate current OpenKrill integration report says the Firecrawl x402 search endpoint returns 401 rather than a standard 402 challenge and is unusable through its thirdweb payment flow. Treat US$0.05 as the current public search catalogue price, but do not admit Firecrawl to paid benchmark economics until James directly observes a valid payable challenge or otherwise proves execution compatibility."
     },
     {
@@ -21,6 +22,14 @@
       "listedPriceUsd": 0.01,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
+      "evidenceSources": [
+        {
+          "type": "provider-catalogue",
+          "url": "https://agentutility.ai/compose/search-content/",
+          "checked": "2026-08-28",
+          "note": "Current catalogue confirms x402 settlement mechanics on Base; core structured-search price remains tracked separately at US$0.01 from current provider evidence."
+        }
+      ],
       "evidence": "AgentUtility's current official catalogue lists structured search/web-search at US$0.01/call with title, URL, snippet and domain output. No paid James call has been executed."
     },
     {
@@ -30,7 +39,21 @@
       "listedPriceUsd": 0.01,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "Public x402 listings show /web-search at US$0.01 and /research below US$0.01. Replace placeholder host with seller canonical host before paid execution."
+      "directoryServerUrl": "https://www.x402scan.com/server/af9283bc-b1f8-4e50-b474-abb1f5d082e0",
+      "observedTraction": {
+        "transactions30d": 16,
+        "buyers30d": 2,
+        "volumeUsd30d": 0.04
+      },
+      "evidenceSources": [
+        {
+          "type": "x402-directory",
+          "url": "https://www.x402scan.com/server/af9283bc-b1f8-4e50-b474-abb1f5d082e0",
+          "checked": "2026-08-28",
+          "note": "/web-search is US$0.01 and described as a deterministic Exa pass-through; /research is sub-cent. Displayed 30-day activity: 16 transactions, 2 buyers, US$0.04 volume."
+        }
+      ],
+      "evidence": "Current x402scan evidence confirms /web-search at US$0.01 and /research below US$0.01, plus observed third-party paid activity. The directory page still does not expose a canonical execution host in the retrieved evidence, so the placeholder host remains deliberately non-executable until resolved."
     },
     {
       "provider": "Agent Judgment & Synthesis",
@@ -39,7 +62,27 @@
       "listedPriceUsd": 0.001,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "Public x402 listings observed at US$0.001/call with zero displayed recent buyer activity in current checks. Canonical execution endpoint must be resolved before benchmark execution."
+      "directoryServerUrl": "https://www.x402scan.com/server/e35dc90e-20f5-4ce1-9608-d52522bda1cf",
+      "observedTraction": {
+        "transactions30d": 0,
+        "buyers30d": 0,
+        "volumeUsd30d": 0
+      },
+      "evidenceSources": [
+        {
+          "type": "x402-directory",
+          "url": "https://www.x402scan.com/server/e35dc90e-20f5-4ce1-9608-d52522bda1cf",
+          "checked": "2026-08-28",
+          "note": "Search/research/scrape/classify are advertised at US$0.001; displayed 30-day activity remains 0 transactions, 0 buyers, US$0 volume."
+        },
+        {
+          "type": "editorial-catalogue",
+          "url": "https://toll402.com/browse",
+          "checked": "2026-08-28",
+          "note": "TOLL·402 currently lists Agent Judgment & Synthesis from US$0.001/call."
+        }
+      ],
+      "evidence": "Fresh public evidence still supports US$0.001/call while showing no displayed recent buyer activity. Canonical execution endpoint must be resolved before benchmark execution."
     },
     {
       "provider": "You.com",
@@ -48,6 +91,7 @@
       "listedPriceUsd": 0.005,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
+      "evidenceSources": [],
       "evidence": "Official You.com x402 documentation lists search at US$0.005/call, with livecrawl adding US$0.001 per requested result."
     },
     {
@@ -59,13 +103,45 @@
       "freeTrialLimit": "10 searches/day without signup",
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
+      "evidenceSources": [],
       "evidence": "Official anybrowse docs specify structured title/url/snippet search results, 10 free searches/day, and x402 pay-per-use at US$0.002/search on Base. Free responses may validate schema/scoring only and must not enter paid outcome economics."
+    },
+    {
+      "provider": "Agent402 Web Search",
+      "endpoint": "https://agent402.tools/api/search",
+      "method": "GET",
+      "listedPriceUsd": 0.02,
+      "liveQuoteObserved": false,
+      "paidExecutionObserved": false,
+      "evidenceSources": [
+        {
+          "type": "provider-product-page",
+          "url": "https://agent402.tools/tools/search",
+          "checked": "2026-08-28",
+          "note": "Current product page lists US$0.02/call via x402 and returns ranked title, URL, snippet and age fields."
+        }
+      ],
+      "evidence": "Fresh source-backed structured-search comparator. It satisfies the benchmark response shape on paper and gives James a higher-price control, but no James paid execution has occurred."
     }
   ],
   "marketContext": {
     "webSearchProvidersCatalogued": 43,
-    "source": "402radar, August 2026 observation",
-    "implication": "Search is sufficiently substitutable for a cost-per-acceptable-outcome benchmark, but generic price/health ranking is already competitive."
+    "source": "402radar, updated 2026-08-18 and checked 2026-08-28",
+    "implication": "Search is sufficiently substitutable for a cost-per-acceptable-outcome benchmark, but generic uptime/success/latency/price ranking is already competitive.",
+    "competitorEvidence": [
+      {
+        "provider": "402radar",
+        "url": "https://402radar.io/best/web-search-x402-apis",
+        "checked": "2026-08-28",
+        "observation": "43 web-search APIs ranked by uptime, success rate, latency and price on real traffic."
+      },
+      {
+        "provider": "TOLL·402",
+        "url": "https://toll402.com/insights/x402-endpoint-health-report-august-2026",
+        "checked": "2026-08-28",
+        "observation": "August index reports 89,057 canonical resources and 19,259 valid payment requirements, but zero paid-call verification in the index."
+      }
+    ]
   },
   "executionBlocker": {
     "status": "blocked_no_constrained_x402_payment_capability",
