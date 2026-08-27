@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const crypto = require('node:crypto');
 
 const TASK_FILE = path.join(__dirname, 'structured-research.json');
 const OUTPUT_FILE = path.join(__dirname, 'preflight.latest.json');
@@ -189,7 +190,9 @@ function summarize(observations) {
 }
 
 async function main() {
-  const benchmark = JSON.parse(fs.readFileSync(TASK_FILE, 'utf8'));
+  const benchmarkRaw = fs.readFileSync(TASK_FILE, 'utf8');
+  const benchmark = JSON.parse(benchmarkRaw);
+  const benchmarkContractSha256 = crypto.createHash('sha256').update(benchmarkRaw).digest('hex');
   const observations = [];
   for (const task of benchmark.tasks) {
     for (const provider of providers) observations.push(await preflight(provider, task));
@@ -198,11 +201,13 @@ async function main() {
   const output = {
     observedAt: new Date().toISOString(),
     benchmarkVersion: benchmark.benchmarkVersion,
+    benchmarkContractSha256,
     taskClass: benchmark.taskClass,
     tasksProbed: benchmark.tasks.length,
     providersProbed: providers.length,
     totalPreflightRequests: observations.length,
     spendUsd: 0,
+    contractIntegrityRule: 'Never aggregate or compare observations produced under different benchmarkContractSha256 values without an explicit migration/regrade step.',
     identityRule: 'Do not aggregate provider traction or outcomes by directory listing ID or brand name alone. Canonicalize by endpoint host + observed payment recipient.',
     paidBenchmarkGate: 'Only rows with eligibleForPaidBenchmark=true may progress to controlled paid execution.',
     summary: summarize(observations),
