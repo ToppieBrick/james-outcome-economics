@@ -1,25 +1,27 @@
 {
-  "benchmarkVersion": "0.1.0",
+  "benchmarkVersion": "0.2.0",
   "taskClass": "structured-research",
   "createdAt": "2026-08-26",
-  "purpose": "Deterministic benchmark for measuring effective cost per acceptable structured web-search outcome.",
+  "updatedAt": "2026-08-27",
+  "purpose": "Deterministic benchmark for measuring effective cost per acceptable structured web-search outcome, including relevance to authoritative ground truth.",
   "acceptanceCriteria": {
     "minimumResults": 3,
     "requiredFieldsPerResult": ["title", "url"],
     "minimumDistinctDomains": 2,
+    "minimumAuthoritativeMatches": 1,
     "requireHttpUrls": true,
-    "failureIf": ["request_error", "payment_error", "fewer_than_minimum_results", "missing_required_fields", "fewer_than_minimum_distinct_domains"]
+    "failureIf": ["request_error", "payment_error", "fewer_than_minimum_results", "missing_required_fields", "fewer_than_minimum_distinct_domains", "no_authoritative_match"]
   },
   "tasks": [
-    {"id":"sr-01","query":"OpenAI official API documentation","intent":"navigational"},
-    {"id":"sr-02","query":"Australia electricity market operator official website","intent":"navigational"},
-    {"id":"sr-03","query":"latest x402 protocol documentation","intent":"technical"},
-    {"id":"sr-04","query":"Australian Securities and Investments Commission company register","intent":"government"},
-    {"id":"sr-05","query":"Base network USDC contract address","intent":"factual"},
-    {"id":"sr-06","query":"Vercel serverless functions documentation","intent":"technical"},
-    {"id":"sr-07","query":"Coinbase x402 GitHub repository","intent":"navigational"},
-    {"id":"sr-08","query":"Australian Business Register ABN Lookup","intent":"government"},
-    {"id":"sr-09","query":"Model Context Protocol official specification","intent":"technical"},
-    {"id":"sr-10","query":"Cloudflare agents SDK documentation","intent":"technical"}
+    {"id":"sr-01","query":"OpenAI official API documentation","intent":"navigational","authoritativeDomains":["openai.com"]},
+    {"id":"sr-02","query":"Australia electricity market operator official website","intent":"navigational","authoritativeDomains":["aemo.com.au"]},
+    {"id":"sr-03","query":"latest x402 protocol documentation","intent":"technical","authoritativeDomains":["x402.org"]},
+    {"id":"sr-04","query":"Australian Securities and Investments Commission company register","intent":"government","authoritativeDomains":["asic.gov.au"]},
+    {"id":"sr-05","query":"Base network USDC contract address","intent":"factual","authoritativeDomains":["circle.com","developers.circle.com","base.org","basescan.org"]},
+    {"id":"sr-06","query":"Vercel serverless functions documentation","intent":"technical","authoritativeDomains":["vercel.com"]},
+    {"id":"sr-07","query":"Coinbase x402 GitHub repository","intent":"navigational","authoritativeDomains":["github.com"],"requiredUrlTerms":["x402"]},
+    {"id":"sr-08","query":"Australian Business Register ABN Lookup","intent":"government","authoritativeDomains":["abr.business.gov.au"]},
+    {"id":"sr-09","query":"Model Context Protocol official specification","intent":"technical","authoritativeDomains":["modelcontextprotocol.io"]},
+    {"id":"sr-10","query":"Cloudflare agents SDK documentation","intent":"technical","authoritativeDomains":["developers.cloudflare.com","cloudflare.com"]}
   ]
 }
