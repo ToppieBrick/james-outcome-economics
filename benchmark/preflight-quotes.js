@@ -65,6 +65,20 @@ function median(values) {
   return nums.length % 2 ? nums[mid] : Math.round((nums[mid - 1] + nums[mid]) / 2);
 }
 
+function classifySellability({ response, candidates, liveQuoteUsd, error }) {
+  if (error) return { sellability: 'unreachable', eligibleForPaidBenchmark: false };
+  if (!response) return { sellability: 'no-response', eligibleForPaidBenchmark: false };
+  if (response.status !== 402) {
+    return {
+      sellability: response.status === 200 ? 'no-paywall' : `unexpected-http-${response.status}`,
+      eligibleForPaidBenchmark: false,
+    };
+  }
+  if (!candidates.length) return { sellability: 'unparseable-payment-challenge', eligibleForPaidBenchmark: false };
+  if (liveQuoteUsd == null) return { sellability: 'challenge-without-normalized-price', eligibleForPaidBenchmark: false };
+  return { sellability: 'payable-preflight', eligibleForPaidBenchmark: true };
+}
+
 async function preflight(provider, task) {
   const url = typeof provider.url === 'function' ? provider.url(task.query) : provider.url;
   const options = {
@@ -99,6 +113,7 @@ async function preflight(provider, task) {
   for (const obj of headerObjects) collectPaymentCandidates(obj, candidates);
   const liveQuoteUsd = candidates.map(normalizeUsd).find((v) => Number.isFinite(v) && v >= 0) ?? null;
   const priceDriftUsd = liveQuoteUsd == null ? null : Number((liveQuoteUsd - provider.listedPriceUsd).toFixed(6));
+  const sellability = classifySellability({ response, candidates, liveQuoteUsd, error });
 
   return {
     taskId: task.id,
@@ -113,12 +128,14 @@ async function preflight(provider, task) {
     liveQuoteUsd,
     priceDriftUsd,
     paymentCandidates: candidates.slice(0, 5),
+    sellability: sellability.sellability,
+    eligibleForPaidBenchmark: sellability.eligibleForPaidBenchmark,
     paidExecutionObserved: false,
     attempts: 0,
     pass: null,
     effectiveCostPerAcceptableResultUsd: null,
     error,
-    note: 'Zero-spend preflight only. HTTP 402 quote/latency is not a paid outcome and must not be used as success evidence.',
+    note: 'Zero-spend preflight only. Paid benchmarking is permitted only after a payable HTTP 402 challenge is observed. Preflight eligibility is not delivery-success evidence.',
   };
 }
 
@@ -127,12 +144,19 @@ function summarize(observations) {
     const rows = observations.filter((row) => row.provider === provider.provider);
     const quoteRows = rows.filter((row) => row.liveQuoteObserved);
     const driftRows = quoteRows.filter((row) => row.priceDriftUsd !== 0);
+    const eligibleRows = rows.filter((row) => row.eligibleForPaidBenchmark);
     return {
       provider: provider.provider,
       tasksProbed: rows.length,
       http402Count: rows.filter((row) => row.httpStatus === 402).length,
       quoteObservedCount: quoteRows.length,
       quoteCoverage: rows.length ? Number((quoteRows.length / rows.length).toFixed(3)) : 0,
+      benchmarkEligibleCount: eligibleRows.length,
+      benchmarkEligibilityRate: rows.length ? Number((eligibleRows.length / rows.length).toFixed(3)) : 0,
+      sellabilityOutcomes: rows.reduce((acc, row) => {
+        acc[row.sellability] = (acc[row.sellability] || 0) + 1;
+        return acc;
+      }, {}),
       medianPreflightLatencyMs: median(rows.map((row) => row.preflightLatencyMs)),
       listedPriceUsd: provider.listedPriceUsd,
       distinctLiveQuotesUsd: [...new Set(quoteRows.map((row) => row.liveQuoteUsd))],
@@ -157,6 +181,7 @@ async function main() {
     providersProbed: providers.length,
     totalPreflightRequests: observations.length,
     spendUsd: 0,
+    paidBenchmarkGate: 'Only rows with eligibleForPaidBenchmark=true may progress to controlled paid execution.',
     summary: summarize(observations),
     observations,
   };
