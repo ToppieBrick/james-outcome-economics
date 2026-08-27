@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "purpose": "James paid benchmark guardrails. This file is policy metadata only; it contains no wallet secret or signing credential.",
+  "network": "base",
+  "asset": "USDC",
+  "maxPaymentUsd": 0.025,
+  "maxSessionUsd": 1.0,
+  "maxPaidCalls": 40,
+  "arbitraryTransfersAllowed": false,
+  "rawPrivateKeyAccessibleToAgent": false,
+  "requireProviderAllowlist": true,
+  "requireLiveQuote": true,
+  "requireQuoteAtOrBelowMaxPayment": true,
+  "requireCanonicalProviderIdentity": true,
+  "requireAuditRecord": true,
+  "failClosed": true,
+  "allowedPurpose": "structured-research benchmark only",
+  "requiredAuditFields": [
+    "taskId",
+    "provider",
+    "endpoint",
+    "payTo",
+    "liveQuoteUsd",
+    "settledCostUsd",
+    "attempt",
+    "latencyMs",
+    "pass",
+    "transactionId"
+  ],
+  "activationGate": [
+    "signer/wallet keeps keys outside LLM context",
+    "owner-controlled spend limits are enforced outside the agent",
+    "agent cannot increase limits",
+    "agent cannot make arbitrary transfers",
+    "Base and USDC restrictions are enforced",
+    "provider allowlist is enforced",
+    "test transaction proves over-limit requests fail closed",
+    "test transaction proves unknown recipient requests fail closed"
+  ]
+}
