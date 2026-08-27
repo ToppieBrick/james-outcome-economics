@@ -1,8 +1,8 @@
 {
-  "benchmarkVersion": "0.2.0",
+  "benchmarkVersion": "0.2.1",
   "taskClass": "structured-research",
   "createdAt": "2026-08-26",
-  "updatedAt": "2026-08-27",
+  "updatedAt": "2026-08-28",
   "purpose": "Deterministic benchmark for measuring effective cost per acceptable structured web-search outcome, including relevance to authoritative ground truth.",
   "acceptanceCriteria": {
     "minimumResults": 3,
@@ -10,7 +10,7 @@
     "minimumDistinctDomains": 2,
     "minimumAuthoritativeMatches": 1,
     "requireHttpUrls": true,
-    "failureIf": ["request_error", "payment_error", "fewer_than_minimum_results", "missing_required_fields", "fewer_than_minimum_distinct_domains", "no_authoritative_match"]
+    "failureIf": ["request_error", "payment_error", "fewer_than_minimum_results", "missing_required_fields", "invalid_or_non_http_url", "fewer_than_minimum_distinct_domains", "no_authoritative_match"]
   },
   "tasks": [
     {"id":"sr-01","query":"OpenAI official API documentation","intent":"navigational","authoritativeDomains":["openai.com"]},
