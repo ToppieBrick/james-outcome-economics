@@ -58,6 +58,20 @@ function normalizeUsd(candidate) {
   return n;
 }
 
+function normalizeRecipient(candidates) {
+  const recipient = candidates.map((candidate) => candidate.payTo).find(Boolean);
+  return recipient ? String(recipient).trim().toLowerCase() : null;
+}
+
+function endpointHost(url) {
+  try { return new URL(url).host.toLowerCase(); } catch { return null; }
+}
+
+function providerCanonicalKey(url, paymentRecipient) {
+  const host = endpointHost(url) || 'unknown-host';
+  return `${host}|${paymentRecipient || 'unobserved-recipient'}`;
+}
+
 function median(values) {
   const nums = values.filter(Number.isFinite).sort((a, b) => a - b);
   if (!nums.length) return null;
@@ -112,6 +126,8 @@ async function preflight(provider, task) {
   const candidates = collectPaymentCandidates(bodyJson, []);
   for (const obj of headerObjects) collectPaymentCandidates(obj, candidates);
   const liveQuoteUsd = candidates.map(normalizeUsd).find((v) => Number.isFinite(v) && v >= 0) ?? null;
+  const paymentRecipient = normalizeRecipient(candidates);
+  const canonicalKey = providerCanonicalKey(url, paymentRecipient);
   const priceDriftUsd = liveQuoteUsd == null ? null : Number((liveQuoteUsd - provider.listedPriceUsd).toFixed(6));
   const sellability = classifySellability({ response, candidates, liveQuoteUsd, error });
 
@@ -120,7 +136,10 @@ async function preflight(provider, task) {
     intent: task.intent,
     query: task.query,
     provider: provider.provider,
+    providerCanonicalKey: canonicalKey,
     endpoint: url,
+    endpointHost: endpointHost(url),
+    paymentRecipientObserved: paymentRecipient,
     listedPriceUsd: provider.listedPriceUsd,
     httpStatus: response?.status ?? null,
     preflightLatencyMs: latencyMs,
@@ -135,7 +154,7 @@ async function preflight(provider, task) {
     pass: null,
     effectiveCostPerAcceptableResultUsd: null,
     error,
-    note: 'Zero-spend preflight only. Paid benchmarking is permitted only after a payable HTTP 402 challenge is observed. Preflight eligibility is not delivery-success evidence.',
+    note: 'Zero-spend preflight only. Paid benchmarking is permitted only after a payable HTTP 402 challenge is observed. Preflight eligibility is not delivery-success evidence. Provider identity is canonicalized by endpoint host + observed payment recipient so directory duplicates are not blindly aggregated.',
   };
 }
 
@@ -147,6 +166,9 @@ function summarize(observations) {
     const eligibleRows = rows.filter((row) => row.eligibleForPaidBenchmark);
     return {
       provider: provider.provider,
+      canonicalProviderKeys: [...new Set(rows.map((row) => row.providerCanonicalKey).filter(Boolean))],
+      endpointHosts: [...new Set(rows.map((row) => row.endpointHost).filter(Boolean))],
+      observedPaymentRecipients: [...new Set(rows.map((row) => row.paymentRecipientObserved).filter(Boolean))],
       tasksProbed: rows.length,
       http402Count: rows.filter((row) => row.httpStatus === 402).length,
       quoteObservedCount: quoteRows.length,
@@ -181,6 +203,7 @@ async function main() {
     providersProbed: providers.length,
     totalPreflightRequests: observations.length,
     spendUsd: 0,
+    identityRule: 'Do not aggregate provider traction or outcomes by directory listing ID or brand name alone. Canonicalize by endpoint host + observed payment recipient.',
     paidBenchmarkGate: 'Only rows with eligibleForPaidBenchmark=true may progress to controlled paid execution.',
     summary: summarize(observations),
     observations,
