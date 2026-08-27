@@ -6,12 +6,13 @@
       "provider": "Firecrawl",
       "endpoint": "https://api.firecrawl.dev/v1/x402/search",
       "method": "POST",
-      "listedPriceUsd": null,
-      "listedPriceStatus": "conflicting-public-evidence",
+      "listedPriceUsd": 0.05,
+      "listedPriceStatus": "current-editorial-catalogue-search-price",
       "publicPriceObservationsUsd": [0.01, 0.05],
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidence": "Canonical x402 endpoint is confirmed by Coinbase's Firecrawl x402 case study, but current public price evidence conflicts: earlier/third-party x402 observations place search near US$0.01 while Signal402 currently lists US$0.05/search. Firecrawl's standard account pricing is credit-based rather than x402 pay-per-use. Do not use a sticker-price baseline for Firecrawl until an actual HTTP 402 quote is observed."
+      "executionEligibility": "unresolved-nonstandard-x402-risk",
+      "evidence": "Coinbase confirms the canonical x402 endpoint and that price is quoted via HTTP 402. Signal402, refreshed every six hours, currently distinguishes Firecrawl scrape at US$0.01 from search at US$0.05. A separate current OpenKrill integration report says the Firecrawl x402 search endpoint returns 401 rather than a standard 402 challenge and is unusable through its thirdweb payment flow. Treat US$0.05 as the current public search catalogue price, but do not admit Firecrawl to paid benchmark economics until James directly observes a valid payable challenge or otherwise proves execution compatibility."
     },
     {
       "provider": "agentutility",
