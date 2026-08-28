@@ -6,31 +6,53 @@
       "provider": "Firecrawl",
       "endpoint": "https://api.firecrawl.dev/v1/x402/search",
       "method": "POST",
-      "listedPriceUsd": 0.05,
-      "listedPriceStatus": "current-editorial-catalogue-search-price",
+      "listedPriceUsd": null,
+      "listedPriceStatus": "conflicted-current-x402-price-unverified",
       "publicPriceObservationsUsd": [0.01, 0.05],
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "executionEligibility": "unresolved-nonstandard-x402-risk",
-      "evidenceSources": [],
-      "evidence": "Coinbase confirms the canonical x402 endpoint and that price is quoted via HTTP 402. Signal402, refreshed every six hours, currently distinguishes Firecrawl scrape at US$0.01 from search at US$0.05. A separate current OpenKrill integration report says the Firecrawl x402 search endpoint returns 401 rather than a standard 402 challenge and is unusable through its thirdweb payment flow. Treat US$0.05 as the current public search catalogue price, but do not admit Firecrawl to paid benchmark economics until James directly observes a valid payable challenge or otherwise proves execution compatibility."
+      "executionEligibility": "preflight-required-current-x402-executability-unverified",
+      "evidenceSources": [
+        {
+          "type": "first-party-pricing",
+          "url": "https://www.firecrawl.dev/pricing",
+          "checked": "2026-08-28",
+          "note": "Current standard Firecrawl pricing says pay-per-use is not offered; Search is billed through subscription credits at 2 credits per 10 results. This does not establish current x402 pricing or executability."
+        },
+        {
+          "type": "first-party-x402-case-study",
+          "url": "https://www.coinbase.com/developer-platform/discover/launches/firecrawl-x402",
+          "checked": "2026-08-28",
+          "note": "Older first-party Coinbase case-study evidence documents https://api.firecrawl.dev/v1/x402/search using an HTTP 402 payment flow with USDC on Base. A fresh raw 402 is required to establish current execution terms."
+        }
+      ],
+      "evidence": "Current first-party standard pricing is subscription-credit based and says no pay-per-use, while older first-party x402 material documents the canonical x402 search route. Public x402 sticker-price observations are conflicting. Do not assign a current listed x402 price or admit Firecrawl to paid benchmark economics until James directly observes a fresh policy-compliant HTTP 402 from the canonical endpoint."
     },
     {
       "provider": "agentutility",
-      "endpoint": "https://x402.agentutility.ai/search",
+      "endpoint": "https://x402.agentutility.ai/web-search",
       "method": "POST",
-      "listedPriceUsd": 0.01,
+      "listedPriceUsd": 0.006,
+      "listedPriceStatus": "current-endpoint-specific-first-party-price-with-source-drift",
+      "publicPriceObservationsUsd": [0.006, 0.01],
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
+      "executionEligibility": "preflight-required-awaiting-live-402",
       "evidenceSources": [
         {
-          "type": "provider-catalogue",
-          "url": "https://agentutility.ai/compose/search-content/",
+          "type": "first-party-endpoint-page",
+          "url": "https://x402.agentutility.ai/web-search",
           "checked": "2026-08-28",
-          "note": "Current catalogue confirms x402 settlement mechanics on Base; core structured-search price remains tracked separately at US$0.01 from current provider evidence."
+          "note": "Current endpoint-specific page lists POST /web-search as live at US$0.006/call, USDC on Base mainnet, x402 exact scheme; adjacent search and search-web are also listed at US$0.006. First unsigned request is expected to return HTTP 402."
+        },
+        {
+          "type": "first-party-directory-observation",
+          "url": "https://x402.agentutility.ai",
+          "checked": "2026-08-28",
+          "note": "A separate same-day first-party directory observation listed search/web-search at US$0.01. Preserve as source/listed-price drift; do not average."
         }
       ],
-      "evidence": "AgentUtility's current official catalogue lists structured search/web-search at US$0.01/call with title, URL, snippet and domain output. No paid James call has been executed."
+      "evidence": "Newest endpoint-specific first-party evidence lists structured web-search/search-web/search at US$0.006/call with title/URL/snippet/domain-style structured output and x402 USDC settlement on Base. A separate same-day directory observation listed US$0.01, so both are retained as provenance drift. A fresh raw HTTP 402 immediately before payment remains authoritative. No paid James call has been executed."
     },
     {
       "provider": "Anicca",
