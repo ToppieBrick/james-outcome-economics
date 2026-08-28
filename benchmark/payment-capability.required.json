@@ -1,0 +1,84 @@
+{
+  "version": "1.0",
+  "purpose": "Minimum machine-payment capability required before Outcome Economics Intelligence may execute a paid structured-search benchmark.",
+  "status": "required-not-connected",
+  "protocol": "x402",
+  "asset": {
+    "symbol": "USDC",
+    "preferredNetwork": "eip155:8453",
+    "preferredNetworkName": "Base mainnet",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "wallet": {
+    "dedicatedLowValueWallet": true,
+    "rawPrivateKeyAgentReadable": false,
+    "arbitraryTransferCapability": false,
+    "fundingRule": "Hold only the bounded benchmark allowance plus minimal gas if required by the payment client.",
+    "testnetAssumption": "Do not require testnet support. You.com documents x402 as mainnet-only; first successful call spends real funds."
+  },
+  "executionControls": {
+    "approvedHosts": [
+      "api.you.com",
+      "x402.tavily.com"
+    ],
+    "allowedMethodsByHost": {
+      "api.you.com": ["GET"],
+      "x402.tavily.com": ["POST"]
+    },
+    "perPaymentUsdCap": 0.025,
+    "sessionUsdCap": 1.0,
+    "founderTransactionLimitAud": 25,
+    "founderDailyLimitAud": 40,
+    "freshQuoteRequired": true,
+    "maxQuoteAgeSeconds": 900,
+    "bindPaymentTo": [
+      "provider",
+      "endpoint",
+      "method",
+      "taskFingerprint",
+      "recipient",
+      "network",
+      "asset",
+      "amount",
+      "nonce",
+      "expiry"
+    ],
+    "replayProtection": true,
+    "auditReceiptRequired": true,
+    "killSwitchRequired": true
+  },
+  "clientRequirements": {
+    "mustParse402PaymentRequired": true,
+    "mustEnforceSpendCeilingBeforeSigning": true,
+    "mustRetryOriginalRequestOnlyAfterPolicyPass": true,
+    "mustCapturePaymentResponseReceipt": true,
+    "mustReturn": [
+      "liveQuotedPriceUsd",
+      "quoteObservedAt",
+      "settledAmountUsd",
+      "transactionId",
+      "network",
+      "payer",
+      "latencyMs",
+      "attempts",
+      "httpStatus",
+      "responseBody"
+    ]
+  },
+  "providerSpecificEvidence": {
+    "You.com": {
+      "endpoint": "https://api.you.com/v1/search",
+      "method": "GET",
+      "listedPriceUsd": 0.005,
+      "network": "Base or Solana mainnet",
+      "note": "Official documentation states no testnet is available and recommends a wallet holding only what is intended to be spent while validating the handshake."
+    },
+    "Tavily": {
+      "endpoint": "https://x402.tavily.com/search",
+      "method": "POST",
+      "listedPriceUsd": 0.01,
+      "network": "Base mainnet",
+      "note": "Official documentation states the endpoint returns 402 with price/payment details, then accepts USDC on Base through an x402-compatible client."
+    }
+  }
+}
