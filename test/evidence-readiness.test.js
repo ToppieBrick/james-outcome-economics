@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { readiness, rankingReadiness, isExecutableHttpEndpoint, canonicalProviderIdentity } = require('../lib/evidence-readiness');
+const { readiness, rankingReadiness, isExecutableHttpEndpoint, canonicalProviderIdentity, isFreshLiveQuote } = require('../lib/evidence-readiness');
 
 const base = {
   provider: 'Provider A',
@@ -11,23 +11,56 @@ const base = {
   listedPriceUsd: 0.01,
 };
 
-test('valid constrained quote makes first paid benchmark ready without prior payment', () => {
+const NOW = Date.parse('2026-08-28T02:49:38Z');
+
+test('valid constrained fresh quote makes first paid benchmark ready without prior payment', () => {
   const result = readiness({
     ...base,
     liveQuoteObserved: true,
+    liveQuoteObservedAt: '2026-08-28T02:45:00Z',
     liveQuotePolicyCompliant: true,
     paidExecutionObserved: false,
-  });
+  }, { now: NOW });
   assert.equal(result.preflightReady, true);
+  assert.equal(result.liveQuoteFresh, true);
   assert.equal(result.quoteVerified, true);
   assert.equal(result.paidBenchmarkReady, true);
   assert.equal(result.paidExecutionObserved, false);
 });
 
 test('resolved endpoint without live quote is not paid benchmark ready', () => {
-  const result = readiness({ ...base, liveQuoteObserved: false });
+  const result = readiness({ ...base, liveQuoteObserved: false }, { now: NOW });
   assert.equal(result.preflightReady, true);
   assert.equal(result.paidBenchmarkReady, false);
+});
+
+test('stale live quote fails closed even when policy compliant', () => {
+  const result = readiness({
+    ...base,
+    liveQuoteObserved: true,
+    liveQuoteObservedAt: '2026-08-28T02:20:00Z',
+    liveQuotePolicyCompliant: true,
+  }, { now: NOW });
+  assert.equal(result.liveQuoteFresh, false);
+  assert.equal(result.quoteVerified, false);
+  assert.equal(result.paidBenchmarkReady, false);
+});
+
+test('live quote without timestamp fails closed', () => {
+  const result = readiness({
+    ...base,
+    liveQuoteObserved: true,
+    liveQuotePolicyCompliant: true,
+  }, { now: NOW });
+  assert.equal(result.liveQuoteFresh, false);
+  assert.equal(result.paidBenchmarkReady, false);
+});
+
+test('future-dated live quote fails closed', () => {
+  assert.equal(isFreshLiveQuote({
+    liveQuoteObserved: true,
+    liveQuoteObservedAt: '2026-08-28T02:50:00Z',
+  }, { now: NOW }), false);
 });
 
 test('paid execution without deterministic score cannot make ranking ready', () => {
