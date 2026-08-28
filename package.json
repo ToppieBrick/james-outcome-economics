@@ -8,7 +8,8 @@
     "test": "node --test",
     "benchmark:preflight": "node benchmark/preflight-safety-gate.js && node benchmark/preflight-quotes-v2.js",
     "benchmark:preflight:primary": "node benchmark/preflight-safety-gate.js && node benchmark/preflight-primary-cohort.js",
-    "benchmark:trial:anybrowse": "node benchmark/trial-observation-anybrowse.js"
+    "benchmark:trial:anybrowse": "node benchmark/trial-observation-anybrowse.js",
+    "benchmark:trial:2sio": "node benchmark/trial-observation-2sio.js"
   },
   "engines": {
     "node": ">=20"
