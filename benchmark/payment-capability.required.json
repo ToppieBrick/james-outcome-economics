@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "purpose": "Minimum machine-payment capability required before Outcome Economics Intelligence may execute a paid structured-search benchmark.",
   "status": "required-not-connected",
   "protocol": "x402",
@@ -31,6 +31,11 @@
     "founderDailyLimitAud": 40,
     "freshQuoteRequired": true,
     "maxQuoteAgeSeconds": 900,
+    "dynamicRecipientPolicy": "fail-closed-unless-enrolled",
+    "recipientEnrollmentRequired": true,
+    "recipientEnrollmentSource": "trusted configuration outside LLM execution path",
+    "recipientDriftBlocksPayment": true,
+    "fresh402CannotEnrollRecipient": true,
     "bindPaymentTo": [
       "provider",
       "endpoint",
@@ -50,6 +55,8 @@
   "clientRequirements": {
     "mustParse402PaymentRequired": true,
     "mustEnforceSpendCeilingBeforeSigning": true,
+    "mustRejectUnenrolledDynamicRecipient": true,
+    "mustRejectRecipientDrift": true,
     "mustRetryOriginalRequestOnlyAfterPolicyPass": true,
     "mustCapturePaymentResponseReceipt": true,
     "mustReturn": [
@@ -79,6 +86,13 @@
       "listedPriceUsd": 0.01,
       "network": "Base mainnet",
       "note": "Official documentation states the endpoint returns 402 with price/payment details, then accepts USDC on Base through an x402-compatible client."
+    }
+  },
+  "protocolCompatibilityEvidence": {
+    "x402V2DynamicRecipients": {
+      "observed": true,
+      "source": "https://x402.org/x402-v2-launch/",
+      "control": "Protocol-valid dynamic payees remain payment-ineligible until separately enrolled; a fresh 402 quote is evidence of a requested payee, not authorization to pay it."
     }
   }
 }
