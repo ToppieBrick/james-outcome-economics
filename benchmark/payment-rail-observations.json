@@ -1,0 +1,34 @@
+{
+  "observedAt": "2026-08-28",
+  "scope": "structured-web-search payment-rail pricing observations",
+  "benchmarkPrimaryRail": "x402",
+  "observations": [
+    {
+      "provider": "You.com",
+      "taskClass": "structured-research",
+      "service": "Web Search",
+      "x402": {
+        "listedPriceUsd": 0.005,
+        "settlement": "USDC; Base or Solana mainnet per provider documentation",
+        "paidExecutionObservedByJames": false
+      },
+      "alternativeRail": {
+        "protocol": "MPP",
+        "listedPriceUsd": 0.01,
+        "advertisedMethod": "tempo",
+        "paidExecutionObservedByJames": false
+      },
+      "priceRatioAlternativeToX402": 2,
+      "source": "https://you.com/docs/administration/machine-payments",
+      "checked": "2026-08-28",
+      "observation": "The same You.com Web Search service is publicly listed at US$0.005 via x402 and US$0.01 via MPP. Provider documentation attributes the difference to the payment rail's minimum charge. This is observed listed-price evidence only, not a live quote or paid result.",
+      "benchmarkImplication": "Outcome economics must bind provider outcome evidence to payment rail. Otherwise a provider ranking can silently confound supplier quality with rail-specific transaction economics. The current benchmark remains x402-only; cross-rail comparison is out of scope until the locked x402 task benchmark has paid evidence."
+    }
+  ],
+  "rules": [
+    "Do not merge listed prices from different payment rails into one provider price.",
+    "Do not treat alternative-rail catalogue pricing as an x402 live quote.",
+    "Do not include alternative-rail observations in paid outcome economics without an observed paid execution on that rail.",
+    "Keep structured-web-search x402 as the locked primary benchmark until kill criteria are hit."
+  ]
+}
