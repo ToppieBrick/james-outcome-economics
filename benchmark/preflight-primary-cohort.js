@@ -5,6 +5,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const { parsePaymentHeaders, collectPaymentCandidates, normalizeUsd } = require('./preflight-quotes-v2');
 const { validatePreflightQuote } = require('./validate-preflight-quote');
+const { validateRequestEquivalence } = require('./validate-request-equivalence');
 const paymentCapability = require('./payment-capability.required.json');
 
 const TASK_FILE = path.join(__dirname, 'structured-research.json');
@@ -45,6 +46,7 @@ function median(values) {
 
 async function probe(provider, task) {
   const { url, options } = adapters[provider.provider].build(provider, task);
+  const requestEquivalence = validateRequestEquivalence({ task, provider: provider.provider, url, options });
   const started = performance.now();
   let response = null;
   let text = '';
@@ -76,7 +78,7 @@ async function probe(provider, task) {
     paymentCandidate,
   });
   const paymentCapabilityConnected = paymentCapability.status === 'connected';
-  const eligibleForPaidBenchmark = policyValidation.ok && paymentCapabilityConnected;
+  const eligibleForPaidBenchmark = requestEquivalence.ok && policyValidation.ok && paymentCapabilityConnected;
   return {
     taskId: task.id,
     provider: provider.provider,
@@ -85,6 +87,8 @@ async function probe(provider, task) {
     requestShape: provider.provider === 'You.com'
       ? { count: 5, livecrawl: false }
       : { search_depth: 'advanced', max_results: 5 },
+    requestEquivalence,
+    requestEquivalenceOk: requestEquivalence.ok,
     listedPriceUsd: provider.listedPriceUsd ?? null,
     httpStatus: response?.status ?? null,
     preflightLatencyMs: latencyMs,
@@ -108,7 +112,7 @@ async function probe(provider, task) {
     pass: null,
     effectiveCostPerAcceptableResultUsd: null,
     error,
-    note: 'Zero-spend primary-cohort preflight. A 402 is not payment-eligible unless the quote passes the constrained payment policy and the isolated payment capability is actually connected.',
+    note: 'Zero-spend primary-cohort preflight. Paid eligibility fails closed unless request equivalence passes, the 402 quote passes the constrained payment policy, and the isolated payment capability is actually connected.',
   };
 }
 
@@ -129,6 +133,8 @@ async function main() {
       provider: provider.provider,
       listedPriceUsd: provider.listedPriceUsd ?? null,
       tasksProbed: rows.length,
+      requestEquivalencePassCount: rows.filter((r) => r.requestEquivalenceOk).length,
+      requestEquivalenceFailCount: rows.filter((r) => !r.requestEquivalenceOk).length,
       http402Count: rows.filter((r) => r.httpStatus === 402).length,
       liveQuoteCount: quoted.length,
       quoteCoverage: rows.length ? Number((quoted.length / rows.length).toFixed(3)) : 0,
@@ -150,10 +156,12 @@ async function main() {
       resultCount: 5,
       YouCom: 'GET /v1/search?query=...&count=5; no livecrawl',
       Tavily: 'POST /search {query, search_depth:"advanced", max_results:5}',
+      failClosed: true,
+      eligibilityRequirement: 'validateRequestEquivalence(...).ok === true',
     },
     paymentCapabilityVersion: paymentCapability.version,
     paymentCapabilityStatus: paymentCapability.status,
-    paidEligibilityRule: 'HTTP 402 + policy-compliant Base/USDC/x402-v2 quote + approved host/method + fresh quote + connected isolated payment capability.',
+    paidEligibilityRule: 'request-equivalent locked task + HTTP 402 + policy-compliant Base/USDC/x402-v2 quote + approved host/method + fresh quote + connected isolated payment capability.',
     spendUsd: 0,
     paymentSignaturesCreated: 0,
     summary,
