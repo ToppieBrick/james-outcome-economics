@@ -1,12 +1,12 @@
 {
   "name": "james-outcome-economics",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "description": "Machine-readable provider ranking by expected cost per acceptable outcome.",
   "type": "commonjs",
   "scripts": {
     "test": "node --test",
-    "benchmark:preflight": "node benchmark/preflight-quotes-v2.js",
+    "benchmark:preflight": "node benchmark/preflight-safety-gate.js && node benchmark/preflight-quotes-v2.js",
     "benchmark:trial:anybrowse": "node benchmark/trial-observation-anybrowse.js"
   },
   "engines": {
