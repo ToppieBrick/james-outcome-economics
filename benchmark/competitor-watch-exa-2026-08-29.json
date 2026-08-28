@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-08-29T09:53:00+10:00",
+  "taskClass": "structured web research/search",
+  "provider": "Exa Search",
+  "status": "WATCH / ADMIT FOR PREFLIGHT",
+  "evidence": [
+    {
+      "sourceType": "first-party",
+      "source": "https://exa.ai/integrations/world",
+      "observation": "Exa documents an x402 flow for /search and /contents, with USDC fallback after the World AgentKit free allowance is exhausted."
+    },
+    {
+      "sourceType": "first-party",
+      "source": "https://exa.ai/pricing",
+      "observation": "Exa Search standard price is US$7 per 1,000 requests (US$0.007/request) for up to 10 results; configurable latency is stated as 180ms to 1s."
+    },
+    {
+      "sourceType": "third-party-monitor",
+      "source": "https://x402-list.com/services/exa",
+      "observation": "x402-list currently reports Exa as payment-ready with an x402 price from US$0.007/request, USDC on Base/Solana, 100% 30-day uptime and 2805ms p95. Treat price/latency as monitor evidence, not James execution evidence."
+    }
+  ],
+  "listedPriceUsd": 0.007,
+  "listedPriceConfidence": "supported by first-party standard API pricing and a third-party x402 monitor; live 402 still required before payment",
+  "liveQuotedPriceUsd": null,
+  "liveQuoteObserved": false,
+  "jamesProbe": {
+    "attempted": true,
+    "paid": false,
+    "outcome": "runtime DNS resolution failure before provider reached",
+    "providerLatencyMs": null,
+    "passFail": null,
+    "attemptsCountedAsProviderEvidence": 0
+  },
+  "paidExecutionObserved": false,
+  "settledCostUsd": 0,
+  "effectiveCostPerAcceptableResultUsd": null,
+  "rankingEligible": false,
+  "notes": "Do not infer benchmark quality from Exa's published benchmark claims or third-party uptime/latency. Admit only after a fresh unsigned 402 preflight confirms method, route, network, asset, recipient and execution-time amount. Then run the same locked deterministic tasks used for other providers."
+}
