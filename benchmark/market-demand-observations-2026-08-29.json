@@ -1,0 +1,73 @@
+{
+  "observedAt": "2026-08-29T08:50:52+10:00",
+  "taskClass": "structured-research",
+  "evidenceClass": "external-market-demand",
+  "rankingEligible": false,
+  "warning": "Marketplace transactions, buyers, volume, listed prices and directory call counts are external demand evidence only. They are not James benchmark PASS/FAIL evidence and must never be used to infer successProbability or effective cost per acceptable result.",
+  "observations": [
+    {
+      "provider": "Anicca",
+      "scope": "x402scan-server-record",
+      "serverUrl": "https://www.x402scan.com/server/c41507fa-e33c-4f38-b9e4-4c2a448eb81d",
+      "transactions30d": 16,
+      "buyers30d": 2,
+      "volumeUsd30d": 0.04,
+      "listedSearchPriceUsd": 0.01,
+      "source": "x402scan",
+      "note": "Observed public paid activity for an Anicca seller record. Do not aggregate with other Anicca server records because listing/address fragmentation may represent overlapping service activity."
+    },
+    {
+      "provider": "Anicca",
+      "scope": "x402scan-server-record",
+      "serverUrl": "https://www.x402scan.com/server/439753c7-81e9-4c3e-b383-3be9c7377d9e",
+      "transactions30d": 20,
+      "buyers30d": 10,
+      "volumeUsd30d": 0.03,
+      "listedSearchPriceUsd": 0.01,
+      "source": "x402scan",
+      "note": "Second current Anicca seller record with observed public paid activity. Kept separate to avoid double counting."
+    },
+    {
+      "provider": "Agent Judgment & Synthesis",
+      "scope": "x402scan-server-record",
+      "serverUrl": "https://www.x402scan.com/server/e35dc90e-20f5-4ce1-9608-d52522bda1cf",
+      "transactions30d": 0,
+      "buyers30d": 0,
+      "volumeUsd30d": 0,
+      "listedSearchPriceUsd": 0.001,
+      "source": "x402scan",
+      "note": "Current directory evidence shows advertised search/research pricing but no displayed 30-day paid activity. This is negative external-demand evidence, not a quality failure."
+    },
+    {
+      "provider": "agentutility",
+      "scope": "x402scan-server-wide",
+      "serverUrl": "https://x402.agentutility.ai",
+      "transactions30d": 17730,
+      "buyers30d": 100,
+      "volumeUsd30d": 442.41,
+      "listedSearchPriceUsd": 0.01,
+      "source": "x402scan + first-party catalogue",
+      "note": "Observed server-wide traction across hundreds of agentutility endpoints; it proves paid usage of the seller, not endpoint-specific demand for /web-search. Current x402scan resource listings show /search, /search-web and /web-search at US$0.01."
+    },
+    {
+      "provider": "StableEnrich / Exa Search",
+      "scope": "graded-endpoint-demand",
+      "endpoint": "https://stableenrich.dev/api/exa/search",
+      "transactions30dApprox": 18000,
+      "buyers30d": 242,
+      "listedSearchPriceUsd": 0.01,
+      "source": "Graded",
+      "note": "Direct structured-web-search analogue with substantial endpoint-specific external demand. This is evidence that machine-paid search is being purchased repeatedly, not evidence of James benchmark quality."
+    }
+  ],
+  "market": {
+    "x402scanGlobal30d": {
+      "transactions": 17060000,
+      "volumeUsd": 1310000,
+      "buyers": 22010,
+      "sourceChecked": "2026-08-29"
+    },
+    "x402scanSearchServers": 1252,
+    "implication": "The locked task class has observable machine-payment demand and a large supplier set. Demand validation is therefore no longer the primary uncertainty; outcome-quality discrimination versus commodity price/health routing is."
+  }
+}
