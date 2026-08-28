@@ -1,4 +1,5 @@
 const observed = require('../benchmark/providers.observed.json');
+const paymentCapability = require('../benchmark/payment-capability.required.json');
 const { readiness, rankingReadiness, DEFAULT_MAX_LIVE_QUOTE_AGE_MS } = require('../lib/evidence-readiness');
 
 module.exports = function handler(req, res) {
@@ -31,7 +32,7 @@ module.exports = function handler(req, res) {
   const ranking = rankingReadiness(observed.providers);
 
   res.status(200).json({
-    model: 'outcome-economics-v0.2.4',
+    model: 'outcome-economics-v0.2.5',
     evidenceType: 'observed-public-and-benchmark-evidence',
     syntheticSeedData: false,
     observedAt: observed.observedAt,
@@ -40,6 +41,7 @@ module.exports = function handler(req, res) {
       maxLiveQuoteAgeSeconds: DEFAULT_MAX_LIVE_QUOTE_AGE_MS / 1000,
       liveQuoteTimestampRequired: true,
       staleQuotesFailClosed: true,
+      paymentCapabilityStatus: paymentCapability.status,
     },
     summary: {
       providersTracked: providers.length,
@@ -58,6 +60,7 @@ module.exports = function handler(req, res) {
     providers,
     marketContext: observed.marketContext,
     executionBlocker: observed.executionBlocker,
+    paymentCapabilityRequired: paymentCapability,
     warning: 'Listed/public prices and unpaid preflight evidence are not paid outcome evidence. A provider is paid-benchmark-ready only after a policy-compliant live x402 quote with a fresh observation timestamp is verified; quotes older than 15 minutes fail closed. Prior payment is not required. Ranking requires scored paid outcomes from at least two comparable providers under the same benchmark fingerprint.',
   });
 };
