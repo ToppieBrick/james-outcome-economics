@@ -5,15 +5,12 @@
   "endpoint": "https://2s.io/api/search/web",
   "method": "GET",
   "responseShape": ["title", "url", "description", "siteName", "age", "language"],
-  "listedPriceUsd": 0.0225,
-  "listedPriceStatus": "current-first-party-endpoint-page",
-  "priorPublicObservationUsd": 0.009,
-  "priceDriftObserved": true,
+  "listedPriceUsd": 0.009,
+  "listedPriceStatus": "current-first-party-search-result-observation",
+  "conflictingSameDayObservationUsd": 0.0225,
+  "priceDriftOrSourceConflictObserved": true,
   "paymentProtocol": "x402 v2",
-  "supportedRails": [
-    "USDC on Base via EIP-3009",
-    "USDC on Solana via SPL transfer"
-  ],
+  "supportedRails": ["USDC on Base via EIP-3009", "USDC on Solana via SPL transfer"],
   "freeTrial": {
     "available": true,
     "mechanism": "trial=1 query parameter or X-2s-Trial: 1 header",
@@ -26,16 +23,15 @@
     "attemptedAt": "2026-08-29",
     "result": "environment-dns-resolution-failure-before-provider",
     "providerLatencyObserved": false,
-    "trialResultObserved": false,
-    "note": "The runtime failed DNS resolution for 2s.io before reaching the provider. Do not treat this as provider failure or provider latency."
+    "trialResultObserved": false
   },
   "evidenceSources": [
     {
-      "type": "first-party-endpoint-page",
+      "type": "first-party-endpoint-page-search-index",
       "url": "https://2s.io/search/web",
       "checked": "2026-08-29",
-      "note": "Current page lists GET /api/search/web at US$0.0225/call, x402 v2, no API key, USDC on Base or Solana, structured ranked results, and a free real-call trial path."
+      "note": "Latest retrievable first-party result lists GET /api/search/web at US$0.0090/call, x402 v2, no API key, Base or Solana USDC, and free trial. A conflicting same-day observation recorded US$0.0225; preserve both and require fresh raw 402 as authoritative execution price."
     }
   ],
-  "benchmarkDecision": "Add to zero-spend preflight/competitor cohort. Do not add to paid primary cohort until James captures a fresh policy-compliant raw 402 and the constrained signer is connected. Use trial calls where available to gather deterministic relevance and latency evidence without spend, clearly partitioned from paid outcome economics."
+  "benchmarkDecision": "Keep in zero-spend preflight/competitor cohort. Do not add to paid primary cohort until a fresh policy-compliant raw 402 is captured and the constrained signer is connected. Never average conflicting listed prices."
 }
