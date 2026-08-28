@@ -1,0 +1,32 @@
+{
+  "observedAt": "2026-08-29",
+  "competitor": "Graded",
+  "url": "https://graded.sh/",
+  "category": "x402 service quality index and gateway",
+  "observedScale": {
+    "servicesTracked": 3851,
+    "domains": 2020,
+    "callableThroughGateway": 3069,
+    "probeCadence": "every 6 hours"
+  },
+  "structuredSearchDemandEvidence": [
+    {
+      "service": "stableenrich.dev POST /api/exa/search",
+      "description": "Exa Search - Neural search across the web",
+      "listedServicePriceUsd": 0.01,
+      "gradedGatewayPriceUsd": 0.015,
+      "thirtyDayCalls": 18000,
+      "thirtyDayPayers": 242,
+      "grade": "A",
+      "evidenceType": "public competitor demand counter",
+      "paidExecutionObservedByJames": false
+    }
+  ],
+  "killBoundaryAssessment": {
+    "status": "does-not-yet-trigger-kill",
+    "overlap": "Graded already measures x402 service callability/quality and offers a gateway; this is close to generic reliability routing.",
+    "remainingJamesBoundary": "task-specific repeated paid outcome economics: execution-time quote + deterministic acceptance for the same locked task + retries + latency + settled cost per acceptable result, then machine-readable provider choice.",
+    "killTrigger": "Reassess if Graded or another competitor publicly demonstrates task-specific deterministic outcome success rates and retry-adjusted settled cost-per-acceptable-result routing for structured web search."
+  },
+  "decision": "TEST continues. Treat observed Exa demand as external demand evidence for machine-paid structured search, not as James paid benchmark evidence."
+}
