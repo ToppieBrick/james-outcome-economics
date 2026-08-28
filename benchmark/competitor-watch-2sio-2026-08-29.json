@@ -1,0 +1,41 @@
+{
+  "observedAt": "2026-08-29",
+  "taskClass": "structured-research",
+  "provider": "2s.io search.web",
+  "endpoint": "https://2s.io/api/search/web",
+  "method": "GET",
+  "responseShape": ["title", "url", "description", "siteName", "age", "language"],
+  "listedPriceUsd": 0.0225,
+  "listedPriceStatus": "current-first-party-endpoint-page",
+  "priorPublicObservationUsd": 0.009,
+  "priceDriftObserved": true,
+  "paymentProtocol": "x402 v2",
+  "supportedRails": [
+    "USDC on Base via EIP-3009",
+    "USDC on Solana via SPL transfer"
+  ],
+  "freeTrial": {
+    "available": true,
+    "mechanism": "trial=1 query parameter or X-2s-Trial: 1 header",
+    "limit": "one free real call per endpoint per hour",
+    "admissionRule": "Trial results may validate schema, deterministic relevance and latency, but must not be recorded as a paid x402 outcome or used as settled-price evidence."
+  },
+  "liveQuoteObservedByJames": false,
+  "paidExecutionObservedByJames": false,
+  "zeroSpendExecutionAttempt": {
+    "attemptedAt": "2026-08-29",
+    "result": "environment-dns-resolution-failure-before-provider",
+    "providerLatencyObserved": false,
+    "trialResultObserved": false,
+    "note": "The runtime failed DNS resolution for 2s.io before reaching the provider. Do not treat this as provider failure or provider latency."
+  },
+  "evidenceSources": [
+    {
+      "type": "first-party-endpoint-page",
+      "url": "https://2s.io/search/web",
+      "checked": "2026-08-29",
+      "note": "Current page lists GET /api/search/web at US$0.0225/call, x402 v2, no API key, USDC on Base or Solana, structured ranked results, and a free real-call trial path."
+    }
+  ],
+  "benchmarkDecision": "Add to zero-spend preflight/competitor cohort. Do not add to paid primary cohort until James captures a fresh policy-compliant raw 402 and the constrained signer is connected. Use trial calls where available to gather deterministic relevance and latency evidence without spend, clearly partitioned from paid outcome economics."
+}
