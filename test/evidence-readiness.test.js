@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { readiness, rankingReadiness, isExecutableHttpEndpoint } = require('../lib/evidence-readiness');
+const { readiness, rankingReadiness, isExecutableHttpEndpoint, canonicalProviderIdentity } = require('../lib/evidence-readiness');
 
 const base = {
   provider: 'Provider A',
@@ -32,22 +32,22 @@ test('resolved endpoint without live quote is not paid benchmark ready', () => {
 
 test('paid execution without deterministic score cannot make ranking ready', () => {
   const ranking = rankingReadiness([
-    { ...base, paidExecutionObserved: true, outcomeScored: false },
+    { ...base, paidExecutionObserved: true, outcomeScored: false, providerCanonicalKey: 'provider.test|0xaaa' },
   ]);
   assert.equal(ranking.rankingReady, false);
 });
 
-test('one scored provider is not a ranking', () => {
+test('one scored canonical provider is not a ranking', () => {
   const ranking = rankingReadiness([
-    { ...base, paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1' },
+    { ...base, paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1', providerCanonicalKey: 'provider.test|0xaaa' },
   ]);
   assert.equal(ranking.rankingReady, false);
 });
 
-test('two scored providers under same fingerprint make ranking ready', () => {
+test('two canonically distinct scored providers under same fingerprint make ranking ready', () => {
   const ranking = rankingReadiness([
-    { ...base, provider: 'A', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1' },
-    { ...base, provider: 'B', endpoint: 'https://b.test/search', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1' },
+    { ...base, provider: 'A', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1', providerCanonicalKey: 'a.test|0xaaa' },
+    { ...base, provider: 'B', endpoint: 'https://b.test/search', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1', providerCanonicalKey: 'b.test|0xbbb' },
   ]);
   assert.equal(ranking.rankingReady, true);
   assert.deepEqual(ranking.comparableFingerprints, ['fp-1']);
@@ -55,10 +55,31 @@ test('two scored providers under same fingerprint make ranking ready', () => {
 
 test('different fingerprints cannot be compared', () => {
   const ranking = rankingReadiness([
-    { ...base, provider: 'A', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1' },
-    { ...base, provider: 'B', endpoint: 'https://b.test/search', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-2' },
+    { ...base, provider: 'A', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1', providerCanonicalKey: 'a.test|0xaaa' },
+    { ...base, provider: 'B', endpoint: 'https://b.test/search', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-2', providerCanonicalKey: 'b.test|0xbbb' },
   ]);
   assert.equal(ranking.rankingReady, false);
+});
+
+test('two brand aliases for the same canonical seller cannot create a ranking', () => {
+  const ranking = rankingReadiness([
+    { ...base, provider: 'Brand A', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1', providerCanonicalKey: 'shared.test|0xabc' },
+    { ...base, provider: 'Brand B', endpoint: 'https://shared.test/alternate', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1', providerCanonicalKey: 'shared.test|0xabc' },
+  ]);
+  assert.equal(ranking.rankingReady, false);
+});
+
+test('scored providers without canonical identity do not count toward ranking readiness', () => {
+  const ranking = rankingReadiness([
+    { ...base, provider: 'A', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1' },
+    { ...base, provider: 'B', endpoint: 'https://b.test/search', paidExecutionObserved: true, outcomeScored: true, benchmarkFingerprint: 'fp-1' },
+  ]);
+  assert.equal(ranking.rankingReady, false);
+  assert.equal(ranking.canonicallyIdentifiedScoredProviders, 0);
+});
+
+test('canonical identity can be derived from observed recipient plus endpoint host', () => {
+  assert.equal(canonicalProviderIdentity({ endpoint: 'https://Provider.Test/search', paymentRecipientObserved: '0xAbC' }), 'provider.test|0xabc');
 });
 
 test('http prefix lookalike is not executable', () => {
