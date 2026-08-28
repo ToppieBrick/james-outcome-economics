@@ -4,6 +4,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { parsePaymentHeaders, collectPaymentCandidates, normalizeUsd } = require('./preflight-quotes-v2');
+const { validatePreflightQuote } = require('./validate-preflight-quote');
+const paymentCapability = require('./payment-capability.required.json');
 
 const TASK_FILE = path.join(__dirname, 'structured-research.json');
 const PROVIDER_FILE = path.join(__dirname, 'providers.observed.json');
@@ -54,15 +56,27 @@ async function probe(provider, task) {
     error = e.message;
   }
   const latencyMs = Math.round(performance.now() - started);
+  const quoteObservedAt = new Date().toISOString();
   const headers = response ? Object.fromEntries(response.headers.entries()) : {};
   const parsedHeaders = parsePaymentHeaders(headers);
   const candidates = collectPaymentCandidates(maybeJson(text), []);
   for (const obj of parsedHeaders.objects) collectPaymentCandidates(obj, candidates);
   const liveQuoteUsd = candidates.map(normalizeUsd).find((v) => Number.isFinite(v) && v >= 0) ?? null;
+  const paymentCandidate = candidates.find((candidate) => normalizeUsd(candidate) === liveQuoteUsd) || candidates[0] || null;
   const recipients = [...new Set(candidates.map((c) => c.payTo).filter(Boolean).map(String))];
   const networks = [...new Set(candidates.map((c) => c.network).filter(Boolean).map(String))];
   const assets = [...new Set(candidates.map((c) => c.asset).filter(Boolean).map(String))];
-  const valid402 = response?.status === 402 && liveQuoteUsd != null && candidates.length > 0;
+  const policyValidation = validatePreflightQuote({
+    endpoint: url,
+    method: options.method,
+    httpStatus: response?.status ?? null,
+    protocolVersion: parsedHeaders.protocolVersion,
+    liveQuoteUsd,
+    quoteObservedAt,
+    paymentCandidate,
+  });
+  const paymentCapabilityConnected = paymentCapability.status === 'connected';
+  const eligibleForPaidBenchmark = policyValidation.ok && paymentCapabilityConnected;
   return {
     taskId: task.id,
     provider: provider.provider,
@@ -74,6 +88,7 @@ async function probe(provider, task) {
     listedPriceUsd: provider.listedPriceUsd ?? null,
     httpStatus: response?.status ?? null,
     preflightLatencyMs: latencyMs,
+    quoteObservedAt,
     liveQuoteObserved: liveQuoteUsd != null,
     liveQuoteUsd,
     priceDriftUsd: liveQuoteUsd == null || !Number.isFinite(provider.listedPriceUsd)
@@ -84,13 +99,16 @@ async function probe(provider, task) {
     recipients,
     networks,
     assets,
-    eligibleForPaidBenchmark: valid402,
+    quotePolicyCompliant: policyValidation.ok,
+    quotePolicyErrors: policyValidation.errors,
+    paymentCapabilityConnected,
+    eligibleForPaidBenchmark,
     paidExecutionObserved: false,
     attempts: 0,
     pass: null,
     effectiveCostPerAcceptableResultUsd: null,
     error,
-    note: 'Zero-spend primary-cohort preflight. No payment signature is created or transmitted.',
+    note: 'Zero-spend primary-cohort preflight. A 402 is not payment-eligible unless the quote passes the constrained payment policy and the isolated payment capability is actually connected.',
   };
 }
 
@@ -114,6 +132,7 @@ async function main() {
       http402Count: rows.filter((r) => r.httpStatus === 402).length,
       liveQuoteCount: quoted.length,
       quoteCoverage: rows.length ? Number((quoted.length / rows.length).toFixed(3)) : 0,
+      quotePolicyCompliantCount: rows.filter((r) => r.quotePolicyCompliant).length,
       paidBenchmarkEligibleCount: rows.filter((r) => r.eligibleForPaidBenchmark).length,
       medianPreflightLatencyMs: median(rows.map((r) => r.preflightLatencyMs)),
       distinctLiveQuotesUsd: [...new Set(quoted.map((r) => r.liveQuoteUsd))],
@@ -132,6 +151,9 @@ async function main() {
       YouCom: 'GET /v1/search?query=...&count=5; no livecrawl',
       Tavily: 'POST /search {query, search_depth:"advanced", max_results:5}',
     },
+    paymentCapabilityVersion: paymentCapability.version,
+    paymentCapabilityStatus: paymentCapability.status,
+    paidEligibilityRule: 'HTTP 402 + policy-compliant Base/USDC/x402-v2 quote + approved host/method + fresh quote + connected isolated payment capability.',
     spendUsd: 0,
     paymentSignaturesCreated: 0,
     summary,
