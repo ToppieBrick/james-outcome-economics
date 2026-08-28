@@ -3,6 +3,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const handler = require('../api/evidence');
+const paymentRailObservations = require('../benchmark/payment-rail-observations.json');
 const { DEFAULT_MAX_LIVE_QUOTE_AGE_MS } = require('../lib/evidence-readiness');
 
 function invokeEvidenceApi() {
@@ -55,5 +56,24 @@ test('no provider can be paid-benchmark-ready without a fresh policy-compliant l
     assert.equal(provider.readiness.liveQuoteFresh, true, provider.provider);
     assert.equal(provider.readiness.liveQuotePolicyCompliant, true, provider.provider);
     assert.equal(provider.readiness.quoteVerified, true, provider.provider);
+  }
+});
+
+test('evidence API exposes payment-rail-bound evidence without changing the locked benchmark rail', () => {
+  const { body } = invokeEvidenceApi();
+  assert.equal(body.controls.paymentRailBoundEvidence, true);
+  assert.equal(body.controls.benchmarkPrimaryPaymentRail, 'x402');
+  assert.equal(body.controls.benchmarkPrimaryPaymentRail, paymentRailObservations.benchmarkPrimaryRail);
+  assert.deepEqual(body.paymentRailEvidence, paymentRailObservations);
+  assert.equal(body.summary.paymentRailObservations, paymentRailObservations.observations.length);
+});
+
+test('alternative-rail catalogue observations cannot masquerade as paid x402 evidence', () => {
+  const { body } = invokeEvidenceApi();
+  for (const observation of body.paymentRailEvidence.observations) {
+    if (!observation.alternativeRail) continue;
+    assert.notEqual(observation.alternativeRail.protocol.toLowerCase(), body.controls.benchmarkPrimaryPaymentRail);
+    assert.equal(observation.alternativeRail.paidExecutionObservedByJames, false, observation.provider);
+    assert.equal(observation.x402.paidExecutionObservedByJames, false, observation.provider);
   }
 });
