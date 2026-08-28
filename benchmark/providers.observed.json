@@ -91,8 +91,34 @@
       "listedPriceUsd": 0.005,
       "liveQuoteObserved": false,
       "paidExecutionObserved": false,
-      "evidenceSources": [],
-      "evidence": "Official You.com x402 documentation lists search at US$0.005/call, with livecrawl adding US$0.001 per requested result."
+      "executionEligibility": "first-party-documented-awaiting-live-402",
+      "evidenceSources": [
+        {
+          "type": "first-party-x402-docs",
+          "url": "https://you.com/docs/administration/machine-payments/x402",
+          "checked": "2026-08-28",
+          "note": "GET /v1/search and GET/POST /v1/agents/search are US$0.005/call. livecrawl adds US$0.001 per requested result. x402 supports USDC on Base or Solana mainnet; no testnet is available."
+        }
+      ],
+      "evidence": "First-party documentation confirms US$0.005/call, canonical x402 search routes, quoted pricing via PAYMENT-REQUIRED, and mainnet-only execution. This is now a primary paid benchmark candidate once a constrained signer is connected and a fresh live 402 is captured."
+    },
+    {
+      "provider": "Tavily",
+      "endpoint": "https://x402.tavily.com/search",
+      "method": "POST",
+      "listedPriceUsd": 0.01,
+      "liveQuoteObserved": false,
+      "paidExecutionObserved": false,
+      "executionEligibility": "first-party-documented-awaiting-live-402",
+      "evidenceSources": [
+        {
+          "type": "first-party-x402-docs",
+          "url": "https://www.tavily.com/blog/tavily-on-x402",
+          "checked": "2026-08-28",
+          "note": "POST /search is US$0.01/call, returns ranked web results/snippets/source URLs, and settles USDC on Base after a 402 challenge."
+        }
+      ],
+      "evidence": "First-party documentation confirms a directly comparable structured-search x402 endpoint at US$0.01/call. This is the second primary paid benchmark candidate once a constrained signer is connected and a fresh live 402 is captured."
     },
     {
       "provider": "anybrowse",
@@ -145,7 +171,8 @@
   },
   "executionBlocker": {
     "status": "blocked_no_constrained_x402_payment_capability",
-    "requiredCapability": "A purpose-specific x402 purchase tool backed by an isolated low-value wallet/signer. The LLM must not receive or be able to reveal a raw private key. The payment layer must enforce Base + USDC only, an approved-provider allowlist, per-call and session spend caps, no arbitrary transfer method, audit logging, and a kill switch.",
-    "recommendedImplementation": "First preference: a managed agent wallet/MCP or isolated signer that exposes only bounded x402 purchase operations. Start on testnet where supported, then fund a dedicated mainnet operating wallet with only the benchmark allowance. Do not place a general-purpose wallet private key in James prompts, repository files, logs, Airtable, Drive, or agent-readable configuration."
+    "requiredCapabilityFile": "benchmark/payment-capability.required.json",
+    "requiredCapability": "A purpose-specific x402 client backed by an isolated low-value signer/wallet. The LLM must not receive or reveal a raw private key. The layer must parse live 402 terms, enforce Base + USDC for the initial cohort, approved host/method allowlists, per-call/session/founder budget caps, task/endpoint/recipient/amount binding, replay protection, audit receipts, and a kill switch before signing.",
+    "recommendedImplementation": "Use an x402-compatible managed wallet/MCP or isolated signer exposing only bounded purchase operations. Initial cohort: You.com GET /v1/search at US$0.005 and Tavily POST /search at US$0.01. Do not assume testnet availability: You.com explicitly documents mainnet-only x402 and says the first successful call spends real funds. Fund the dedicated operating wallet only with the bounded benchmark allowance. Never place a general-purpose wallet private key in James prompts, repository files, logs, Airtable, Drive, or agent-readable configuration."
   }
 }
