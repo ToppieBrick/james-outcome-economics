@@ -1,6 +1,6 @@
 {
   "name": "james-outcome-economics",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "description": "Machine-readable provider ranking by expected cost per acceptable outcome.",
   "type": "commonjs",
