@@ -1,0 +1,13 @@
+{
+  "observedAt": "2026-08-28",
+  "providers": [
+    {
+      "provider": "agentutility",
+      "status": "quarantined-current-search-resource-not-observed",
+      "reason": "Current x402 List service evidence exposes 9 monitored resource URLs and does not expose /search, /search-web, or /web-search. Prior structured-search catalogue evidence is retained historically but must not be preflighted or paid until a current canonical search resource is re-observed.",
+      "source": "https://x402-list.com/services/agentutility",
+      "checked": "2026-08-28",
+      "releaseGate": "Observe a current canonical structured-search endpoint plus a valid live HTTP 402 challenge before removing quarantine."
+    }
+  ]
+}
