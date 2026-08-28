@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "purpose": "James paid benchmark guardrails. This file is policy metadata only; it contains no wallet secret or signing credential.",
   "network": "base",
   "asset": "USDC",
@@ -18,6 +18,10 @@
   "requireUniqueNonce": true,
   "requireTaskEndpointRecipientBinding": true,
   "requireAuditRecord": true,
+  "dynamicRecipientPolicy": "fail-closed-unless-enrolled",
+  "requireRecipientEnrollment": true,
+  "recipientDriftBlocksPayment": true,
+  "freshQuoteCannotEnrollRecipient": true,
   "failClosed": true,
   "allowedPurpose": "structured-research benchmark only",
   "requiredAuditFields": [
@@ -42,11 +46,14 @@
     "agent cannot make arbitrary transfers",
     "Base and USDC restrictions are enforced",
     "provider endpoint and payment recipient allowlists are enforced",
+    "x402 V2 dynamic recipients are never auto-enrolled from a fresh 402 quote",
+    "recipient drift for an approved endpoint blocks signing until separately re-enrolled outside the LLM execution path",
     "live quote is no older than 15 minutes and has not expired",
     "payment authorization is bound to task, endpoint, provider and recipient",
     "nonce/payment identifier is unique and cannot be replayed",
     "test transaction proves over-limit requests fail closed",
     "test transaction proves unknown recipient requests fail closed",
+    "test transaction proves recipient-drift requests fail closed",
     "test transaction proves stale/expired quote requests fail closed",
     "test transaction proves replayed nonce requests fail closed"
   ]
