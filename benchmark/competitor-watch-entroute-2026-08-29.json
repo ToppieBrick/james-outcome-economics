@@ -1,0 +1,39 @@
+{
+  "competitor": "EntRoute",
+  "checkedDate": "2026-08-29",
+  "classification": "competitor-watch",
+  "taskClass": "structured-web-search",
+  "sources": [
+    "https://entroute.com/",
+    "https://entroute.com/docs/verification",
+    "https://entroute.com/capabilities/web.search"
+  ],
+  "observedCapabilities": {
+    "discovery": "Machine-first discovery API returning ranked x402 endpoints by capability.",
+    "rankingAxes": ["reliability", "speed", "price"],
+    "continuousVerification": {
+      "statedProbeFrequencyMinutes": 10,
+      "checks": ["HTTP 402 behavior", "network", "USDC", "amount", "payment address", "latency"],
+      "publishedMetrics": ["success_rate_7d", "p95_latency_ms", "last_verified_at"]
+    },
+    "paidVerification": "EntRoute states that top endpoints are further tested with real paid requests to confirm useful data after payment.",
+    "webSearchCapability": true,
+    "publishedWebSearchSnapshotExamples": [
+      {"provider": "Gifu Server", "listedPriceUsd": 0.03, "successRate": "100%", "latencyMs": 210},
+      {"provider": "Scout hashnode", "listedPriceUsd": 0.001, "successRate": "100%", "latencyMs": 393},
+      {"provider": "api.exa.ai", "listedPriceUsd": 0.001, "successRate": "100%", "latencyMs": 125}
+    ]
+  },
+  "evidenceLimits": {
+    "jamesLiveQuoteObserved": false,
+    "jamesPaidExecutionObserved": false,
+    "jamesDeterministicOutcomeObserved": false,
+    "jamesSpendUsd": 0,
+    "note": "EntRoute's published success/latency and paid-canary claims are competitor evidence only. They are not James benchmark results or live execution quotes."
+  },
+  "killCriterion3": {
+    "hit": false,
+    "reason": "Public evidence reviewed does not clearly show identical locked-task deterministic correctness/acceptability tests, task-specific post-purchase success probability, paid retry history, or retry-adjusted expected cost per acceptable result driving the machine route."
+  },
+  "implicationForJames": "Generic x402 endpoint discovery, continuous 402 verification, reliability/latency/price ranking and even real-paid canary verification should now be treated as commodity infrastructure. Outcome Economics Intelligence must prove exact-task deterministic post-purchase acceptability and execution-time retry-adjusted cost per acceptable result, then change the buying decision versus cheapest/healthiest/cheapest-live baselines."
+}
