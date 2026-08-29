@@ -1,0 +1,47 @@
+{
+  "observedAt": "2026-08-29",
+  "taskClass": "structured-research",
+  "provider": "Klymax402 Web Search API",
+  "canonicalEndpoint": "https://web-search.api.klymax402.com/api/search",
+  "method": "POST",
+  "responseShape": ["query", "results[].title", "results[].url", "results[].snippet", "totalResults"],
+  "listedPriceUsd": null,
+  "listedPriceStatus": "conflicted-public-price-requires-live-402",
+  "publicPriceObservationsUsd": [0.003, 0.008],
+  "liveQuoteObservedByJames": false,
+  "paidExecutionObservedByJames": false,
+  "rankingEligible": false,
+  "externalDemand": {
+    "calls30d": 13,
+    "maxEndpointPayers": 3,
+    "sourceType": "third-party-marketplace-observation",
+    "note": "Talkshi reports 13 30-day calls and 3 max endpoint payers for POST /api/search, activity sourced from Coinbase x402 Bazaar and observed 2026-07-27. Treat as external demand only, not James outcome evidence."
+  },
+  "externalLiveness": {
+    "mcpHandshakeUptime24hPct": 100,
+    "checks24h": 92,
+    "averageHandshakeLatencyMs": 23,
+    "sourceType": "independent-mcp-monitor",
+    "note": "mcpbeat reports the MCP endpoint answering, 92/92 successful checks over 24h and ~23 ms average handshake response. This measures MCP handshake availability, not paid /api/search latency or result correctness."
+  },
+  "evidenceSources": [
+    {
+      "url": "https://talkshi.com/agent/x402-web-search-api-klymax402-com",
+      "checked": "2026-08-29",
+      "observation": "POST /api/search shown at US$0.003 with 13 reported 30-day calls and 3 max endpoint payers; activity attributed to Coinbase x402 Bazaar."
+    },
+    {
+      "url": "https://glama.ai/mcp/servers/Br0ski777/web-search-x402",
+      "checked": "2026-08-29",
+      "observation": "Same POST /api/search structured-search endpoint shown at US$0.008, creating current public price conflict."
+    },
+    {
+      "url": "https://mcpbeat.com/mcp-servers/br0ski777/web-search/",
+      "checked": "2026-08-29",
+      "observation": "Independent monitor reports structured web_search_query schema, 100% 24h MCP handshake uptime (92/92) and ~23 ms average MCP handshake latency; not paid-search outcome evidence."
+    }
+  ],
+  "benchmarkImplication": "Admit as zero-spend preflight comparator after James can directly reach the canonical HTTP endpoint. Do not assign a benchmark price from public listings because US$0.003 and US$0.008 conflict. A fresh raw HTTP 402 immediately before payment is authoritative. If admitted to paid execution later, run the identical locked query/request contract and record live quote, paid-search latency, attempts, deterministic PASS/FAIL and settled effective cost per acceptable result.",
+  "spendUsd": 0,
+  "fabricatedPaidOutcomes": 0
+}
