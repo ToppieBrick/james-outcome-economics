@@ -1,0 +1,45 @@
+{
+  "observedAt": "2026-08-29T17:50:06+10:00",
+  "taskClass": "structured-research",
+  "observationType": "unsigned-zero-spend-preflight",
+  "query": "What is the capital of France?",
+  "spendUsd": 0,
+  "paymentAuthorizationCreated": false,
+  "paidExecutionObserved": false,
+  "providers": [
+    {
+      "provider": "Tavily x402 Advanced Search",
+      "endpoint": "https://x402.tavily.com/search",
+      "method": "POST",
+      "listedPriceUsd": 0.01,
+      "liveQuotedPriceUsd": null,
+      "providerReached": false,
+      "transportAttempts": 1,
+      "transportFailure": "dns_resolution",
+      "transportFailureElapsedMs": 1.462,
+      "providerLatencyMs": null,
+      "paidAttempts": 0,
+      "pass": null,
+      "effectiveCostPerAcceptableResultUsd": null,
+      "evidenceNote": "Unsigned request failed during local DNS resolution before reaching Tavily. The transport failure elapsed time is not provider latency and no live 402 quote or outcome is inferred."
+    },
+    {
+      "provider": "You.com x402 Search",
+      "endpoint": "https://api.you.com/v1/search",
+      "method": "GET",
+      "listedPriceUsd": 0.005,
+      "liveQuotedPriceUsd": null,
+      "providerReached": false,
+      "transportAttempts": 1,
+      "transportFailure": "dns_resolution",
+      "transportFailureElapsedMs": 4766.367,
+      "providerLatencyMs": null,
+      "paidAttempts": 0,
+      "pass": null,
+      "effectiveCostPerAcceptableResultUsd": null,
+      "evidenceNote": "Unsigned request failed during local DNS resolution before reaching You.com. The transport failure elapsed time is not provider latency and no live 402 quote or outcome is inferred."
+    }
+  ],
+  "rankingEligible": false,
+  "reasonNotRankingEligible": "Neither provider was reached and no paid deterministic outcome was observed."
+}
