@@ -1,0 +1,46 @@
+{
+  "observedAt": "2026-08-30T03:24:32+10:00",
+  "provider": "AgentUtility",
+  "taskClass": "structured-web-research-search",
+  "evidenceType": "endpoint-scope-validation",
+  "observations": [
+    {
+      "endpoint": "https://x402.agentutility.ai/search-web",
+      "source": "Agenstry indexed endpoint metadata observed 2026-08-30",
+      "listedPriceUsd": 0.02,
+      "network": "eip155:8453",
+      "asset": "USDC",
+      "scheme": "exact",
+      "requestShapeEvidence": {
+        "query": true,
+        "num_results": true,
+        "num_results_example": 10
+      },
+      "lockedTop5ShapeExpressible": true,
+      "live402ObservedByJames": false,
+      "paidOutcomeObservedByJames": false
+    },
+    {
+      "endpoint": "https://x402.agentutility.ai/search",
+      "source": "Agenstry indexed endpoint metadata observed 2026-08-30",
+      "description": "ranked Decodo Google results with degraded GDELT fallback",
+      "endpointSpecificPriceResolved": false,
+      "lockedTop5ShapeExpressible": false,
+      "live402ObservedByJames": false,
+      "paidOutcomeObservedByJames": false
+    }
+  ],
+  "decision": {
+    "doNotMergeEndpointEvidence": true,
+    "canonicalAgentUtilitySearchPriceRemainsNull": true,
+    "searchWebMayEnterRequestEquivalenceReview": true,
+    "searchWebRankingEligible": false,
+    "reason": "Fresh endpoint-index evidence identifies search-web as a distinct US$0.02 endpoint with num_results control. That evidence must not resolve the existing price conflict for the generic AgentUtility Search record because /search and /search-web are distinct endpoint scopes. search-web can be evaluated separately for locked top-5 equivalence, but only a fresh policy-compliant raw 402 can establish executable quote terms and only paid identical-task outcomes can populate ranking metrics."
+  },
+  "paymentExecution": {
+    "spendUsd": 0,
+    "liveQuotedPriceUsd": null,
+    "paidExecutionObserved": false,
+    "paidOutcomes": 0
+  }
+}
