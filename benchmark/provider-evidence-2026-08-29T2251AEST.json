@@ -1,0 +1,52 @@
+{
+  "observedAt": "2026-08-29T22:51:00+10:00",
+  "taskClass": "structured-web-research-search",
+  "evidencePolicy": "public observations only; not paid-call evidence; not ranking eligible",
+  "observations": [
+    {
+      "provider": "You.com",
+      "endpoint": "GET https://api.you.com/v1/search",
+      "listedPriceUsd": 0.005,
+      "sourceType": "first-party-x402-documentation",
+      "source": "https://you.com/docs/administration/machine-payments/x402",
+      "observation": "Current first-party documentation lists GET /v1/search and GET/POST /v1/agents/search at US$0.005/call; livecrawl adds US$0.001 per requested result. x402 remains supported.",
+      "liveQuotedPriceUsd": null,
+      "latencyMs": null,
+      "attempts": 0,
+      "pass": null,
+      "effectiveCostPerAcceptableResultUsd": null,
+      "rankingEligible": false
+    },
+    {
+      "provider": "Agent Judgment & Synthesis",
+      "endpoint": "GET /v1/search and GET /v1/research",
+      "listedPriceUsd": 0.001,
+      "sourceType": "x402-directory-current-snapshot",
+      "source": "https://www.x402scan.com/server/e35dc90e-20f5-4ce1-9608-d52522bda1cf",
+      "observation": "Current directory snapshot still advertises search/research at US$0.001/call and shows 0 transactions, 0 buyers and US$0.00 volume over the displayed 30-day window.",
+      "liveQuotedPriceUsd": null,
+      "latencyMs": null,
+      "attempts": 0,
+      "pass": null,
+      "effectiveCostPerAcceptableResultUsd": null,
+      "rankingEligible": false
+    },
+    {
+      "provider": "agentutility",
+      "endpoint": "x402.agentutility.ai structured-search family",
+      "listedPriceUsd": null,
+      "sourceType": "first-party-provider-directory",
+      "source": "https://agentutility.ai/",
+      "observation": "Current provider directory states all endpoints are x402 paywalled, per-call priced from US$0.001 to US$5 and settled in USDC on Base. This is rail/provider evidence only; endpoint-specific structured-search price remains governed by its endpoint page or a fresh 402.",
+      "liveQuotedPriceUsd": null,
+      "latencyMs": null,
+      "attempts": 0,
+      "pass": null,
+      "effectiveCostPerAcceptableResultUsd": null,
+      "rankingEligible": false
+    }
+  ],
+  "spendUsd": 0,
+  "paidExecutionsObserved": 0,
+  "fabricatedPaidResults": 0
+}
