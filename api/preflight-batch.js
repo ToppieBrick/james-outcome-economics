@@ -85,12 +85,15 @@ module.exports = async function handler(req, res) {
   );
 
   const liveQuotesObserved = observations.filter((item) => item.observation?.liveQuoteObserved).length;
+  const benchmarkEligibleQuotes = observations.filter((item) => item.observation?.benchmarkEligibleQuote).length;
+  const equivalentRequests = observations.filter((item) => item.observation?.requestEquivalent === true).length;
+  const nonEquivalentRequests = observations.filter((item) => item.observation?.requestEquivalent === false).length;
   const upstream402s = observations.filter((item) => item.observation?.httpStatus === 402).length;
   const errors = observations.filter((item) => item.batchError || item.observation?.error).length;
 
   res.setHeader('cache-control', 'no-store');
   return res.status(200).json({
-    model: 'outcome-economics-preflight-batch-v1',
+    model: 'outcome-economics-preflight-batch-v2',
     evidenceType: 'runtime-zero-spend-observation-batch',
     spendUsd: 0,
     paymentAuthorizationCreated: false,
@@ -100,9 +103,12 @@ module.exports = async function handler(req, res) {
     batchLatencyMs: Date.now() - batchStarted,
     requestedObservations: combinations.length,
     liveQuotesObserved,
+    benchmarkEligibleQuotes,
+    equivalentRequests,
+    nonEquivalentRequests,
     upstream402s,
     errors,
     observations,
-    note: 'Batch wrapper around /api/preflight. It performs unsigned requests only and never signs or submits payment. Provider PASS/FAIL and effective cost remain null until paid benchmark execution is observed.',
+    note: 'Batch wrapper around /api/preflight. It performs unsigned requests only and never signs or submits payment. Raw live quotes remain discovery evidence unless request equivalence passes; benchmarkEligibleQuotes counts only equivalent-request quotes. Provider PASS/FAIL and effective cost remain null until paid benchmark execution is observed.',
   });
 };
