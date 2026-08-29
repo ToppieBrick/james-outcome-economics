@@ -53,5 +53,16 @@
     "latencyMs": null,
     "observedPaidAttempts": 0,
     "evidence": "Observed official x402 documentation: US$0.005/call for /v1/search and /v1/agents/search; livecrawl adds US$0.001/result. No paid James outcome observations yet."
+  },
+  {
+    "id": "tavily-x402-search",
+    "name": "Tavily x402 Advanced Search",
+    "taskClasses": ["structured-research"],
+    "listedPrice": 0.01,
+    "livePrice": null,
+    "successProbability": null,
+    "latencyMs": null,
+    "observedPaidAttempts": 0,
+    "evidence": "Observed first-party Tavily x402 documentation on 2026-08-29: POST https://x402.tavily.com/search, US$0.01/call, USDC on Base. An unsigned direct probe was attempted in this run but failed at local DNS resolution before reaching Tavily, so no live quote or provider latency is claimed. No paid James outcome observations yet."
   }
 ]
