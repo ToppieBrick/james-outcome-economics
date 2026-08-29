@@ -1,0 +1,25 @@
+{
+  "observedAt": "2026-08-30T06:53:44+10:00",
+  "taskClass": "structured web research/search",
+  "provider": "Exa Search",
+  "evidenceClass": "external demand / marketplace telemetry",
+  "source": "https://agentic.market/services/api-exa-ai",
+  "sourceType": "third-party marketplace",
+  "observations": {
+    "listedPriceUsd": 0.007,
+    "route": "POST /search",
+    "reportedCalls30d": 3700,
+    "reportedPayers30d": 94
+  },
+  "interpretation": "This is useful external demand corroboration for paid structured search, but it is not James execution evidence. Marketplace call/payer telemetry does not establish task-level quality, provider latency under James conditions, deterministic acceptance, retries, settlement cost, or effective cost per acceptable result.",
+  "jamesBenchmarkFields": {
+    "liveQuotedPriceUsd": null,
+    "providerLatencyMs": null,
+    "attempts": null,
+    "passFail": null,
+    "effectiveCostPerAcceptableResultUsd": null,
+    "paidExecutionObserved": false,
+    "rankingEligible": false
+  },
+  "decision": "KEEP EXA IN PREFLIGHT COHORT. Treat US$0.007 as listed/marketplace price only until a fresh raw 402 is observed immediately before any payment. Do not infer quality or rank from 30-day calls/payers."
+}
