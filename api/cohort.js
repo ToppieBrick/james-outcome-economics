@@ -10,7 +10,7 @@ function candidate(provider) {
     provider: provider.provider,
     endpoint: provider.endpoint,
     method: provider.method,
-    listedPriceUsd: Number.isFinite(Number(provider.listedPriceUsd)) ? Number(provider.listedPriceUsd) : null,
+    listedPriceUsd: r.priceObserved ? Number(provider.listedPriceUsd) : null,
     sourceBackedPrice: r.sourceBackedPrice,
     endpointResolved: r.endpointResolved,
     preflightReady: r.preflightReady,
