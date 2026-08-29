@@ -1,0 +1,36 @@
+{
+  "observedAtUtc": "2026-08-29T10:52:00Z",
+  "taskClass": "structured-web-research-search",
+  "provider": "Browserbase Payment Gateway",
+  "endpoint": {
+    "method": "POST",
+    "url": "https://x402.browserbase.com/search",
+    "listedPriceUsd": 0.01,
+    "responseDescription": "Web search with structured results"
+  },
+  "payment": {
+    "protocol": "x402",
+    "network": "Base",
+    "asset": "USDC",
+    "paymentHeader": "X-PAYMENT",
+    "mainnetStatusListed": true
+  },
+  "evidence": {
+    "sourceUrl": "https://x402.browserbase.com/",
+    "sourceType": "provider-operated public payment gateway page",
+    "freshness": "crawled 2026-08-28/29 by web retrieval",
+    "notes": "Provider-operated page lists Search at $0.01/request and describes x402 as live on Base mainnet."
+  },
+  "benchmarkObservation": {
+    "liveQuotedPriceUsd": null,
+    "providerLatencyMs": null,
+    "attempts": 0,
+    "acceptanceResult": null,
+    "effectiveCostPerAcceptableResultUsd": null,
+    "paidExecutionObserved": false,
+    "rankingEligible": false
+  },
+  "classification": "WATCH",
+  "rationale": "Direct structured-search comparator at the same listed price band as several existing candidates. No James-origin fresh 402, paid call, latency or deterministic acceptance result has been observed, so it is excluded from outcome ranking.",
+  "spendUsd": 0
+}
