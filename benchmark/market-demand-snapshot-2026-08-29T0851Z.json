@@ -1,0 +1,75 @@
+{
+  "observedAt": "2026-08-29T08:51:20Z",
+  "taskClass": "structured web research/search",
+  "evidenceType": "external marketplace demand snapshot",
+  "rankingEligible": false,
+  "source": {
+    "name": "LavoLoop services marketplace",
+    "url": "https://lavoloop.com/services",
+    "sourceReportedCatalogSync": "2026-08-03",
+    "observedPageCrawlFreshness": "2 days before observation",
+    "caveat": "Marketplace-reported usage and payer counts are external-demand evidence only. They are not James live quotes, paid outcomes, provider latency, deterministic acceptance results, or effective cost per acceptable result. Raw transaction volume can be distorted; payer diversity is the stronger signal and still requires caution."
+  },
+  "observations": [
+    {
+      "provider": "Tavily",
+      "endpointDescription": "Tavily Search - advanced mode",
+      "listedPriceUsd": 0.01,
+      "calls30d": 60307,
+      "uniquePayers30d": 422,
+      "network": "Base",
+      "paymentScheme": "x402 v2 exact",
+      "taskComparable": true
+    },
+    {
+      "provider": "StableEnrich",
+      "endpointDescription": "Exa Search - Neural search across the web",
+      "listedPriceUsd": 0.01,
+      "calls30d": 11002,
+      "uniquePayers30d": 265,
+      "network": "Base",
+      "paymentScheme": "x402 v2 exact",
+      "taskComparable": true
+    },
+    {
+      "provider": "Exa",
+      "endpointDescription": "Exa /search endpoint",
+      "listedPriceUsd": 0.007,
+      "calls30d": 4972,
+      "uniquePayers30d": 89,
+      "network": "Base",
+      "paymentScheme": "x402 v2 exact",
+      "taskComparable": true
+    },
+    {
+      "provider": "BlockRun.AI",
+      "endpointDescription": "Neural and keyword web search",
+      "listedPriceUsd": 0.011,
+      "calls30d": 1592,
+      "uniquePayers30d": 33,
+      "network": "Base",
+      "paymentScheme": "x402 v2 exact",
+      "taskComparable": true
+    },
+    {
+      "provider": "Vaaya",
+      "endpointDescription": "Exa semantic web search via provider API key",
+      "listedPriceUsd": 0.01,
+      "calls30d": 554,
+      "uniquePayers30d": 32,
+      "network": "Base",
+      "paymentScheme": "x402 v2 exact",
+      "taskComparable": true
+    }
+  ],
+  "benchmarkFields": {
+    "liveQuotedPriceUsd": null,
+    "providerLatencyMs": null,
+    "paidAttempts": 0,
+    "deterministicPassFail": null,
+    "effectiveCostPerAcceptableResultUsd": null
+  },
+  "decisionImpact": "External demand for machine-paid structured web search remains observable across multiple providers and payer populations. This reduces category-demand risk but does not resolve James's core proof gate: whether deterministic task-specific outcome economics changes provider selection versus price, health, reputation or popularity routing.",
+  "spendUsd": 0,
+  "fabricatedPaidResults": 0
+}
