@@ -1,0 +1,53 @@
+{
+  "observedAt": "2026-08-30T07:23:26+10:00",
+  "provider": "Exa Search",
+  "taskClass": "structured web research/search",
+  "evidenceClass": "first-party request-equivalence and provenance validation",
+  "firstPartyEvidence": {
+    "source": "https://exa.ai/docs/reference/x402-guide",
+    "providerDomain": "exa.ai",
+    "x402Endpoint": "POST https://api.exa.ai/search",
+    "nativeX402": true,
+    "apiKeyRequired": false,
+    "paymentAsset": "USDC",
+    "network": "Base",
+    "pricing": {
+      "typeFastUsdUpTo10Results": 0.007,
+      "fiveResultExampleUsd": 0.007
+    },
+    "requestShape": {
+      "query": "string",
+      "numResults": 5,
+      "type": "fast"
+    },
+    "requestEquivalenceValidated": true,
+    "reason": "Exa first-party x402 documentation explicitly documents POST /search and gives a 5-result x402 pricing example. The locked top-5 benchmark is therefore expressible without changing task shape."
+  },
+  "marketplaceEvidenceBoundary": {
+    "source": "https://agentic.market/services/api-exa-ai",
+    "reportedCalls30d": 3700,
+    "reportedPayers30d": 94,
+    "use": "external demand corroboration only",
+    "rankingInput": false
+  },
+  "zeroSpendPreflightAttempt": {
+    "attempted": true,
+    "method": "unsigned POST with query, numResults=5, type=fast",
+    "result": "DNS resolution failed before HTTP transport in relay runtime",
+    "http402Observed": false,
+    "liveQuotedPriceUsd": null,
+    "payTo": null,
+    "providerLatencyMs": null
+  },
+  "jamesBenchmarkFields": {
+    "requestEquivalenceValidated": true,
+    "provenanceValidatedFirstParty": true,
+    "liveQuotedPriceUsd": null,
+    "attempts": null,
+    "passFail": null,
+    "effectiveCostPerAcceptableResultUsd": null,
+    "paidExecutionObserved": false,
+    "rankingEligible": false
+  },
+  "decision": "ADVANCE EXA TO RAW-402 GATE. Exa is now first-party/provenance validated and locked-top-5 request-equivalent. Do not rank it or treat US$0.007 as a live executable quote until a fresh unsigned raw 402 is captured immediately before any policy-compliant paid execution."
+}
