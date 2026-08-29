@@ -1,0 +1,23 @@
+{
+  "observedAt":"2026-08-30T00:50:29+10:00",
+  "provider":"Graded.sh",
+  "url":"https://graded.sh/",
+  "evidenceType":"public competitor watch",
+  "observed":{
+    "servicesIndexed":3851,
+    "distinctDomains":2020,
+    "probeCadenceHours":6,
+    "callableThroughGateway":3069,
+    "gradeDistribution":{"A":1020,"B":2053,"C":120,"D":531,"F":127},
+    "claim":"grades discoverable x402 services on whether an agent can actually use them and exposes passing services through one prepaid gateway",
+    "exampleStructuredSearch":{"provider":"stableenrich.dev","endpoint":"POST /api/exa/search","listedPriceUsd":0.01,"gatewayPriceUsd":0.015,"thirtyDayCalls":18000,"thirtyDayPayers":242}
+  },
+  "rankingEligible":false,
+  "paidExecutionObservedByJames":false,
+  "live402ObservedByJames":false,
+  "latencyObservedByJames":null,
+  "acceptancePassFail":null,
+  "effectiveCostPerAcceptableResultUsd":null,
+  "competitiveAssessment":"Material overlap with x402 discovery, callability grading, price visibility, demand signals and gateway execution. Kill criterion is not hit because public evidence does not show identical locked task execution scored against James's deterministic post-result acceptance contract or retry-adjusted effective cost per acceptable result by task class.",
+  "source":"https://graded.sh/"
+}
