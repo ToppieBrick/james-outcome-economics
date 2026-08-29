@@ -10,6 +10,14 @@ function normalizeQuery(value) {
   return String(value ?? '').trim().replace(/\s+/g, ' ');
 }
 
+function parseJsonBody(options, provider, errors) {
+  try { return JSON.parse(options?.body || '{}'); }
+  catch {
+    errors.push(`${provider} request body is not valid JSON`);
+    return {};
+  }
+}
+
 function validateRequestEquivalence({ task, provider, url, options }) {
   const errors = [];
   const expectedQuery = normalizeQuery(task?.query);
@@ -24,12 +32,19 @@ function validateRequestEquivalence({ task, provider, url, options }) {
     providerMode = 'web-search:no-livecrawl';
     if (parsed.searchParams.has('livecrawl')) errors.push('You.com livecrawl must not be enabled in the primary cohort');
   } else if (provider === 'Tavily') {
-    let body;
-    try { body = JSON.parse(options?.body || '{}'); } catch { errors.push('Tavily request body is not valid JSON'); body = {}; }
+    const body = parseJsonBody(options, provider, errors);
     observedQuery = normalizeQuery(body.query);
     observedResultCount = Number(body.max_results);
     providerMode = `search_depth:${body.search_depth ?? 'unset'}`;
     if (body.search_depth !== 'advanced') errors.push('Tavily search_depth drifted from locked advanced mode');
+  } else if (provider === 'Firecrawl') {
+    const body = parseJsonBody(options, provider, errors);
+    observedQuery = normalizeQuery(body.query);
+    observedResultCount = Number(body.limit);
+    providerMode = Array.isArray(body.sources) ? `sources:${body.sources.join(',')}` : 'sources:unset';
+    if (!Array.isArray(body.sources) || body.sources.length !== 1 || body.sources[0] !== 'web') {
+      errors.push('Firecrawl sources drifted from locked web-only mode');
+    }
   } else {
     errors.push(`No equivalence contract for provider: ${provider}`);
   }
