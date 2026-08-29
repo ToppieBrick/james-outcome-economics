@@ -1,0 +1,69 @@
+{
+  "observedAt": "2026-08-29T10:22:31Z",
+  "taskClass": "structured-web-research-search",
+  "provider": "OneShotAgent",
+  "endpoint": "https://win.oneshotagent.com/v1/tools/search",
+  "method": "POST",
+  "purpose": "Zero-spend admission validation for the locked top-5 structured-search benchmark.",
+  "requestContract": {
+    "bodyType": "json",
+    "required": ["query"],
+    "maxResultsField": "max_results",
+    "maxResultsRange": "1-20",
+    "defaultMaxResults": 5,
+    "lockedBenchmarkValue": 5,
+    "requestEquivalenceStatus": "SUPPORTED_BY_MARKETPLACE_SCHEMA"
+  },
+  "marketplaceEvidence": [
+    {
+      "source": "https://www.x402ui.org/service/web-search-returning-urls-titles-and-descriptions",
+      "sourceType": "x402 marketplace/index",
+      "reportedWindow": "30d",
+      "calls": 367,
+      "uniquePayers": 3,
+      "listedPriceUsd": 0.001,
+      "sourceUpdatedAt": "2026-08-15T03:06:23.657Z"
+    },
+    {
+      "source": "https://graded.sh/",
+      "sourceType": "independent x402 service index",
+      "reportedWindow": "30d",
+      "calls": 538,
+      "uniquePayers": 4,
+      "listedPriceUsd": 0.001,
+      "grade": "B",
+      "observedFreshness": "index states live/reprobed periodically; exact row timestamp not exposed in retrieved snapshot"
+    },
+    {
+      "source": "https://opensea.io/tools/x402-bazaar/base/1652694659936097306",
+      "sourceType": "x402 Bazaar marketplace view",
+      "reportedWindow": "7d",
+      "calls": 779,
+      "uniqueCallers": 6,
+      "reportedVolumeUsd": 0.78,
+      "listedPriceBand": "<0.01 USDC"
+    }
+  ],
+  "provenanceDecision": "Do not merge or sum marketplace call/payer counts across sources. They use different windows, refresh times and likely indexing/deduplication methods. Treat each as an independent external-demand observation only.",
+  "livePreflightAttempt": {
+    "attempted": true,
+    "paid": false,
+    "request": {
+      "query": "current AI agent frameworks",
+      "max_results": 5
+    },
+    "httpResponseObserved": false,
+    "failureClass": "DNS_RESOLUTION_FAILURE",
+    "detail": "Execution runtime could not resolve win.oneshotagent.com; no HTTP request reached the provider and no 402 was observed.",
+    "liveQuotedPriceUsd": null,
+    "providerLatencyMs": null
+  },
+  "benchmarkDecision": {
+    "rankingEligible": false,
+    "requestShapeComparable": true,
+    "liveQuoteObserved": false,
+    "decision": "WATCH",
+    "nextAdmissionCondition": "From a network-capable runtime, POST the exact locked query with max_results=5 and capture the raw policy-compliant HTTP 402. Persist amount, network, asset, recipient, protocol version, raw challenge hash and timestamp before any paid benchmark admission."
+  },
+  "notes": "This artifact adds request-equivalence evidence and a concrete transport blocker. It does not infer paid performance, PASS/FAIL, latency or effective cost per acceptable outcome."
+}
