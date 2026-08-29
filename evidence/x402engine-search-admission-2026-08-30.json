@@ -1,0 +1,37 @@
+{
+  "provider": "x402engine",
+  "endpoint": "https://x402engine.app/api/search/web",
+  "observedAt": "2026-08-30T06:20:00+10:00",
+  "taskClass": "structured-research",
+  "sourceType": "first-party-documentation",
+  "listedPriceUsd": 0.01,
+  "requestEquivalence": {
+    "validated": true,
+    "lockedTopK": 5,
+    "parameter": "numResults",
+    "documentedRange": "1-30",
+    "documentedDefault": 10,
+    "exampleUsesFive": true
+  },
+  "payment": {
+    "protocol": "x402 v2",
+    "baseUsdcDocumented": true,
+    "baseNetwork": "eip155:8453",
+    "live402Observed": false
+  },
+  "zeroSpendProbe": {
+    "attempted": true,
+    "method": "POST",
+    "body": {"query": "OpenAI latest news", "numResults": 5},
+    "result": "blocked-before-http",
+    "blocker": "runtime DNS resolution failure for x402engine.app",
+    "paid": false
+  },
+  "rankingEligible": false,
+  "admissionGate": "Obtain a fresh raw unsigned HTTP 402 for this exact endpoint/request shape; only identical-task paid executions may populate acceptance, paid latency, settlement and effective cost.",
+  "sources": [
+    "https://x402engine.app/docs/",
+    "https://x402engine.app/"
+  ],
+  "notes": "First-party docs explicitly define POST /api/search/web as neural web search, list US$0.01/call, and expose numResults 1-30 with an example using 5. This closes request-shape equivalence but does not establish a live executable quote or paid performance."
+}
