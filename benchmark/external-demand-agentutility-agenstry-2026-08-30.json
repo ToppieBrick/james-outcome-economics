@@ -1,0 +1,35 @@
+{
+  "observedAt": "2026-08-30T02:51:43+10:00",
+  "taskClass": "structured-web-research-search",
+  "provider": "AgentUtility",
+  "endpointScope": "seller-wide, not web-search-specific",
+  "evidenceType": "external-demand-corroboration",
+  "source": {
+    "name": "Agenstry",
+    "url": "https://agenstry.com/agents/x402.agentutility.ai",
+    "observedDate": "2026-08-30"
+  },
+  "observations": {
+    "reportedTotalTransactions30d": 11016,
+    "paymentAuthenticityEvidenceConfidence": "insufficient_evidence_of_independent_payers",
+    "assessedInflowUsd": 18.00,
+    "assessedTransactions": 685,
+    "payerIdentitiesAvailable": false,
+    "sharedSettlementWalletCaveat": true
+  },
+  "benchmarkUse": {
+    "rankingEligible": false,
+    "mayPopulateSuccessProbability": false,
+    "mayPopulateProviderLatency": false,
+    "mayPopulatePaidAttempts": false,
+    "mayPopulatePassFail": false,
+    "mayPopulateEffectiveCostPerAcceptableResult": false,
+    "interpretation": "Seller-wide activity corroborates market usage only. Attribution is weak because payer identities are unavailable and the settlement wallet is shared; it must not be treated as endpoint-specific web-search demand or outcome-quality evidence."
+  },
+  "paymentExecution": {
+    "spendUsd": 0,
+    "liveQuotedPriceUsd": null,
+    "paidExecutionObserved": false,
+    "paidOutcomes": 0
+  }
+}
