@@ -1,0 +1,39 @@
+{
+  "observedAt": "2026-08-29T09:49:27Z",
+  "taskClass": "structured-web-research-search",
+  "provider": "OneShotAgent",
+  "endpoint": "https://win.oneshotagent.com/v1/tools/search",
+  "method": "POST",
+  "outputContractObserved": {
+    "structuredJson": true,
+    "fields": ["title", "url", "description"],
+    "resultCountField": true
+  },
+  "publicEvidence": {
+    "source": "https://www.x402ui.org/service/web-search-returning-urls-titles-and-descriptions",
+    "listedPriceUsd": 0.001,
+    "network": "eip155:8453",
+    "asset": "USDC",
+    "assetAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "payTo": "0x9fb365E4E9385E2a39FeBAd70368267e6f571d9A",
+    "scheme": "exact",
+    "x402Version": 2,
+    "maxTimeoutSeconds": 300,
+    "30dCalls": 367,
+    "30dUniquePayers": 3,
+    "lastCalledAt": "2026-08-14T17:23:02.292Z",
+    "sourceUpdatedAt": "2026-08-15T03:06:23.657Z"
+  },
+  "jamesObservation": {
+    "liveQuotedPriceUsd": null,
+    "providerLatencyMs": null,
+    "paidAttempts": 0,
+    "pass": null,
+    "effectiveCostPerAcceptableResultUsd": null,
+    "paidExecutionObserved": false
+  },
+  "rankingEligible": false,
+  "decision": "WATCH",
+  "admissionRule": "Zero-spend preflight only. Paid benchmark admission requires a fresh policy-compliant raw HTTP 402 from the canonical endpoint confirming route, method, Base USDC, recipient, x402 version and execution-time amount, plus the constrained signer/payment capability.",
+  "notes": "External endpoint-specific demand/listed-price evidence only. 367 calls / 3 payers is weak payer diversity and must not enter success probability or outcome ranking. No James paid result is inferred."
+}
