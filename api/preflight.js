@@ -3,6 +3,7 @@
 const benchmark = require('../benchmark/structured-research.json');
 const evidence = require('../benchmark/providers.observed.json');
 const { parsePaymentHeaders, collectPaymentCandidates, normalizeUsd } = require('../benchmark/preflight-quotes-v2');
+const { validateRequestEquivalence } = require('../benchmark/validate-request-equivalence');
 
 const adapters = {
   Firecrawl(provider, task) {
@@ -81,6 +82,13 @@ module.exports = async function handler(req, res) {
   }
 
   const request = adapter(provider, task);
+  const requestEquivalence = validateRequestEquivalence({
+    task,
+    provider: providerName,
+    url: request.url,
+    options: request.options,
+  });
+
   const started = Date.now();
   let response;
   let text = '';
@@ -104,21 +112,28 @@ module.exports = async function handler(req, res) {
     .map((candidate) => ({ ...candidate, normalizedUsd: normalizeUsd(candidate) }))
     .filter((candidate) => Number.isFinite(candidate.normalizedUsd));
   const liveQuoteUsd = normalized.length ? normalized[0].normalizedUsd : null;
+  const liveQuoteObserved = liveQuoteUsd != null;
+  const benchmarkEligibleQuote = liveQuoteObserved && requestEquivalence.ok;
 
   return res.status(200).json({
-    model: 'outcome-economics-preflight-v1',
-    evidenceType: 'runtime-zero-spend-observation',
+    model: 'outcome-economics-preflight-v2',
+    evidenceType: requestEquivalence.ok
+      ? 'runtime-zero-spend-observation'
+      : 'runtime-zero-spend-discovery-diagnostic',
     spendUsd: 0,
     paymentAuthorizationCreated: false,
     task: { id: task.id, query: task.query, intent: task.intent },
     provider: provider.provider,
     endpoint: request.url,
     method: request.options.method,
+    requestEquivalence,
+    requestEquivalent: requestEquivalence.ok,
     listedPriceUsd: provider.listedPriceUsd ?? null,
     observedAt,
     latencyMs,
     httpStatus: response?.status ?? null,
-    liveQuoteObserved: liveQuoteUsd != null,
+    liveQuoteObserved,
+    benchmarkEligibleQuote,
     liveQuoteUsd,
     priceDriftUsd: liveQuoteUsd == null || !Number.isFinite(provider.listedPriceUsd)
       ? null
@@ -132,6 +147,8 @@ module.exports = async function handler(req, res) {
     attempts: 0,
     pass: null,
     effectiveCostPerAcceptableResultUsd: null,
-    note: 'Unsigned live preflight only. This endpoint never signs or submits a payment. A fresh runtime 402 remains authoritative before any future paid benchmark call.',
+    note: requestEquivalence.ok
+      ? 'Unsigned live preflight only. Request equivalence passed, but this endpoint never signs or submits a payment. A fresh runtime 402 remains authoritative before any future paid benchmark call.'
+      : 'Unsigned discovery diagnostic only. Request equivalence failed, so any observed quote is excluded from benchmark evidence until the adapter contract is corrected.',
   });
 };
