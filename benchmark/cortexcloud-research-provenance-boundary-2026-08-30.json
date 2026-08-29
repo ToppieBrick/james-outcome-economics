@@ -1,0 +1,43 @@
+{
+  "observedAt": "2026-08-30T08:24:20+10:00",
+  "taskClass": "structured web research/search",
+  "provider": "CortexCloud Research",
+  "evidenceClass": "endpoint provenance / benchmark admission boundary",
+  "firstParty": {
+    "source": "https://cortexcloud.org/",
+    "observations": {
+      "researchAdvertised": true,
+      "advertisedPriceUsdFrom": 0.01,
+      "description": "Web search and answer synthesis; grounded, cited, pay per query",
+      "freeEstimateEndpoint": "POST /v1/estimate",
+      "settlementRail": "USDC on Base",
+      "apiKeyRequired": false
+    }
+  },
+  "thirdPartyMonitoring": {
+    "source": "https://x402-list.com/services/cortexcloud",
+    "observedEndpoints": [
+      "GET /v1/ai/chat",
+      "GET /v1/automation/transform",
+      "GET /v1/optimize"
+    ],
+    "researchEndpointExplicitlyObserved": false,
+    "latestPublishedUnpaidHandshakeChecks": 1,
+    "latestPublishedPaidSettlementObserved": false,
+    "scopeWarning": "x402 List's published CortexCloud reliability/compliance telemetry covers three non-research endpoints. Seller-level uptime, latency, price or compliance must not be inherited by CortexCloud Research."
+  },
+  "jamesBenchmarkFields": {
+    "liveQuotedPriceUsd": null,
+    "payTo": null,
+    "asset": null,
+    "networkFromFreshResearch402": null,
+    "providerLatencyMs": null,
+    "attempts": null,
+    "passFail": null,
+    "effectiveCostPerAcceptableResultUsd": null,
+    "paidExecutionObserved": false,
+    "rankingEligible": false
+  },
+  "decision": "KEEP CORTEXCLOUD RESEARCH IN ZERO-SPEND PREFLIGHT WATCH, BUT FAIL CLOSED ON ENDPOINT PROVENANCE. The first-party catalogue establishes existence, advertised price floor and settlement rail only. Before benchmark admission, capture the exact Research request schema and a fresh unpaid 402 for that exact endpoint. Do not import x402 List telemetry from chat/transform/optimize into the Research row.",
+  "nextAction": "Resolve the exact Research route and request schema from first-party OpenAPI/llms discovery, verify the locked task can be expressed without semantic drift, then capture a fresh raw unpaid 402 immediately before any policy-compliant paid execution."
+}
