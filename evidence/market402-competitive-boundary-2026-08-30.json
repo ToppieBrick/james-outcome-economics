@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-08-30T05:20:00+10:00",
+  "subject": "Market402 competitive boundary",
+  "sources": [
+    "https://market402.com/",
+    "https://market402.com/faq"
+  ],
+  "observations": [
+    "Market402 describes itself as a verified index of the x402 economy and reports 24,854 endpoints probed across 1,499 operators, 10,945 spec-compliant endpoints and 25 verified operators in its current census.",
+    "Its published scoring already uses observed availability, latency, x402 spec compliance, price integrity and paid delivery; qualifying operators are bought with real USDC.",
+    "Market402 explicitly avoids on-chain volume as a quality signal because it can be gamed and publishes methodology, raw observations and its own spending.",
+    "Its FAQ states all published index, score, report and score-history data is CC BY 4.0 and may be copied, built on and used commercially with attribution to Market402; live verification claims remain valid only when served from market402.com."
+  ],
+  "decision": "Treat Market402 as a direct competitor/public prior for generic x402 discovery, pre-payment health, price integrity and paid-delivery verification. Do not claim those capabilities as James differentiation. Its CC BY 4.0 public data may be used as attributed external-prior input, but Market402 live verification status must not be copied or represented as James-owned verification.",
+  "remainingDifferentiation": "Exact-task deterministic post-result acceptance across request-equivalent providers, repeated identical-task retry/settlement history, and retry-adjusted effective cost per acceptable result that changes provider choice or retry policy.",
+  "benchmarkBoundary": {
+    "market402MetricsAsExternalPrior": true,
+    "market402MetricsAsJamesPaidOutcomeEvidence": false,
+    "market402LiveVerificationClaimReusableAsOwn": false,
+    "rankingEligibleFromMarket402Alone": false
+  },
+  "nextGate": "When the locked paid structured-search cohort is available, compare James's recommendation against Market402-style generic health/price/paid-delivery evidence. If exact-task acceptance plus retry economics does not change provider choice on at least 20% of tasks, apply the existing kill criterion rather than broadening scope."
+}
