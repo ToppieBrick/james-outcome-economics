@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-08-30T04:23:00+10:00",
+  "subject": "AgentUtility x402-list scope drift",
+  "decision": "Do not attribute x402-list service-level reliability, latency, price, volume or buyer telemetry to AgentUtility structured-search endpoints unless the monitored endpoint is explicitly present in the source endpoint inventory.",
+  "observations": [
+    {
+      "source": "https://x402-list.com/services/agentutility",
+      "observed": "The current page exposes 9 monitored endpoints, none of which is a structured-search endpoint. It reports 100% 30d unpaid-402 handshake uptime, 1615ms p95, 862ms average and 2700 checks at service level, and explicitly says the measurement is the unpaid 402 handshake, not the paid call. Current on-chain volume and distinct buyers are shown as unmeasured, not zero."
+    },
+    {
+      "source": "https://agentutility.ai/",
+      "observed": "AgentUtility's current first-party site states 799 live x402 endpoints across 18 clusters, materially broader than the 9 endpoints represented on the x402-list service page."
+    }
+  ],
+  "implication": "The x402-list AgentUtility page is useful as third-party evidence for the subset it actually monitors, but it is not evidence that AgentUtility search-web/search endpoints inherit those telemetry values. Earlier seller-level demand/settlement figures must be treated as time-bounded observations and not carried forward when the current source reports those metrics unmeasured.",
+  "benchmarkBoundary": {
+    "categoryComparable": true,
+    "requestEquivalenceValidatedFromThisEvidence": false,
+    "rankingEligibleFromThisEvidence": false,
+    "paidOutcomeEvidence": false
+  },
+  "nextGate": "For AgentUtility structured search, require endpoint-specific schema plus a fresh raw unpaid 402 for that exact endpoint; only paid identical-task outcomes may populate deterministic acceptance, paid latency or effective cost per acceptable result."
+}
