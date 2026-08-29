@@ -1,0 +1,13 @@
+{
+  "createdAt":"2026-08-30T01:22:36+10:00",
+  "purpose":"Machine-readable admission contract for external aggregate benchmark priors such as Verging Labs. Prevents aggregate benchmark data from being mistaken for executable x402 procurement evidence.",
+  "sourceArtifact":"benchmark/external-observed-search-baseline-verging-2026-08-30.json",
+  "rules":{
+    "rankingEligible":false,
+    "mayPopulate":["externalPrior.indexScore","externalPrior.correctAnswerRate","externalPrior.costPer1000SuccessfulAnswersUsd","externalPrior.p50LatencySeconds","externalPrior.p95LatencySeconds","externalPrior.failureRate"],
+    "mustNotPopulate":["liveQuote","quoteAmount","payTo","asset","network","paidAttempts","deterministicPassFail","settlement","effectiveCostPerAcceptableResult","providerRanking"],
+    "executionEvidenceRequiredForRanking":["fresh exact-endpoint 402 quote","exact payable endpoint identity","request-equivalence validation","deterministic acceptance result","paid attempt and retry history","settlement evidence","effective cost per acceptable result"]
+  },
+  "decision":"Use Verging only as a non-ranking aggregate baseline. James's differentiation test is whether fresh execution-time x402 evidence changes provider choice or retry-adjusted effective cost relative to that prior. If no material decision delta is observed after a comparable paid cohort exists, apply the existing kill criterion rather than broaden the venture.",
+  "spendUsd":0
+}
