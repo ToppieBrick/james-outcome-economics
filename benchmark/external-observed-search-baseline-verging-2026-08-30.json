@@ -1,0 +1,13 @@
+{
+  "observedAt":"2026-08-30T00:50:29+10:00",
+  "source":"https://verginglabs.com/search-index",
+  "sourceRelease":"Agentic Search Index v0.1 (Jul 2026)",
+  "purpose":"Observed external benchmark baseline for the same broad structured web-search task class. This evidence is NOT James paid x402 execution evidence and MUST NOT populate James liveQuote, paidAttempts, deterministicPassFail or ranking fields.",
+  "methodEvidence":{"providers":9,"taskBankSize":121,"repeatsPerTask":3,"judgeHumanAgreement":0.941},
+  "providers":[
+    {"name":"Firecrawl","indexScore":83.7,"correctAnswerRate":0.70,"costPer1000SuccessfulAnswersUsd":37.57,"p50LatencySeconds":2.0,"p95LatencySeconds":5.0,"failureRate":0.083},
+    {"name":"Tavily","indexScore":78.1,"correctAnswerRate":0.62,"costPer1000SuccessfulAnswersUsd":58.54,"p50LatencySeconds":6.0,"p95LatencySeconds":9.1,"failureRate":0.060}
+  ],
+  "admissionPolicy":"External benchmark results may be shown as a non-ranking prior/context layer only. James ranking remains fail-closed until James has comparable paid x402 outcomes against its locked deterministic acceptance contract.",
+  "competitiveImplication":"Generic same-task search benchmarking, quality/cost/speed comparison and private workload benchmarking are occupied. James must prove additional value from execution-time x402 procurement: current 402 quote/payTo identity + deterministic acceptance + retries + settlement + effective cost per acceptable result for the exact purchasable endpoint."
+}
