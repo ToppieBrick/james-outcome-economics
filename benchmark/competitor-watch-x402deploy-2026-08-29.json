@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-08-29T05:53:39Z",
+  "competitor": "x402deploy",
+  "taskClass": "structured web research/search",
+  "evidenceType": "public catalogue observation",
+  "source": "TOLL·402",
+  "sourceUrl": "https://toll402.com/",
+  "listedPriceUsdPerCall": 0.005,
+  "liveQuoteObservedByJames": null,
+  "latencyMsObservedByJames": null,
+  "attemptsObservedByJames": 0,
+  "deterministicAcceptance": null,
+  "effectiveCostPerAcceptableResultUsd": null,
+  "paymentObservedByJames": false,
+  "rankingEligible": false,
+  "notes": [
+    "TOLL·402 currently lists x402deploy as offering a web-search endpoint among 13 general-purpose pay-per-call utilities at approximately US$0.005 per call on Base.",
+    "This is a direct task-class comparator but not an observed James execution quote or paid outcome.",
+    "Do not promote catalogue price, liveness, or transaction activity into Outcome Economics ranking evidence."
+  ],
+  "decision": "WATCH"
+}
