@@ -1,0 +1,23 @@
+{
+  "observedAt":"2026-08-30T02:18:48+10:00",
+  "purpose":"Fail-closed competitive boundary for Outcome Economics after fresh first-party review. This is public competitor evidence only; it is not James paid execution evidence.",
+  "competitors":[
+    {
+      "name":"Graded.sh",
+      "observedCapabilities":["x402 service discovery","6-hour callability probing","A-F usability grading","price visibility","30-day demand signals","gateway execution across x402 dialects","failed-call refund","single prepaid balance"],
+      "commercialModel":"upstream price plus 25% markup with $0.005 minimum per successful call",
+      "implication":"Generic discovery, callability/reliability scoring, gateway execution and a simple failure-adjusted spend proposition are occupied. James must not claim these as unique differentiation."
+    },
+    {
+      "name":"Verging Labs",
+      "observedCapabilities":["same-task search benchmarking","accuracy/cost/speed comparison","per-resource x402 liveness","freshness","price","payTo","chain drift","monitoring history","pre-payment machine verdict"],
+      "commercialModel":"x402 pay-per-call machine intelligence; /v1/check $0.035 and /v1/trade-check $0.01 per documented pricing",
+      "implication":"Execution-time quote identity and drift alone are also occupied. James must not treat fresh 402 price/payTo/network evidence by itself as sufficient moat."
+    }
+  ],
+  "remainingTestableDifferentiation":"A narrower decision layer may remain only if James can show that exact-task deterministic post-result acceptance plus retry history and settlement-aware effective cost materially changes which payable endpoint an agent should buy versus the choices implied by public benchmark priors and pre-payment reliability/quote intelligence.",
+  "killGate":"Once a comparable paid cohort exists, if James cannot demonstrate at least one reproducible provider-choice or retry-policy decision that differs because of its post-result acceptance/effective-cost evidence, treat the differentiation thesis as failed rather than broadening scope.",
+  "rankingEligible":false,
+  "paidExecutionObservedByJames":false,
+  "sources":["https://graded.sh/","https://graded.sh/agents","https://verginglabs.com/search-index","https://verginglabs.com/pricing","https://verginglabs.com/docs"]
+}
