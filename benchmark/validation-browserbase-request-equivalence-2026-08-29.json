@@ -1,0 +1,37 @@
+{
+  "observedAtUtc": "2026-08-29T11:21:00Z",
+  "provider": "Browserbase Payment Gateway",
+  "taskClass": "structured-web-research-search",
+  "candidateEndpoint": {
+    "method": "POST",
+    "url": "https://x402.browserbase.com/search",
+    "listedPriceUsd": 0.01
+  },
+  "firstPartyEvidence": {
+    "paymentGateway": {
+      "url": "https://x402.browserbase.com/",
+      "observed": "Provider-operated gateway lists POST /search as Web search with structured results at $0.01/request; x402 is described as live using USDC on Base via HTTP 402 + X-PAYMENT."
+    },
+    "searchSemantics": {
+      "url": "https://docs.browserbase.com/use-cases/agents",
+      "observed": "Browserbase first-party agent documentation demonstrates structured web search with bb.search.web({ query, numResults: 5 }) and explicitly recommends Search for recon."
+    }
+  },
+  "equivalenceDecision": {
+    "categoryComparable": true,
+    "top5CapabilityExistsInBrowserbaseSearchProduct": true,
+    "x402EndpointRequestSchemaValidated": false,
+    "requestEquivalenceValidated": false,
+    "rankingEligible": false,
+    "reason": "The first-party product documentation proves Browserbase Search can express a locked top-5 query, but the provider-operated x402 gateway page does not publish the POST /search body schema. Do not infer that the x402 route accepts the SDK's numResults field until exact-endpoint schema or a zero-spend live response validates it."
+  },
+  "zeroSpendProbe": {
+    "attempted": true,
+    "requestBodyAttempted": {"query": "OpenAI", "numResults": 5},
+    "result": "transport_blocked",
+    "detail": "Execution runtime failed DNS resolution for x402.browserbase.com before HTTP transport; no live 402 was observed.",
+    "paid": false
+  },
+  "nextAdmissionGate": "From a network-capable runtime, issue an unsigned POST /search using the canonical benchmark query and numResults=5. Persist HTTP status, raw payment challenge hash/terms and any validation response. Admit request equivalence only if the exact x402 route accepts or documents the locked top-5 control; paid execution remains a separate later gate.",
+  "spendUsd": 0
+}
