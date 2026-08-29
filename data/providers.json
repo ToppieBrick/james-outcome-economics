@@ -14,12 +14,17 @@
     "id": "agentutility-search",
     "name": "AgentUtility Search",
     "taskClasses": ["structured-research"],
-    "listedPrice": 0.01,
+    "listedPrice": null,
+    "listedPriceCandidates": [
+      {"usd": 0.006, "provenance": "first-party endpoint/registry evidence observed 2026-08-29"},
+      {"usd": 0.01, "provenance": "first-party x402 API directory observed 2026-08-29"}
+    ],
+    "priceConflict": true,
     "livePrice": null,
     "successProbability": null,
     "latencyMs": null,
     "observedPaidAttempts": 0,
-    "evidence": "Observed public listing: search/web-search/search-web at US$0.01/call. No paid James outcome observations yet."
+    "evidence": "Conflicting first-party AgentUtility prices observed on 2026-08-29: US$0.006/call in endpoint/registry evidence and US$0.01/call in the x402 API directory. Executable listed price is intentionally null until a fresh raw 402 resolves the conflict. No paid James outcome observations yet."
   },
   {
     "id": "anicca-web-search",
