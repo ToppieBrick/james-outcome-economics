@@ -1,0 +1,29 @@
+{
+  "observedAt": "2026-08-30T09:24:38+10:00",
+  "taskClass": "structured web research/search",
+  "provider": "Sovereign Execution Engine",
+  "endpoint": "https://api.zuluworksai.com/exec/web-search",
+  "evidenceClass": "request-equivalence / provenance boundary",
+  "source": "https://x402-list.com/services/sovereign-execution-engine",
+  "sourceType": "third-party monitor carrying captured x402 Bazaar metadata",
+  "observations": {
+    "catalogueTableMethod": "GET",
+    "capturedBazaarMethod": "POST",
+    "capturedTryNowMethod": "POST",
+    "capturedRequiredBodyFields": ["query"],
+    "resultCountParameterDocumented": false,
+    "listedPriceUsd": 0.01,
+    "network": "eip155:8453",
+    "asset": "USDC",
+    "implementationDescription": "Structured web search via Bing RSS (title, URL, description, pubDate)."
+  },
+  "conflict": "The same monitoring record labels /exec/web-search as GET in its endpoint table while its captured x402 Bazaar metadata and try-now example specify POST with JSON body {query}. The captured schema documents no result-count/top-k field.",
+  "lockedTaskImplication": "James's locked top-5 task is not yet proven request-equivalent. A query-only schema cannot establish that exactly five results can be requested, and post-hoc truncation would not prove provider-side top-5 equivalence.",
+  "jamesBenchmarkFields": {
+    "requestEquivalenceValidated": false,
+    "liveQuotedPriceUsd": null,
+    "paidExecutionObserved": false,
+    "rankingEligible": false
+  },
+  "decision": "KEEP AS NEGATIVE-DEMAND PREFLIGHT CONTROL ONLY. Before any paid cohort admission, resolve the live HTTP method and capture endpoint-specific raw 402 metadata, then establish that exactly five results can be requested without semantic drift. Do not pay merely to discover whether top-5 is expressible."
+}
