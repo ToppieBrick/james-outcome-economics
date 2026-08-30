@@ -1,0 +1,44 @@
+{
+  "observedAt": "2026-08-30T01:51:00Z",
+  "competitor": "TOLL·402",
+  "evidenceClass": "external-observed-zero-spend-competitor-evidence",
+  "taskClassRelevance": "structured web research/search procurement",
+  "sources": [
+    {
+      "url": "https://toll402.com/insights",
+      "asOf": "2026-08-25",
+      "observations": {
+        "live402QuotesDecodedToUsd": 21850,
+        "routesWithRegistryAndLiveQuote": 3228,
+        "registryVsLiveQuoteDisagreementRate": 0.051,
+        "routesWith10xOrGreaterPriceDrift": 33
+      }
+    },
+    {
+      "url": "https://toll402.com/insights/x402-endpoint-health-report-august-2026",
+      "asOf": "2026-08-25",
+      "observations": {
+        "canonicalResources": 98727,
+        "quoteTestableRoutes": 83994,
+        "validQuotes": 21852,
+        "settledPaidCalls": 0,
+        "paidOutputsReviewed": 0
+      }
+    }
+  ],
+  "interpretation": [
+    "Execution-time live quote discovery and registry-vs-quote drift measurement are already occupied at scale; James must not claim them as proprietary differentiation.",
+    "TOLL·402 still reports zero settled paid calls and zero reviewed paid outputs in its index, leaving a boundary for exact-task post-payment outcome evidence.",
+    "The 2026-08-25 research ledger reports 5.1% price disagreement across routes with both registry and live quote, with 33 routes off by at least 10x. This strengthens James's rule that listed price is discovery metadata only and the fresh raw 402 is authoritative at purchase time."
+  ],
+  "jamesBoundary": "fresh executable 402 -> identical locked task -> actual settlement -> deterministic acceptable result -> retries/latency -> effective cost per acceptable result -> provider choice",
+  "rankingUse": {
+    "listedPrice": "discovery-only",
+    "liveQuote": "pre-purchase authorization input when directly observed by James",
+    "toll402PriceDrift": "competitor/market evidence only",
+    "paidOutcome": "unobserved",
+    "rankingEligible": false
+  },
+  "spendUsd": 0,
+  "fabricatedPaidResults": false
+}
