@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-08-31",
+  "purpose": "Test the pre-registered kill signal against newly observed competitors discussing or shipping post-payment economics.",
+  "observations": [
+    {
+      "name": "AgentClose",
+      "url": "https://apibridge.cc/",
+      "observed": "Public product page positions AgentClose as post-payment reconciliation for AI agents. It correlates task/request/payment/delivery/receipt, exposes task cost, tracks retry/attempt lineage, and distinguishes delivered versus exception spend. It explicitly states that it begins after payment and does not choose or approve payments.",
+      "overlap": ["post-payment evidence", "task-level cost", "retry lineage", "paid-without-delivery exceptions"],
+      "not_observed": ["cross-provider exact-task ranking", "provider selection using retry-adjusted settled cost", "deterministic acceptance-based routing"]
+    },
+    {
+      "name": "SqueezeOS MCP discussion",
+      "url": "https://github.com/orgs/modelcontextprotocol/discussions/784",
+      "observed": "A public MCP community discussion explicitly defines effective_cost = price × expected_retries, says nominal price can mis-rank providers that fail-and-retry, and states routing priority as reliability then effective cost then latency.",
+      "overlap": ["retry-adjusted effective cost concept", "provider routing priority"],
+      "not_observed": ["verified production product evidence", "exact-task post-settlement acceptance benchmark", "observed settled-spend provider-choice delta"]
+    }
+  ],
+  "decision": "MOAT_NARROWED_NOT_KILLED",
+  "reason": "The broad concept of post-payment/retry-aware economics is no longer novel. However, current evidence does not show a credible competitor publishing or routing on comparable exact-task deterministic acceptance plus retry-adjusted observed settled economics across canonically distinct providers, which is the locked kill criterion.",
+  "required_claim_change": "Do not claim novelty for post-payment reconciliation, task-level cost, retry accounting, or the idea of retry-adjusted effective cost. Restrict differentiation to independently observed exact-task cross-provider outcome evidence that demonstrably changes provider choice and lowers effective cost per acceptable result.",
+  "next_gate": "Search specifically for a production router that consumes observed post-settlement delivery/acceptance and retry-adjusted settled spend across providers. If found, trigger the pre-registered kill signal; otherwise proceed to the locked provider-choice delta experiment when payment capability is independently available.",
+  "spend_usd": 0,
+  "secrets_handled": false,
+  "legal_commitments": false
+}
