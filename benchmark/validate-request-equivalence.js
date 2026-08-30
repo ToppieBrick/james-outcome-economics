@@ -45,6 +45,11 @@ function validateRequestEquivalence({ task, provider, url, options }) {
     if (!Array.isArray(body.sources) || body.sources.length !== 1 || body.sources[0] !== 'web') {
       errors.push('Firecrawl sources drifted from locked web-only mode');
     }
+  } else if (provider === 'scrape402') {
+    const parsed = new URL(url);
+    observedQuery = normalizeQuery(parsed.searchParams.get('q'));
+    observedResultCount = Number(parsed.searchParams.get('count'));
+    providerMode = 'web-search:raw-results';
   } else {
     errors.push(`No equivalence contract for provider: ${provider}`);
   }
