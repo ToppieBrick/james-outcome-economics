@@ -1,6 +1,6 @@
 'use strict';
 
-const DEFAULT_PROVIDERS = ['Tavily', 'You.com', 'agentutility', 'Firecrawl'];
+const DEFAULT_PROVIDERS = ['Tavily', 'You.com', 'scrape402', 'agentutility', 'Firecrawl'];
 const DEFAULT_TASKS = ['sr-01'];
 const MAX_OBSERVATIONS = 20;
 
