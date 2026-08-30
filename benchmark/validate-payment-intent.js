@@ -56,6 +56,22 @@ function validatePaymentIntent(intent, context = {}) {
   if (!intent.provider) errors.push('missing_provider_binding');
   if (!intent.payTo) errors.push('missing_recipient_binding');
 
+  // A session allowlist is only a coarse safety boundary. Payment must also be
+  // bound to the exact task/provider/endpoint/recipient independently selected
+  // by the execution context so an allowlisted substitution cannot be paid.
+  if (context.expectedTaskId !== undefined && intent.taskId !== context.expectedTaskId) {
+    errors.push('task_binding_mismatch');
+  }
+  if (context.expectedProvider !== undefined && intent.provider !== context.expectedProvider) {
+    errors.push('provider_binding_mismatch');
+  }
+  if (context.expectedEndpoint !== undefined && intent.endpoint !== context.expectedEndpoint) {
+    errors.push('endpoint_binding_mismatch');
+  }
+  if (context.expectedPayTo !== undefined && intent.payTo !== context.expectedPayTo) {
+    errors.push('recipient_binding_mismatch');
+  }
+
   return {
     ok: errors.length === 0,
     errors,
