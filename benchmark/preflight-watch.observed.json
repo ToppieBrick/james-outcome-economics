@@ -1,0 +1,25 @@
+{
+  "observedAt": "2026-08-31",
+  "taskClass": "structured-research",
+  "providers": [
+    {
+      "provider": "scrape402",
+      "endpoint": "https://x402.shizu.me/search",
+      "method": "GET",
+      "listedPriceUsd": 0.012,
+      "listedPriceStatus": "independent-unpaid-402-observation",
+      "liveQuoteObservedByJames": false,
+      "paidExecutionObserved": false,
+      "executionEligibility": "zero-spend-preflight-watch",
+      "evidenceSources": [
+        {
+          "type": "independent-x402-monitor",
+          "url": "https://x402-list.com/services/scrape402",
+          "checked": "2026-08-31",
+          "note": "GET /search accepts q + count and returns title/url/snippet results. Monitor observed x402 v2 exact USDC on Base, amount 12000 atomic USDC = US$0.012 and payTo 0x217e5Fe265EB78b29067bF8324ef03a7D8e167C4. This is not a James-direct quote or paid outcome."
+        }
+      ],
+      "evidence": "Exact-schema structured-search comparator admitted to zero-spend preflight only. James must capture its own fresh policy-compliant HTTP 402 immediately before any future paid admission."
+    }
+  ]
+}
