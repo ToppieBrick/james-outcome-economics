@@ -2,6 +2,7 @@
 
 const benchmark = require('../benchmark/structured-research.json');
 const evidence = require('../benchmark/providers.observed.json');
+const preflightWatch = require('../benchmark/preflight-watch.observed.json');
 const { parsePaymentHeaders, collectPaymentCandidates, normalizeUsd } = require('../benchmark/preflight-quotes-v2');
 const { validateRequestEquivalence } = require('../benchmark/validate-request-equivalence');
 
@@ -48,6 +49,15 @@ const adapters = {
       },
     };
   },
+  scrape402(provider, task) {
+    const url = new URL(provider.endpoint);
+    url.searchParams.set('q', task.query);
+    url.searchParams.set('count', '5');
+    return {
+      url: url.toString(),
+      options: { method: 'GET', headers: { accept: 'application/json' }, redirect: 'manual' },
+    };
+  },
 };
 
 function maybeJson(value) {
@@ -69,7 +79,11 @@ module.exports = async function handler(req, res) {
 
   const providerName = String(req.query.provider || 'Tavily');
   const taskId = String(req.query.task || 'sr-01');
-  const provider = evidence.providers.find((item) => item.provider === providerName);
+  const observedProviders = [
+    ...(Array.isArray(evidence.providers) ? evidence.providers : []),
+    ...(Array.isArray(preflightWatch.providers) ? preflightWatch.providers : []),
+  ];
+  const provider = observedProviders.find((item) => item.provider === providerName);
   const task = benchmark.tasks.find((item) => item.id === taskId);
   const adapter = adapters[providerName];
 
