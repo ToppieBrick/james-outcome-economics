@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "locked_at": "2026-08-31",
+  "purpose": "Pre-register the minimum experiment that can validate or falsify the surviving Outcome Economics differentiation without post-hoc metric selection.",
+  "hypothesis": "Repeated exact-task post-settlement outcome evidence changes provider choice versus a pre-purchase match+health+price baseline and improves effective cost per acceptable result.",
+  "scope": {
+    "candidate_set": "Only canonically distinct sellers that pass the existing PAYABLE/readiness gate for the identical locked task and output contract.",
+    "minimum_sellers": 2,
+    "task_fingerprint": "Must be identical across compared sellers and attempts; request-equivalence gate remains fail-closed.",
+    "excluded_from_claim": [
+      "directory-only listings",
+      "unpaid 402 handshake success",
+      "free/trial observations",
+      "seller-level aggregate demand not attributable to the exact endpoint",
+      "providers with different output contracts"
+    ]
+  },
+  "baseline_policy": {
+    "name": "pre_purchase_baseline",
+    "inputs_allowed": ["task_match", "current_payability", "pre_purchase_health", "quoted_price"],
+    "inputs_forbidden": ["James paid acceptance history", "James paid retry history", "James paid settled-cost history"],
+    "tie_break": ["higher task_match", "higher health", "lower quoted_price", "canonical_provider_key ascending"]
+  },
+  "outcome_policy": {
+    "name": "outcome_economics",
+    "primary_metric": "effective_cost_per_acceptable_result",
+    "formula": "sum(settled_spend_for_all_attempts) / accepted_results",
+    "secondary_metrics": ["deterministic_acceptance_rate", "attempts_per_acceptable_result", "paid_latency_ms"],
+    "fail_closed": "No provider ranking claim until at least two canonically distinct sellers have comparable paid observations under the same task fingerprint."
+  },
+  "required_raw_fields_per_attempt": [
+    "task_fingerprint",
+    "provider_canonical_key",
+    "endpoint",
+    "pay_to",
+    "quote_observed_at",
+    "quoted_amount",
+    "settled_amount",
+    "settlement_receipt_or_tx_reference",
+    "attempt_number",
+    "paid_latency_ms",
+    "deterministic_acceptance_pass",
+    "acceptance_failure_reason",
+    "retry_reason"
+  ],
+  "decision_rules": {
+    "validated": "Outcome Economics selects a different provider than the locked baseline AND that selected provider has lower observed effective cost per acceptable result on comparable evidence; preserve raw evidence and report the absolute and percentage delta.",
+    "not_yet_validated": "Provider choice is unchanged, evidence is insufficient, or effective-cost improvement is not observed. Continue only within the pre-agreed evidence budget; do not claim differentiation.",
+    "falsified_for_task": "After the comparable evidence budget is exhausted, Outcome Economics does not improve effective cost per acceptable result versus the baseline, or any apparent improvement disappears when retries and all settled spend are included.",
+    "kill_signal": "A credible competitor is observed publishing/routing on comparable exact-task post-settlement acceptance + retry-adjusted settled economics, or James repeatedly fails to produce a provider-choice/effective-cost advantage under this locked protocol."
+  },
+  "reporting": {
+    "must_publish": ["baseline_selected_provider", "outcome_selected_provider", "effective_cost_per_acceptable_result_by_provider", "provider_choice_changed", "absolute_cost_delta", "percentage_cost_delta", "all_retries_and_failures"],
+    "must_not_publish_as_evidence": ["fabricated paid results", "estimated settlements presented as observed", "trial results presented as paid", "catalogue price presented as settled price"]
+  },
+  "execution_status": "PRE_REGISTERED_ONLY_NO_PAID_EXECUTION",
+  "spend_usd": 0,
+  "secrets_handled": false,
+  "legal_commitments": false
+}
