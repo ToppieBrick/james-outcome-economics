@@ -1,0 +1,27 @@
+{
+  "observedAt": "2026-08-30T10:20:00Z",
+  "source": "GitHub Actions first-party run metadata",
+  "workflow": "Test",
+  "workflowPath": ".github/workflows/test.yml",
+  "headSha": "b64d2f51e8073c7ab805af74b431c7d56633b043",
+  "runId": 33303812881,
+  "jobId": 99236681652,
+  "event": "push",
+  "status": "completed",
+  "conclusion": "failure",
+  "steps": {
+    "checkout": "success",
+    "setupNode20": "success",
+    "runTestSuite": "failure"
+  },
+  "checkAnnotationsCount": 2,
+  "decision": "CI is active; repository Actions policy is not the blocker. The canonical npm test / node --test suite itself fails on the current main commit. Do not claim full-suite validation until the failing assertions are identified and corrected.",
+  "evidenceBoundary": "The connector exposed run/job/check metadata but not job log bodies or annotation payloads in this relay runtime, so the exact failing test names/messages are not inferred.",
+  "nextGate": "Retrieve the two check annotations or job logs, fix only the observed failing tests/implementation, push, and require a green Test workflow before treating the harness as fully validated.",
+  "safety": {
+    "spend": 0,
+    "secretsHandled": false,
+    "walletOperation": false,
+    "paidExecution": false
+  }
+}
