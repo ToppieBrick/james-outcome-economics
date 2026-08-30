@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-08-30T15:21:56+10:00",
+  "subject": "Agent402 Smart Order Router competitive boundary",
+  "source": "https://agent402.tools/marketplace",
+  "observed_claims": {
+    "indexed_sellers": 2825,
+    "indexed_endpoints": 3480,
+    "advertised_tool_listings": 90319,
+    "external_settlements_30d": 3335,
+    "distinct_external_buyers_30d": 10,
+    "external_settlements_all_time": 7476,
+    "distinct_external_buyers_all_time": 10,
+    "router_behavior": "Free task resolution followed by paid execution; ranks by match score, rolling crawl health, then price, and can pay an external seller on the buyer's behalf.",
+    "health_method": "Hourly unpaid probes of manifests and live 402 challenges; rolling health used to route around unavailable sellers.",
+    "host_exclusion": "Agent402 states its own canary and volume runs are excluded from ranked external settlement figures."
+  },
+  "decision": {
+    "generic_discovery_occupied": true,
+    "health_aware_routing_occupied": true,
+    "price_aware_routing_occupied": true,
+    "cross_seller_payment_execution_occupied": true,
+    "remaining_testable_wedge": "Exact locked-task post-purchase outcome economics: deterministic acceptance, repeated retry/failure and settlement history, response latency and settled spend converted to retry-adjusted effective cost per acceptable result, with evidence that this changes provider selection beyond Agent402-style match+health+price routing.",
+    "benchmark_baseline_addition": "Add Agent402 Smart Order Router as an explicit baseline comparator. James only clears differentiation if exact-task outcome economics materially changes provider choice versus match+health+price routing, not merely versus cheapest quote."
+  },
+  "evidence_class": "external competitor observation; not paid benchmark evidence",
+  "restrictions": [
+    "Do not infer acceptance quality from settlement counts.",
+    "Do not treat advertised tool count as observed successful execution.",
+    "Do not populate James paid benchmark fields from this artifact."
+  ]
+}
