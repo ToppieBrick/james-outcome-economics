@@ -32,6 +32,15 @@ test('equivalence validator admits only the pinned comparable request shapes', (
   });
   assert.equal(firecrawl.ok, true);
 
+  const agentutility = validateRequestEquivalence({
+    task,
+    provider: 'agentutility',
+    url: 'https://example.test/web-search',
+    options: post({ query: task.query, num_results: 5 }),
+  });
+  assert.equal(agentutility.ok, true);
+  assert.equal(agentutility.providerMode, 'web-search:decodo-ranked-results');
+
   const you = validateRequestEquivalence({
     task,
     provider: 'You.com',
@@ -50,14 +59,23 @@ test('equivalence validator admits only the pinned comparable request shapes', (
 });
 
 test('equivalence validator fails closed for unsupported or drifted adapters', () => {
-  const agentutility = validateRequestEquivalence({
+  const agentutilityDrift = validateRequestEquivalence({
     task,
     provider: 'agentutility',
-    url: 'https://example.test/search',
-    options: post({ query: task.query }),
+    url: 'https://example.test/web-search',
+    options: post({ query: task.query, num_results: 10 }),
   });
-  assert.equal(agentutility.ok, false);
-  assert.match(agentutility.errors.join(' | '), /No equivalence contract/);
+  assert.equal(agentutilityDrift.ok, false);
+  assert.match(agentutilityDrift.errors.join(' | '), /top-5/);
+
+  const unsupported = validateRequestEquivalence({
+    task,
+    provider: 'unsupported-provider',
+    url: 'https://example.test/search',
+    options: post({ query: task.query, limit: 5 }),
+  });
+  assert.equal(unsupported.ok, false);
+  assert.match(unsupported.errors.join(' | '), /No equivalence contract/);
 
   const tavilyDrift = validateRequestEquivalence({
     task,
@@ -85,6 +103,7 @@ test('preflight and batch APIs cannot count a non-equivalent or non-402 live quo
 
   assert.match(preflight, /isBenchmarkEligibleQuote\s*\(\s*\{[\s\S]*httpStatus\s*:[\s\S]*liveQuoteObserved[\s\S]*requestEquivalent\s*:\s*requestEquivalence\.ok[\s\S]*\}\s*\)/);
   assert.match(preflight, /runtime-zero-spend-discovery-diagnostic/);
+  assert.match(preflight, /agentutility[\s\S]*num_results:\s*5/);
   assert.match(batch, /benchmarkEligibleQuotes/);
   assert.match(batch, /nonEquivalentRequests/);
   assert.match(batch, /Raw live quotes remain discovery evidence unless request equivalence passes/);
