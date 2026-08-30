@@ -1,0 +1,41 @@
+{
+  "observedAt": "2026-08-30T10:21:00+10:00",
+  "taskClass": "structured web research/search",
+  "provider": "Agent402",
+  "endpoint": "https://agent402.tools/api/search",
+  "evidenceClass": "request-equivalence / provenance validation",
+  "sources": [
+    {
+      "url": "https://agent402.tools/tools/search",
+      "type": "first-party endpoint documentation"
+    },
+    {
+      "url": "https://github.com/MikeyPetrillo/Agent402",
+      "type": "first-party public source repository"
+    }
+  ],
+  "observations": {
+    "method": "GET",
+    "queryParameter": "q",
+    "resultCountParameter": "count",
+    "resultCountRange": [1, 20],
+    "defaultResultCount": 10,
+    "lockedTop5Expressible": true,
+    "listedPriceUsd": 0.02,
+    "paymentProtocol": "x402",
+    "settlementAsset": "USDC",
+    "providerImplementation": "Brave Search API",
+    "responseShape": ["title", "url", "snippet", "age"],
+    "providerRepositoryLicense": "AGPL-3.0",
+    "buyerPackagesLicense": "MIT"
+  },
+  "provenanceBoundary": "The endpoint documentation and public repository establish request shape, advertised price, implementation provenance and software licensing only. They do not establish a fresh executable 402 quote, payTo address, paid-call latency, deterministic acceptance probability, settlement success or effective cost per acceptable result.",
+  "jamesBenchmarkFields": {
+    "requestEquivalenceValidated": true,
+    "provenanceValidatedFirstParty": true,
+    "liveQuotedPriceUsd": null,
+    "paidExecutionObserved": false,
+    "rankingEligible": false
+  },
+  "decision": "ADVANCE AGENT402 /api/search TO THE RAW-402 GATE AS A HIGHER-PRICE CONTROL. The locked top-5 task is directly expressible as GET /api/search?q=<query>&count=5, so no paid spend is needed to resolve request equivalence. Require a fresh policy-compliant raw 402 immediately before any paid admission; marketplace demand remains external validation only and must not populate James outcome-ranking fields."
+}
