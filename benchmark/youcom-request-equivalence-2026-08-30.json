@@ -1,0 +1,35 @@
+{
+  "observed_at": "2026-08-30T14:23:44+10:00",
+  "provider": "You.com",
+  "task_class": "structured web research/search",
+  "endpoint": "GET /v1/search",
+  "locked_task": {
+    "result_count": 5,
+    "request_shape": "GET /v1/search?query=<locked_query>&count=5",
+    "livecrawl": false
+  },
+  "first_party_evidence": {
+    "source": "https://you.com/docs/administration/machine-payments/x402",
+    "result_count_parameter": "count",
+    "documented_parameter_support": true,
+    "x402_method": "GET",
+    "base_price_usd": 0.005,
+    "price_for_count_5_without_livecrawl_usd": 0.005,
+    "payment_protocol_version": "x402 V2",
+    "payment_networks": ["Base", "Solana"],
+    "critical_parameter_warning": "num_results is ignored; count must be used. An unrecognized result-count parameter can silently return the default 10 results.",
+    "quote_binding_rule": "Payment terms must be obtained for the exact request because count/livecrawl changes can change payable terms."
+  },
+  "admission_decision": {
+    "request_equivalence_validated": true,
+    "provenance_validated_first_party": true,
+    "ranking_eligible": false,
+    "paid_benchmark_ready": false,
+    "live_quoted_price_usd": null,
+    "provider_latency_ms": null,
+    "paid_call_executed": false
+  },
+  "reason_not_ranking_eligible": "No fresh endpoint-specific raw 402 has been captured for the exact locked query with count=5, and no identical-task paid outcome has been observed.",
+  "next_gate": "Capture a fresh raw unpaid 402 for GET /v1/search using the locked query and count=5; verify the returned accepts terms and canonical payable-provider identity before any paid admission.",
+  "evidence_boundary": "This artifact validates request expressibility and first-party documentation only. It does not claim a live quote, provider latency, settlement, acceptance result, retry history or effective cost."
+}
