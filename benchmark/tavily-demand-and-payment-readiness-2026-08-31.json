@@ -1,0 +1,40 @@
+{
+  "observed_at": "2026-08-31T06:53:00+10:00",
+  "task_class": "structured_web_research_search",
+  "provider": "Tavily x402 Search",
+  "canonical_endpoint": "https://x402.tavily.com/search",
+  "method": "POST",
+  "evidence": {
+    "first_party": {
+      "source": "https://www.tavily.com/blog/tavily-on-x402",
+      "listed_price_usd": 0.01,
+      "asset": "USDC",
+      "network": "Base",
+      "payment_protocol": "x402",
+      "response_contract": "advanced search with ranked web results, snippets, source URLs, optional generated answer"
+    },
+    "third_party_demand_snapshot": {
+      "source": "https://lavoloop.com/services",
+      "source_class": "marketplace/directory snapshot; ranking-ineligible",
+      "displayed_price_usdc_per_call": 0.01,
+      "displayed_protocol": "x402 v2 exact",
+      "displayed_network": "Base",
+      "displayed_30d_calls": 60307,
+      "displayed_unique_payers": 422,
+      "metric_window": "source-displayed rolling 30 days",
+      "use": "external demand evidence only; do not convert to provider success probability, latency, pass rate, or effective cost"
+    }
+  },
+  "benchmark_fields": {
+    "listed_price_usd": 0.01,
+    "live_quoted_price_usd": null,
+    "provider_result_latency_ms": null,
+    "attempts": 0,
+    "acceptance_result": null,
+    "effective_cost_per_acceptable_result_usd": null,
+    "settled_spend_usd": 0
+  },
+  "execution_note": "No paid call was attempted. This runtime could not resolve x402.tavily.com through its local shell network, so no James-direct 402 challenge, provider latency, settlement, or paid outcome is claimed.",
+  "decision": "TEST",
+  "benchmark_role": "high-demand structured-search control once constrained Base-USDC machine payment is connected"
+}
