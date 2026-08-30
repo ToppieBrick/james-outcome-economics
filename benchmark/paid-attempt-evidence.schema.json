@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ToppieBrick/james-outcome-economics/benchmark/paid-attempt-evidence.schema.json",
+  "title": "Outcome Economics paid attempt evidence",
+  "description": "Fail-closed raw evidence contract for the pre-registered provider-choice delta benchmark. This schema does not authorize payment; it only validates evidence produced by an independently authorized execution path.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "observation_id",
+    "observed_at",
+    "task_fingerprint",
+    "provider_canonical_key",
+    "endpoint",
+    "pay_to",
+    "quote_observed_at",
+    "quoted_amount",
+    "settled_amount",
+    "settlement_receipt_or_tx_reference",
+    "attempt_number",
+    "paid_latency_ms",
+    "deterministic_acceptance_pass",
+    "acceptance_failure_reason",
+    "retry_reason",
+    "evidence_kind"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "observation_id": {"type": "string", "minLength": 8},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "task_fingerprint": {"type": "string", "minLength": 8},
+    "provider_canonical_key": {"type": "string", "minLength": 1},
+    "endpoint": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "pay_to": {"type": "string", "minLength": 1},
+    "quote_observed_at": {"type": "string", "format": "date-time"},
+    "quoted_amount": {"type": "number", "minimum": 0},
+    "settled_amount": {"type": "number", "minimum": 0},
+    "settlement_receipt_or_tx_reference": {"type": "string", "minLength": 1},
+    "attempt_number": {"type": "integer", "minimum": 1},
+    "paid_latency_ms": {"type": "integer", "minimum": 0},
+    "deterministic_acceptance_pass": {"type": "boolean"},
+    "acceptance_failure_reason": {"type": ["string", "null"]},
+    "retry_reason": {"type": ["string", "null"]},
+    "evidence_kind": {"const": "OBSERVED_PAID"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"deterministic_acceptance_pass": {"const": true}}, "required": ["deterministic_acceptance_pass"]},
+      "then": {"properties": {"acceptance_failure_reason": {"type": "null"}}},
+      "else": {"properties": {"acceptance_failure_reason": {"type": "string", "minLength": 1}}}
+    },
+    {
+      "if": {"properties": {"attempt_number": {"minimum": 2}}, "required": ["attempt_number"]},
+      "then": {"properties": {"retry_reason": {"type": "string", "minLength": 1}}}
+    }
+  ]
+}
