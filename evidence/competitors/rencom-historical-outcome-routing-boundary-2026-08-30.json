@@ -1,0 +1,32 @@
+{
+  "observedAt": "2026-08-30",
+  "competitor": "Rencom",
+  "surface": "dev-api.rencom.ai x402 resource search",
+  "evidence": {
+    "valoriaCategory": "search-and-data-extraction",
+    "observedRevenueUsd": 9,
+    "observedPayments": 914,
+    "marketDescription": "Search for x402 resources. Ranks candidate endpoints by historical agent outcomes to minimize execution failure and cost",
+    "sdkEvidence": "Official Rencom Python SDK exposes client.x402.search(query) for x402 resource search"
+  },
+  "provenanceBoundary": {
+    "historicalOutcomeRankingClaim": "third-party marketplace description; not yet independently validated from first-party Rencom documentation",
+    "revenueAndPayments": "third-party Valoria on-chain aggregation; external-demand evidence only",
+    "doNotInfer": [
+      "identical locked-task evaluation",
+      "deterministic canonical-answer acceptance",
+      "retry-adjusted settled cost per acceptable result",
+      "provider-specific paid latency or acceptance rate"
+    ]
+  },
+  "decisionImpact": {
+    "genericHistoricalOutcomeRouting": "occupied/contested",
+    "remainingDifferentiation": "Only exact-task deterministic post-result acceptance plus repeated retry/settlement economics that demonstrably changes provider choice remains defensible.",
+    "killGate": "Once the locked paid cohort exists, compare James ranking against Rencom historical-outcome routing as well as cheapest quote and generic real-traffic rankings. If exact-task economics does not reproducibly change provider choice or retry policy, trigger existing kill criteria rather than broadening."
+  },
+  "sources": [
+    "https://x402.valoria.net/category/search",
+    "https://github.com/rencom-ai/rencom-sdk-python"
+  ],
+  "spendUsd": 0
+}
