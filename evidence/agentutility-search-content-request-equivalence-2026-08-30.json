@@ -1,0 +1,33 @@
+{
+  "observedAt": "2026-08-30T07:22:00Z",
+  "candidate": "AgentUtility search-content",
+  "endpoint": "https://x402.agentutility.ai/search-content",
+  "method": "POST",
+  "listedPriceUsd": 0.05,
+  "network": "base",
+  "asset": "USDC",
+  "scheme": "exact",
+  "firstPartyRegistry": "https://agentutility.ai/registry.json",
+  "registryGeneratedAt": "2026-08-15T17:20:53.415Z",
+  "inputSchema": {
+    "required": ["query"],
+    "num_results": "number; default 3; max 5",
+    "recency": "optional: day|week|month|year|any"
+  },
+  "lockedTop5Request": {
+    "query": "<locked_query>",
+    "num_results": 5
+  },
+  "requestEquivalenceValidated": true,
+  "categoryComparable": false,
+  "benchmarkRole": "premium search-with-content control only",
+  "rankingEligible": false,
+  "paidBenchmarkReady": false,
+  "liveQuoteObserved": false,
+  "zeroSpendPreflight": {
+    "attempted": true,
+    "result": "transport_blocked",
+    "detail": "curl exit 6: DNS resolution failed for x402.agentutility.ai before HTTP transport; no 402 or latency claimed"
+  },
+  "decision": "The locked top-5 request is directly expressible with num_results=5. Keep outside the raw-search cohort because it attaches cleaned page content and therefore changes the output contract. Advance only as a premium control; next gate is a network-capable unsigned exact-route POST capturing fresh raw 402 terms and canonical payable-provider identity before any paid execution."
+}
