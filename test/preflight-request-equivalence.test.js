@@ -79,11 +79,11 @@ test('equivalence validator fails closed for unsupported or drifted adapters', (
   assert.match(scrape402Drift.errors.join(' | '), /top-5/);
 });
 
-test('preflight and batch APIs cannot count a non-equivalent live quote as benchmark eligible', () => {
+test('preflight and batch APIs cannot count a non-equivalent or non-402 live quote as benchmark eligible', () => {
   const preflight = fs.readFileSync(path.join(__dirname, '..', 'api', 'preflight.js'), 'utf8');
   const batch = fs.readFileSync(path.join(__dirname, '..', 'api', 'preflight-batch.js'), 'utf8');
 
-  assert.match(preflight, /benchmarkEligibleQuote\s*=\s*liveQuoteObserved\s*&&\s*requestEquivalence\.ok/);
+  assert.match(preflight, /isBenchmarkEligibleQuote\s*\(\s*\{[\s\S]*httpStatus\s*:[\s\S]*liveQuoteObserved[\s\S]*requestEquivalent\s*:\s*requestEquivalence\.ok[\s\S]*\}\s*\)/);
   assert.match(preflight, /runtime-zero-spend-discovery-diagnostic/);
   assert.match(batch, /benchmarkEligibleQuotes/);
   assert.match(batch, /nonEquivalentRequests/);
