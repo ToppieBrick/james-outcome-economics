@@ -1,0 +1,35 @@
+{
+  "observed_at": "2026-08-30T21:53:52+10:00",
+  "task_class": "structured web research/search",
+  "provider": "x402 Agent Judgment & Synthesis API",
+  "source": {
+    "url": "https://www.x402scan.com/server/e35dc90e-20f5-4ce1-9608-d52522bda1cf",
+    "source_type": "independent registry / settlement activity view",
+    "freshness": "crawled 2026-08-30"
+  },
+  "observed_catalogue": {
+    "search_endpoint": "GET /v1/search",
+    "research_endpoint": "GET /v1/research",
+    "listed_price_usd_per_call": 0.001,
+    "keyword_plan_price_usd_per_call": 0.002,
+    "payment_protocol": "x402 v2"
+  },
+  "observed_demand_30d": {
+    "transactions": 0,
+    "volume_usd": 0,
+    "buyers": 0
+  },
+  "benchmark_evidence_boundary": {
+    "live_quoted_price_usd": null,
+    "provider_latency_ms": null,
+    "attempts": null,
+    "deterministic_pass_fail": null,
+    "effective_cost_per_acceptable_result_usd": null,
+    "paid_call_performed": false,
+    "settlement_observed_by_james": false,
+    "reason": "This is refreshed catalogue and external-demand evidence only. No James wallet/payment capability was used and no paid response was observed."
+  },
+  "implication": "Keep as the cheapest-price comparator, but do not infer quality or demand from sticker price. The current 30-day x402scan view shows zero observed transactions, volume and buyers, making it a useful falsification candidate for cheapest-provider routing once paid benchmarking is enabled.",
+  "decision": "TEST",
+  "spend_usd": 0
+}
