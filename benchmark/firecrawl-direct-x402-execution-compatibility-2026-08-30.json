@@ -1,0 +1,42 @@
+{
+  "observedAt": "2026-08-30T12:54:03Z",
+  "taskClass": "structured_web_research_search",
+  "provider": "Firecrawl",
+  "evidenceType": "execution_compatibility_and_route_identity",
+  "directEndpointIdentity": {
+    "endpoint": "https://api.firecrawl.dev/v1/x402/search",
+    "firstPartySource": "Coinbase Firecrawl x402 case study, published 2025-08-29",
+    "firstPartyClaim": "Firecrawl added this x402-enabled endpoint; pricing is quoted via HTTP 402 and payment settles in USDC on Base.",
+    "benchmarkUse": "historical/first-party endpoint identity and protocol expectation; not a current live quote"
+  },
+  "currentFirstPartyOrdinaryBilling": {
+    "source": "Firecrawl pricing page observed 2026-08-30",
+    "searchPricingModel": "2 credits per 10 results",
+    "payPerUsePlan": false,
+    "boundary": "ordinary Firecrawl account billing only; must not be substituted for the direct x402 route's live 402 quote"
+  },
+  "secondaryCompatibilityWarning": {
+    "source": "MCP.Directory openkrill page observed 2026-08-30",
+    "claim": "Direct Firecrawl x402 endpoint returns HTTP 401 rather than 402 and omits machine-payable payment requirements, making it unusable with the thirdweb payer described by that source.",
+    "provenance": "secondary_source_not_observed_by_james",
+    "confidence": "warning_only",
+    "requiredValidation": "Fresh unsigned preflight against the exact endpoint must determine current HTTP status, payment challenge fields and executable recipient before any payment attempt."
+  },
+  "benchmarkFields": {
+    "listedPriceUsd": 0.01,
+    "listedPriceProvenance": "secondary catalogue / prior public x402 references; not current executable quote",
+    "liveQuotedPriceUsd": null,
+    "providerPaidLatencyMs": null,
+    "attempts": 0,
+    "deterministicPassFail": "NOT_RUN",
+    "effectiveCostPerAcceptableResultUsd": null,
+    "paidExecutionObserved": false,
+    "spendUsd": 0
+  },
+  "decision": {
+    "cohort": "retain",
+    "paidEligibility": "blocked_until_exact_route_preflight_returns_machine_payable_402",
+    "identityRule": "Do not merge prices, reliability or payment capability from reseller/gateway Firecrawl routes with api.firecrawl.dev/v1/x402/search.",
+    "failureClassification": "If exact route returns 401/403 without parseable payment requirements, classify PAYMENT_PROTOCOL_UNAVAILABLE rather than benchmark quality FAIL."
+  }
+}
