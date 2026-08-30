@@ -1,0 +1,39 @@
+{
+  "observed_at": "2026-08-31",
+  "evidence_class": "competitor_differentiation_validation",
+  "task": "Test whether the surviving Outcome Economics differentiation remains unoccupied after James's fresh 402 Index evidence",
+  "competitors": [
+    {
+      "name": "402 Index",
+      "source": "https://402index.io/api-docs",
+      "observed_capabilities": [
+        "hybrid semantic + LIKE discovery search",
+        "verified/category/health-aware default ordering",
+        "health-check history",
+        "uptime_30d",
+        "latency_p50_ms",
+        "reliability_score",
+        "x402 payment-handshake validation"
+      ],
+      "observed_boundary": "Published API documentation exposes discovery, pre-purchase health/reliability and payment-handshake fields; it does not document post-settlement task acceptance, paid-call correctness, retries, settled spend per accepted result, or provider ranking from those post-purchase outcomes."
+    },
+    {
+      "name": "x402-list",
+      "source": "https://x402-list.com/services/x402scan",
+      "observed_capabilities": [
+        "uptime and response latency",
+        "x402 compliance scoring",
+        "category-relative price",
+        "deterministic risk flags",
+        "small on-chain traction term"
+      ],
+      "observed_boundary": "Its published assessment explicitly says reliability is measured on the unpaid 402 handshake, not the paid call, and warns a service can return 402 correctly yet still fail after payment."
+    }
+  ],
+  "clarified_decision": "The defensible benchmark hypothesis is narrower than discovery/reliability/price routing: measure identical locked-task post-settlement outcomes and rank on retry-adjusted effective cost per acceptable result. Current reviewed competitor evidence does not show that capability. Do not claim uniqueness beyond this evidence boundary.",
+  "next_validation_gate": "Once bounded payment capability is independently connected, collect raw paid-call artifacts for the locked task: selected provider/payTo, quoted and settled amount, attempt count, paid latency, deterministic acceptance result, retry reason, and effective cost per acceptable result; compare provider choice against a pre-purchase match+health+price baseline.",
+  "spend_usd": 0,
+  "paid_calls_performed": false,
+  "secrets_handled": false,
+  "legal_commitments": false
+}
