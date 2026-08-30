@@ -1,0 +1,63 @@
+{
+  "observedAt": "2026-08-31",
+  "taskClass": "structured-research",
+  "evidenceType": "public-machine-payment-client-compatibility",
+  "spendUsd": 0,
+  "paidExecutionObserved": false,
+  "sources": [
+    {
+      "name": "TOLL·402 editor's picks",
+      "url": "https://toll402.com/browse",
+      "observed": "MetaMask mcp-x402 is described as an MCP server that signs x402 payment headers from a provided key so MCP-capable agents can pay x402 resources without native wallet support. The same source lists x402-openai (Python) as a drop-in client that automatically signs and retries after HTTP 402."
+    }
+  ],
+  "candidateClients": [
+    {
+      "name": "MetaMask mcp-x402",
+      "observedCapability": "MCP-accessible x402 signer/payment bridge using a provided key",
+      "jamesPaidBenchmarkEligible": false,
+      "blockingControls": [
+        "signer secret must be inaccessible to the model/agent",
+        "per-payment and aggregate spend limits must be enforced outside the model",
+        "provider host allowlist must be enforced outside the model",
+        "payment recipient must be pre-enrolled outside the model and recipient drift must fail closed",
+        "settlement receipt and transaction identifier must be returned for audit",
+        "arbitrary transfer and funding capabilities must be unavailable to the agent",
+        "kill switch must be enforceable outside the model"
+      ],
+      "note": "A client that merely accepts a private key or can sign an arbitrary x402 request is insufficient under James's existing payment-capability gate."
+    },
+    {
+      "name": "x402-openai Python",
+      "observedCapability": "client wrapper described as automatically signing and retrying an HTTP request after a 402 challenge",
+      "jamesPaidBenchmarkEligible": false,
+      "blockingControls": [
+        "prove model-inaccessible signer isolation",
+        "prove immutable spend ceilings",
+        "prove host and recipient policy enforcement",
+        "prove settlement receipt capture and replay protection"
+      ]
+    }
+  ],
+  "exactCapabilityRequired": {
+    "protocol": "x402",
+    "network": "Base mainnet (eip155:8453)",
+    "asset": "USDC",
+    "signer": "dedicated low-value signer with raw private key inaccessible to the model",
+    "requiredOperations": [
+      "inspect/parse fresh HTTP 402 payment requirements",
+      "policy-check amount, network, asset, host and pre-enrolled payTo before signing",
+      "sign and submit the x402 payment header only after policy pass",
+      "retry the exact original benchmark request",
+      "return settled amount, transaction id, payer, recipient, network, latency, attempts, HTTP status and response body"
+    ],
+    "limits": {
+      "perPaymentUsdCap": 0.025,
+      "sessionUsdCap": 1.0,
+      "founderTransactionLimitAud": 25,
+      "founderDailyLimitAud": 40
+    }
+  },
+  "executionDecision": "PAYMENT_BLOCKED_PENDING_BOUNDED_SIGNER",
+  "nextGate": "Do not spend. A candidate payment client becomes usable only after it can be represented by payment-capability.connected.json and passes validate-connected-payment-capability.js without weakening existing controls."
+}
