@@ -12,7 +12,7 @@ const adapters = {
     return { url: provider.endpoint, options: { method: 'POST', headers: { accept: 'application/json', 'content-type': 'application/json' }, body: JSON.stringify({ query: task.query, limit: 5, sources: ['web'] }), redirect: 'manual' } };
   },
   agentutility(provider, task) {
-    return { url: provider.endpoint, options: { method: 'POST', headers: { accept: 'application/json', 'content-type': 'application/json' }, body: JSON.stringify({ query: task.query }), redirect: 'manual' } };
+    return { url: provider.endpoint, options: { method: 'POST', headers: { accept: 'application/json', 'content-type': 'application/json' }, body: JSON.stringify({ query: task.query, num_results: 5 }), redirect: 'manual' } };
   },
   'You.com'(provider, task) {
     const url = new URL(provider.endpoint); url.searchParams.set('query', task.query); url.searchParams.set('count', '5');
