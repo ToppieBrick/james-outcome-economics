@@ -39,6 +39,14 @@ test('equivalence validator admits only the pinned comparable request shapes', (
     options: { method: 'GET' },
   });
   assert.equal(you.ok, true);
+
+  const scrape402 = validateRequestEquivalence({
+    task,
+    provider: 'scrape402',
+    url: `https://example.test/search?q=${encodeURIComponent(task.query)}&count=5`,
+    options: { method: 'GET' },
+  });
+  assert.equal(scrape402.ok, true);
 });
 
 test('equivalence validator fails closed for unsupported or drifted adapters', () => {
@@ -60,6 +68,15 @@ test('equivalence validator fails closed for unsupported or drifted adapters', (
   assert.equal(tavilyDrift.ok, false);
   assert.match(tavilyDrift.errors.join(' | '), /search_depth drifted/);
   assert.match(tavilyDrift.errors.join(' | '), /top-5/);
+
+  const scrape402Drift = validateRequestEquivalence({
+    task,
+    provider: 'scrape402',
+    url: `https://example.test/search?q=${encodeURIComponent(task.query)}&count=10`,
+    options: { method: 'GET' },
+  });
+  assert.equal(scrape402Drift.ok, false);
+  assert.match(scrape402Drift.errors.join(' | '), /top-5/);
 });
 
 test('preflight and batch APIs cannot count a non-equivalent live quote as benchmark eligible', () => {
