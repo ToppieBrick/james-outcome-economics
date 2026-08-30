@@ -1,0 +1,25 @@
+{
+  "observedAt": "2026-08-30T13:21:00Z",
+  "provider": "Firecrawl",
+  "route": "https://api.firecrawl.dev/v1/x402/search",
+  "task": "unsigned exact-route preflight",
+  "spendUsd": 0,
+  "attempt": {
+    "method": "POST intended; no payment/signature/credential",
+    "transportObservation": "Relay web runtime refused direct open of the API URL under safe-navigation policy before an HTTP request could be observed.",
+    "httpStatusObserved": null,
+    "paymentChallengeObserved": false,
+    "liveQuoteObserved": false,
+    "canonicalPayToObserved": false
+  },
+  "freshCorroboration": {
+    "coinbaseFirstPartyCaseStudy": "Coinbase case study remains indexed and states Firecrawl added https://api.firecrawl.dev/v1/x402/search, pricing is quoted via HTTP 402, and settlement is USDC on Base.",
+    "secondaryCurrentWarning": "Current OpenKrill/MCP.Directory documentation reports this exact route returns 401 Unauthorized without payTo/asset/amount and classifies it as non-functional for automated x402 payment. This remains secondary evidence, not a relay-observed HTTP response."
+  },
+  "decision": {
+    "paidEligibility": "blocked",
+    "reason": "No fresh relay-observed machine-payable 402 from exact route.",
+    "classificationIfSecondaryWarningIsReproduced": "PAYMENT_PROTOCOL_UNAVAILABLE",
+    "nextGate": "Run an unsigned POST from a runtime permitted to contact api.firecrawl.dev directly; preserve raw status, headers and body. Do not pay unless the existing payment-capability and intent-binding gates pass."
+  }
+}
