@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-08-30",
+  "competitor": "402 Index",
+  "url": "https://402index.io/",
+  "evidence_class": "competitor_watch_pre_purchase",
+  "fresh_observations": {
+    "endpoints_indexed": 100146,
+    "payment_verified": 34585,
+    "providers_indexed": 3233,
+    "providers_verified": 1996,
+    "x402_verified_endpoints": 33852,
+    "x402_total_endpoints": 97356,
+    "last_checked_displayed": "2026-08-30 11:40:50"
+  },
+  "methodology_boundary": {
+    "payment_verified_x402_definition": "Unsigned HTTP request returns PAYMENT-REQUIRED with parseable x402 requirements including recognized scheme, known asset, valid payTo, and reachable facilitator.",
+    "does_not_prove": [
+      "actual settlement",
+      "HTTP 200 after payment",
+      "deterministic task acceptance",
+      "post-payment output correctness",
+      "retry-adjusted effective cost per acceptable result"
+    ]
+  },
+  "competitive_implication": "Discovery, health monitoring, pricing/schema documentation and payment-handshake validation are already available at large scale. James must not claim these as differentiation. The surviving proof gate is exact locked-task post-settlement economics: identical task, deterministic acceptance, attempts/retries, paid latency, settled spend and effective cost per acceptable result used for provider choice.",
+  "benchmark_effect": "No provider benchmark row changed. This is competitor-watch evidence only.",
+  "spend_usd": 0,
+  "live_quote_observed_by_james": false,
+  "paid_call_performed_by_james": false,
+  "fabricated_paid_results": false
+}
