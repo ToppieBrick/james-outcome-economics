@@ -1,0 +1,61 @@
+{
+  "observedAt": "2026-08-31T05:53:40+10:00",
+  "taskClass": "structured_web_search",
+  "provider": "AgentUtility",
+  "evidenceType": "public_listed_price_provenance",
+  "sourceObservations": [
+    {
+      "source": "https://agentutility.ai/campaigns/x402-api-directory/",
+      "sourceClass": "first_party_directory",
+      "routeLabel": "search / web-search",
+      "listedPriceUsd": 0.01,
+      "paymentRail": "x402",
+      "asset": "USDC",
+      "network": "Base",
+      "notes": "Current first-party directory describes search/web-search around US$0.01/call and states HTTP 402 carries price before commitment."
+    },
+    {
+      "source": "https://agenstry.com/agents/x402.agentutility.ai",
+      "sourceClass": "third_party_machine_catalogue",
+      "method": "POST",
+      "endpoint": "https://x402.agentutility.ai/web-search",
+      "listedPriceUsd": 0.006,
+      "paymentRail": "x402",
+      "scheme": "exact",
+      "asset": "USDC",
+      "network": "eip155:8453"
+    },
+    {
+      "source": "https://agenstry.com/agents/x402.agentutility.ai",
+      "sourceClass": "third_party_machine_catalogue",
+      "method": "POST",
+      "endpoint": "https://x402.agentutility.ai/search",
+      "listedPriceUsd": 0.01,
+      "paymentRail": "x402",
+      "scheme": "exact",
+      "asset": "USDC",
+      "network": "eip155:8453"
+    },
+    {
+      "source": "https://agenstry.com/agents/x402.agentutility.ai",
+      "sourceClass": "third_party_machine_catalogue",
+      "method": "POST",
+      "endpoint": "https://x402.agentutility.ai/search-web",
+      "listedPriceUsd": 0.02,
+      "paymentRail": "x402",
+      "scheme": "exact",
+      "asset": "USDC",
+      "network": "eip155:8453"
+    }
+  ],
+  "handlingRule": "Do not collapse AgentUtility structured search to one provider price. Preserve provider + canonical endpoint + method + source provenance. Do not average conflicting catalogue observations or substitute one route's price for another. A fresh raw policy-compliant HTTP 402 from the exact canonical route remains authoritative immediately before paid admission.",
+  "liveQuotedPriceUsd": null,
+  "providerLatencyMs": null,
+  "attempts": 0,
+  "deterministicPass": null,
+  "settledSpendUsd": 0,
+  "effectiveCostPerAcceptableResultUsd": null,
+  "paidExecutionObserved": false,
+  "rankingEligible": false,
+  "fabricatedPaidOutcome": false
+}
