@@ -1,0 +1,27 @@
+{
+  "observedAt": "2026-08-30T06:24:00Z",
+  "scope": "targeted validation of paid-cohort fail-closed readiness change",
+  "sourceCommit": "be1ce3a3f68d9238ac719213d01abed4a00e6345",
+  "filesReconstructedFromGitHub": [
+    "lib/evidence-readiness.js",
+    "test/evidence-readiness.test.js"
+  ],
+  "executionEnvironment": "relay local Node runtime; repository clone unavailable because runtime DNS could not resolve github.com",
+  "command": "node --test",
+  "targetedObservedResult": {
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "durationMs": 61.654193
+  },
+  "validatedBehaviors": [
+    "fresh policy-compliant quote + request equivalence + canonical identity admits paid benchmark readiness",
+    "unvalidated request equivalence fails closed",
+    "unresolved canonical payable-provider identity fails closed",
+    "stale and future-dated quotes fail closed",
+    "canonical identity can derive from endpoint host plus observed payment recipient",
+    "same canonical seller aliases cannot create ranking readiness"
+  ],
+  "boundary": "This is targeted reconstructed-file validation, not a claim that the complete repository test suite passed. GitHub Actions reported no workflow runs for the source commit, and direct git clone was blocked by relay DNS.",
+  "nextAction": "Run the complete repository `npm test`/`node --test` in a network-capable checkout or CI before treating the entire suite as green."
+}
