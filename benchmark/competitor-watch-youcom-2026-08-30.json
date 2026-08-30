@@ -1,0 +1,37 @@
+{
+  "observed_at": "2026-08-30T13:51:50+10:00",
+  "task_class": "structured web research/search",
+  "provider": "You.com",
+  "endpoint": "GET /v1/search",
+  "listed_price_usd": 0.005,
+  "listed_price_source": "https://you.com/docs/administration/machine-payments/x402",
+  "payment": {
+    "protocol": "x402",
+    "asset": "USDC",
+    "networks": ["Base", "Solana"],
+    "account_required": false
+  },
+  "free_evaluation_path": {
+    "available": true,
+    "method": "keyless MCP free profile",
+    "limit_claimed_by_provider": "100 queries/day",
+    "source": "https://you.com/docs/administration/machine-payments"
+  },
+  "james_observations": {
+    "live_quoted_price_usd": null,
+    "provider_latency_ms": null,
+    "attempts": 0,
+    "deterministic_result": null,
+    "effective_cost_per_acceptable_result_usd": null,
+    "ranking_eligible": false,
+    "paid_call_executed": false
+  },
+  "preflight_attempt": {
+    "attempted": true,
+    "paid": false,
+    "result": "runtime DNS resolution failure before provider reached",
+    "classification": "infrastructure observation only; not provider latency or provider failure"
+  },
+  "evidence_boundary": "First-party documentation establishes listed price and supported payment rails only. No live 402 quote, paid delivery, latency, deterministic PASS/FAIL or effective-cost result was observed, so none is inferred.",
+  "competitive_implication": "You.com adds a $0.005 x402 structured-search comparator and a zero-wallet evaluation path. James must differentiate on identical-task post-payment outcome economics rather than discovery, quote parsing, or generic search quality claims."
+}
