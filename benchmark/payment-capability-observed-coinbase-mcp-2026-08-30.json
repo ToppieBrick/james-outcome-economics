@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-08-30T07:53:00Z",
+  "source": "Coinbase Developer Documentation",
+  "product": "Coinbase Agentic Wallet MCP Beta",
+  "status": "documented-not-connected-to-james-runtime",
+  "observedCapabilities": {
+    "checkPaymentRequirementsWithoutPaying": true,
+    "makeX402RequestAndHandlePayment": true,
+    "supportedSettlementAsset": "USDC",
+    "supportedNetworks": ["Base", "Polygon", "Solana"],
+    "spendingLimitsEnforced": true,
+    "spendingLimitsHumanOnly": true,
+    "arbitraryTransfersAgentAccessible": false,
+    "fundingAgentAccessible": false
+  },
+  "requiredJamesConfiguration": {
+    "dedicatedBenchmarkWallet": true,
+    "network": "Base",
+    "asset": "USDC",
+    "perCallCapUsd": 0.025,
+    "sessionCapUsd": 1.0,
+    "founderTransactionLimitAud": 25,
+    "founderDailyLimitAud": 40,
+    "providerAllowlistRequired": true,
+    "recipientEnrollmentRequired": true,
+    "rawPrivateKeyInModelContext": false,
+    "requiredTools": [
+      "check_payment_requirements",
+      "make_x402_request",
+      "get_wallet_balance"
+    ]
+  },
+  "currentBlocker": "The Coinbase Agentic Wallet MCP capability is not installed/connected in the James execution runtime, so no paid benchmark can be executed safely in this run.",
+  "sources": [
+    "https://docs.cdp.coinbase.com/agentic-wallet/mcp/mcp-tools/make-x402-request",
+    "https://docs.cdp.coinbase.com/agentic-wallet/mcp/mcp-tools/overview"
+  ],
+  "paidExecutionObserved": false,
+  "spendUsd": 0
+}
