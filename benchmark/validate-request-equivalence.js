@@ -45,6 +45,11 @@ function validateRequestEquivalence({ task, provider, url, options }) {
     if (!Array.isArray(body.sources) || body.sources.length !== 1 || body.sources[0] !== 'web') {
       errors.push('Firecrawl sources drifted from locked web-only mode');
     }
+  } else if (provider === 'agentutility') {
+    const body = parseJsonBody(options, provider, errors);
+    observedQuery = normalizeQuery(body.query);
+    observedResultCount = Number(body.num_results);
+    providerMode = 'web-search:decodo-ranked-results';
   } else if (provider === 'scrape402') {
     const parsed = new URL(url);
     observedQuery = normalizeQuery(parsed.searchParams.get('q'));
