@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-08-30T22:22:35+10:00",
+  "validation_target_commit": "98e5a59d8c3bb314bc12c45270b93e059711d1e3",
+  "workflow_run_id": 33308850394,
+  "job_id": 99250123981,
+  "job_name": "test",
+  "status": "completed",
+  "conclusion": "success",
+  "run_test_suite_step": {
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "validated_change": "Payment intent is fail-closed against independently selected task, provider, endpoint and payTo execution context.",
+  "evidence_boundary": "This records GitHub Actions job/step status only. It does not claim any paid benchmark execution, settlement, provider quality result, wallet operation or external demand.",
+  "spend_usd": 0,
+  "decision": "VALIDATED"
+}
