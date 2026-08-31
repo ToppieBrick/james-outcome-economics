@@ -25,6 +25,10 @@ const adapters = {
     const url = new URL(provider.endpoint); url.searchParams.set('q', task.query); url.searchParams.set('count', '5');
     return { url: url.toString(), options: { method: 'GET', headers: { accept: 'application/json' }, redirect: 'manual' } };
   },
+  'OpenWeb Ninja'(provider, task) {
+    const url = new URL(provider.endpoint); url.searchParams.set('q', task.query);
+    return { url: url.toString(), options: { method: 'GET', headers: { accept: 'application/json' }, redirect: 'manual' } };
+  },
 };
 
 function maybeJson(value) { try { return JSON.parse(value); } catch { return null; } }
