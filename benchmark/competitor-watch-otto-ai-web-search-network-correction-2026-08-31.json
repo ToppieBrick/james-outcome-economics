@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "observedAt": "2026-08-31T01:20:00Z",
+  "taskClass": "structured_web_research_search",
+  "provider": "Otto AI",
+  "canonicalHost": "x402.ottoai.services",
+  "endpoint": {
+    "method": "GET",
+    "url": "https://x402.ottoai.services/web-search",
+    "queryParameters": ["query"]
+  },
+  "priorEvidence": {
+    "commit": "69b14b812ba49e00df28814c1c2ff0803109bda8",
+    "classification": "paidBenchmarkEligibleUnderCurrentPolicy=false",
+    "basis": "Agentic Market service-level network EIP155:137 (Polygon)"
+  },
+  "newObservedEvidence": {
+    "source": "https://agenstry.com/agents/x402.ottoai.services",
+    "endpointSpecific": true,
+    "listedPriceUsd": 0.009,
+    "asset": "USDC",
+    "network": "eip155:8453",
+    "networkName": "Base",
+    "scheme": "exact",
+    "method": "GET",
+    "qualityWindow": "last 30 days",
+    "calls": 16,
+    "uniquePayers": 6
+  },
+  "crossSourceConflict": {
+    "agenticMarket": "service-level network EIP155:137 (Polygon)",
+    "agenstryWebSearchRoute": "endpoint-specific network eip155:8453 (Base)",
+    "resolution": "Do not use service-level network metadata to exclude this route. Endpoint-specific evidence is more granular but remains catalogue evidence, not an authoritative payment challenge."
+  },
+  "decision": {
+    "zeroSpendWatch": true,
+    "basePolicyNetworkBlockerRemoved": true,
+    "paidBenchmarkEligible": false,
+    "reason": "Fresh authoritative HTTP 402 from the exact /web-search route is still required, along with request-equivalence validation, before paid benchmark admission."
+  },
+  "nextGate": "Run a zero-spend preflight against the exact GET /web-search route using the locked benchmark query. Admit the quote only if the response is HTTP 402, the live challenge is Base-mainnet under current policy, and request equivalence passes.",
+  "paidOutcomeEvidence": {
+    "paidExecutionObserved": false,
+    "settledCostUsd": 0
+  },
+  "evidenceBoundary": "Third-party endpoint catalogue/demand evidence only. No payment was made. Do not treat the listed price, network, call count, or payer count as James-observed settlement evidence."
+}
