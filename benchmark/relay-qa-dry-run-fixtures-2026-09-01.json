@@ -1,0 +1,27 @@
+{
+  "observed_at": "2026-09-01T01:57:51+10:00",
+  "venture": "Outcome Economics Intelligence",
+  "purpose": "Lock byte-stable inputs for the two-run Relay/QA deterministic dry-run gate without invoking payment.",
+  "task_id": "structured-search-provider-economics-v1",
+  "request_fixture": {
+    "task_class": "structured web research/search",
+    "objective": "rank providers by observed effective cost per acceptable result for the exact task",
+    "result_count": 5,
+    "acceptance_criteria": [
+      "provider observation must not be synthetic",
+      "missing live quote, latency, settlement or paid result remains null/unobserved",
+      "PASS requires every deterministic task criterion to pass",
+      "effective cost uses actual settled spend only",
+      "providers lacking paid acceptable-result evidence are not assigned an effective-cost value"
+    ]
+  },
+  "request_fixture_canonical_json": "{\"acceptance_criteria\":[\"provider observation must not be synthetic\",\"missing live quote, latency, settlement or paid result remains null/unobserved\",\"PASS requires every deterministic task criterion to pass\",\"effective cost uses actual settled spend only\",\"providers lacking paid acceptable-result evidence are not assigned an effective-cost value\"],\"objective\":\"rank providers by observed effective cost per acceptable result for the exact task\",\"result_count\":5,\"task_class\":\"structured web research/search\"}",
+  "request_fixture_sha256": "b7e4a2d9d1b78b5dce5b90d65ca5396f42c04d9ccfb29f8e450cc70a32d5c821",
+  "evidence_fixture_source": "data/providers.json@c63e79891eef07574ce6a10057d81659fd9a6eda",
+  "evidence_fixture_rule": "The exact UTF-8 bytes of data/providers.json at the recorded blob SHA are the locked evidence fixture for both dry runs.",
+  "evidence_fixture_blob_sha": "c63e79891eef07574ce6a10057d81659fd9a6eda",
+  "runs_required": 2,
+  "run_rule": "Both runs MUST use this request canonical JSON and the exact evidence blob SHA above. No payment, network enrichment, timestamp mutation, or evidence substitution is permitted between runs.",
+  "expected_fail_closed_behavior": "Because the locked evidence contains zero observed paid attempts for every provider, no provider may receive an observed effective-cost-per-acceptable-result value and no paid-performance winner may be claimed.",
+  "truthfulness": "This artifact locks fixtures only. It does not claim either required dry run has executed or passed."
+}
