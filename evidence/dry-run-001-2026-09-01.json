@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "request_id": "OEI-DRY-001",
+  "workload_id": "structured-web-search-locked-v1",
+  "request": "For this locked structured web-search workload, compare eligible providers and recommend the lowest expected effective cost per acceptable result. Show evidence boundaries and mark unobserved fields explicitly.",
+  "evidence_policy": {
+    "allowed_classes": ["listed", "live-quote", "paid-observed", "unobserved"],
+    "paid_claim_requires_real_settlement": true,
+    "missing_observation_value": "NOT_OBSERVED"
+  },
+  "providers": [
+    {
+      "provider": "Tavily x402 Search",
+      "provenance": "repository benchmark/evidence records",
+      "listed": "OBSERVED_IN_SHARED_RECORDS",
+      "live_quote": "NOT_OBSERVED_FOR_THIS_DRY_RUN",
+      "paid_observed": "NOT_OBSERVED",
+      "attempts": "NOT_OBSERVED",
+      "latency": "NOT_OBSERVED",
+      "settled_spend": "NOT_OBSERVED",
+      "effective_cost_per_acceptable_result": "NOT_OBSERVED"
+    },
+    {
+      "provider": "AgentUtility search",
+      "provenance": "repository benchmark/evidence records",
+      "listed": "OBSERVED_IN_SHARED_RECORDS",
+      "live_quote": "NOT_OBSERVED_FOR_THIS_DRY_RUN",
+      "paid_observed": "NOT_OBSERVED",
+      "attempts": "NOT_OBSERVED",
+      "latency": "NOT_OBSERVED",
+      "settled_spend": "NOT_OBSERVED",
+      "effective_cost_per_acceptable_result": "NOT_OBSERVED"
+    }
+  ],
+  "acceptance_test": "Recommend only when comparable paid-observed attempts, acceptance outcome, settled spend and retry-adjusted effective cost exist for the locked workload; otherwise return INSUFFICIENT_EVIDENCE.",
+  "recommendation": "INSUFFICIENT_EVIDENCE",
+  "delivery_status": "PARTIAL",
+  "delivery_reason": "No real paid-observed results exist for the promised structured-search task class, so a lowest effective cost per acceptable result recommendation cannot be made without fabrication.",
+  "customer_handling": {
+    "charge": "NONE",
+    "refund": "NOT_APPLICABLE_PAYMENT_DISABLED",
+    "support_record": ["request_id", "workload_id", "evidence_policy", "delivery_status", "delivery_reason"]
+  },
+  "secrets_or_payment_credentials_stored": false,
+  "repeatability_expected_decision": "INSUFFICIENT_EVIDENCE"
+}
