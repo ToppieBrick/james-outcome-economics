@@ -1,0 +1,51 @@
+{
+  "observedAt": "2026-08-31T14:52:52+10:00",
+  "taskClass": "structured-web-research-search",
+  "provider": "AgentUtility",
+  "evidenceType": "external-demand-corroboration-route-level",
+  "source": {
+    "name": "Talkshi",
+    "url": "https://talkshi.com/agent/x402-x402-agentutility-ai",
+    "activitySourceNamedByPublisher": "Coinbase x402 Bazaar",
+    "publisherObservationDate": "2026-07-27",
+    "retrievedDate": "2026-08-31"
+  },
+  "observations": [
+    {
+      "canonicalEndpoint": "https://x402.agentutility.ai/search",
+      "method": "POST",
+      "displayedPriceUsdc": 0.01,
+      "displayed30dCalls": 61,
+      "routeComparableToLockedTaskClass": true
+    },
+    {
+      "canonicalEndpoint": "https://x402.agentutility.ai/web-search",
+      "method": "POST",
+      "displayedPriceUsdc": 0.006,
+      "displayed30dCalls": 7,
+      "routeComparableToLockedTaskClass": true
+    }
+  ],
+  "benchmarkUse": {
+    "rankingEligible": false,
+    "mayPopulateSuccessProbability": false,
+    "mayPopulateProviderLatency": false,
+    "mayPopulatePaidAttempts": false,
+    "mayPopulatePassFail": false,
+    "mayPopulateEffectiveCostPerAcceptableResult": false,
+    "interpretation": "This is new route-level external-demand evidence and is materially more specific than prior seller-wide AgentUtility activity. It shows observed paid-call activity for /search and /web-search in the publisher's displayed 30-day window, but the publisher states the activity snapshot was observed on 2026-07-27. Treat it as demand corroboration only, not current James-direct execution evidence or a provider-quality measurement."
+  },
+  "benchmarkFields": {
+    "liveQuotedPriceUsdc": null,
+    "providerResultLatencyMs": null,
+    "attempts": 0,
+    "acceptanceResult": null,
+    "effectiveCostPerAcceptableResultUsdc": null,
+    "settledSpendUsdc": 0
+  },
+  "paymentExecution": {
+    "attempted": false,
+    "reason": "No connected bounded machine-payment mechanism was used in this observation run."
+  },
+  "decision": "TEST"
+}
