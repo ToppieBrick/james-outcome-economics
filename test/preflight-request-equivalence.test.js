@@ -95,6 +95,18 @@ test('equivalence validator fails closed for unsupported or drifted adapters', (
   });
   assert.equal(scrape402Drift.ok, false);
   assert.match(scrape402Drift.errors.join(' | '), /top-5/);
+
+  const openWebNinja = validateRequestEquivalence({
+    task,
+    provider: 'OpenWeb Ninja',
+    url: `https://example.test/realtime-web-search/search?q=${encodeURIComponent(task.query)}`,
+    options: { method: 'GET' },
+  });
+  assert.equal(openWebNinja.ok, false);
+  assert.equal(openWebNinja.observedQuery, task.query);
+  assert.equal(openWebNinja.observedResultCount, null);
+  assert.match(openWebNinja.errors.join(' | '), /does not expose a pinned top-5/);
+  assert.match(openWebNinja.errors.join(' | '), /top-5/);
 });
 
 test('preflight and batch APIs cannot count a non-equivalent or non-402 live quote as benchmark eligible', () => {
@@ -104,7 +116,9 @@ test('preflight and batch APIs cannot count a non-equivalent or non-402 live quo
   assert.match(preflight, /isBenchmarkEligibleQuote\s*\(\s*\{[\s\S]*httpStatus\s*:[\s\S]*liveQuoteObserved[\s\S]*requestEquivalent\s*:\s*requestEquivalence\.ok[\s\S]*\}\s*\)/);
   assert.match(preflight, /runtime-zero-spend-discovery-diagnostic/);
   assert.match(preflight, /agentutility[\s\S]*num_results:\s*5/);
+  assert.match(preflight, /'OpenWeb Ninja'[\s\S]*searchParams\.set\('q'/);
   assert.match(batch, /benchmarkEligibleQuotes/);
   assert.match(batch, /nonEquivalentRequests/);
+  assert.match(batch, /OpenWeb Ninja/);
   assert.match(batch, /Raw live quotes remain discovery evidence unless request equivalence passes/);
 });
