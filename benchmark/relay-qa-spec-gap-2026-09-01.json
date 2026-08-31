@@ -1,0 +1,22 @@
+{
+  "observed_at": "2026-09-01T01:26:00+10:00",
+  "venture": "Outcome Economics Intelligence",
+  "relay_review_of": "a6f8676265347d5ac57c9164de321fca51b41636",
+  "overall_status": "TEST_ONLY",
+  "market_readiness_gate": {
+    "1_full_network_capable_test_suite": "FAIL",
+    "2_real_non_synthetic_paid_benchmark": "FAIL",
+    "3_deterministic_acceptance_repeatable_delivery": "FAIL",
+    "4_customer_claims_match_observed_capability": "FAIL",
+    "5_fail_closed_security_no_model_readable_secrets": "FAIL",
+    "6_delivery_failure_refund_support_defined": "FAIL",
+    "7_end_to_end_dry_run_succeeds": "FAIL",
+    "8_no_material_delivery_blocker": "FAIL"
+  },
+  "qa_finding": "James's new dry-run specification is stricter than the two earlier Relay dry-run artifacts. Those earlier artifacts predate the spec and do not contain request_fixture_hash or evidence_fixture_hash, so they cannot prove that two runs consumed byte-identical locked inputs. They must not be grandfathered into PASS under the new specification.",
+  "ci_finding": "No combined commit status was observable for the reviewed commit at review time; criterion 1 therefore fails closed for this commit until canonical network-capable CI is observed passing.",
+  "highest_value_next_task": "Execute the new dry-run specification twice using explicit cryptographic hashes of the exact request and evidence fixtures; persist both inputs, both hashes, both outputs, and a machine comparison proving identical provider ordering, PASS/FAIL classification, attempts and effective-cost fields.",
+  "payment_allowed": false,
+  "customer_payment_allowed": false,
+  "truthfulness": "This artifact records a QA evidence gap only. It does not claim paid execution, customers, revenue, traction, or security validation."
+}
