@@ -1,0 +1,42 @@
+{
+  "observedAt": "2026-08-31T12:49:49+10:00",
+  "taskClass": "structured-web-research-search",
+  "provider": "You.com",
+  "evidenceType": "first-party-documentation-observation",
+  "benchmarkEconomicEligibility": "listed-and-schema-evidence-only-awaiting-james-direct-402",
+  "canonicalRoutes": [
+    {
+      "method": "GET",
+      "endpoint": "https://api.you.com/v1/search",
+      "listedPriceUsd": 0.005,
+      "countParameter": "count",
+      "lockedBenchmarkCount": 5
+    },
+    {
+      "method": "POST",
+      "endpoint": "https://api.you.com/v1/agents/search",
+      "listedPriceUsd": 0.005,
+      "countParameter": "count",
+      "lockedBenchmarkCount": 5
+    }
+  ],
+  "routeGotchas": [
+    "POST /v1/search does not offer machine-payment terms and returns 401; use GET /v1/search or /v1/agents/search.",
+    "Result count is controlled by count, not num_results; unrecognised parameters are ignored and can silently fall back to the default result count.",
+    "Adding livecrawl changes the quote to the US$0.005 base plus US$0.001 per requested result, so the benchmark must omit livecrawl unless all compared providers are equivalently configured."
+  ],
+  "currentHarnessAssessment": {
+    "adapter": "GET /v1/search?query=<locked-query>&count=5",
+    "requestShapeMatchesFirstPartyContract": true,
+    "paidResultObserved": false,
+    "jamesDirectLive402Observed": false,
+    "latencyEligible": false,
+    "passFailEligible": false,
+    "effectiveCostEligible": false
+  },
+  "source": {
+    "url": "https://you.com/docs/administration/machine-payments/x402",
+    "checked": "2026-08-31",
+    "note": "First-party documentation observed directly. No paid call or James-direct execution-time quote is inferred from this file."
+  }
+}
