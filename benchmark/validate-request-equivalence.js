@@ -55,6 +55,12 @@ function validateRequestEquivalence({ task, provider, url, options }) {
     observedQuery = normalizeQuery(parsed.searchParams.get('q'));
     observedResultCount = Number(parsed.searchParams.get('count'));
     providerMode = 'web-search:raw-results';
+  } else if (provider === 'OpenWeb Ninja') {
+    const parsed = new URL(url);
+    observedQuery = normalizeQuery(parsed.searchParams.get('q'));
+    observedResultCount = null;
+    providerMode = 'realtime-web-search:google-serp';
+    errors.push('OpenWeb Ninja public Web Search schema does not expose a pinned top-5 result-count parameter');
   } else {
     errors.push(`No equivalence contract for provider: ${provider}`);
   }
