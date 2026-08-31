@@ -1,0 +1,49 @@
+{
+  "observedAt": "2026-08-31T20:49:56+10:00",
+  "evidenceClass": "competitor_payment_semantics",
+  "rankingEligible": false,
+  "provider": "Brave experiments / bx402",
+  "repository": "https://github.com/brave-experiments/bx402",
+  "taskClass": "structured_web_search",
+  "serviceModel": "self-hosted pay-per-request proxy for Brave Search API",
+  "route": "/res/v1/web/search",
+  "listedPriceUsd": 0.005,
+  "liveQuotedPriceUsd": null,
+  "network": "Base mainnet (x402); Base Sepolia testnet also documented",
+  "asset": "USDC",
+  "paymentProtocol": "x402",
+  "paymentSemantics": {
+    "sequence": [
+      "unpaid request returns HTTP 402",
+      "payment authorization is verified without moving funds",
+      "upstream search executes",
+      "x402 settlement occurs only after successful search",
+      "paid response returns settlement receipt/transaction reference"
+    ],
+    "failedUpstreamSearchCharged": false,
+    "economicImplication": "A failed search may have zero settled provider cost under this execution model. Outcome Economics must distinguish payment authorization/verification from settlement and record settlement timing/failure charging semantics when calculating effective cost per acceptable result."
+  },
+  "comparisonBoundary": "bx402 is an experimental/self-hosted proxy rather than an observed public James-callable provider endpoint, so it is competitor/payment-semantics evidence only and must not enter provider ranking.",
+  "jamesObserved": {
+    "http402": false,
+    "providerReached": false,
+    "paidExecution": false,
+    "providerLatencyMs": null,
+    "attempts": 0,
+    "pass": null,
+    "settledCostUsd": 0,
+    "effectiveCostPerAcceptableResultUsd": null
+  },
+  "sources": [
+    {
+      "url": "https://github.com/brave-experiments/bx402",
+      "observations": [
+        "x402 and MPP micropayment proxy for Brave Search",
+        "Both rails charge 5000 base units = US$0.005 of a six-decimal token",
+        "x402 mainnet support is Base USDC",
+        "x402 verifies without moving funds, runs search, then settles; failed search is not charged"
+      ]
+    }
+  ],
+  "requiredBenchmarkChange": "Persist settlement_state/timing and charged_failure semantics separately from attempt count so cost-per-acceptable-result uses actual settled spend, while failed attempts still remain visible as reliability evidence."
+}
