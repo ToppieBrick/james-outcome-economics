@@ -1,0 +1,51 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "task_id": "structured-search-provider-economics-v1",
+  "execution_mode": "locked-observed-evidence-only",
+  "payment_invoked": false,
+  "request_fixture_hash": "b7e4a2d9d1b78b5dce5b90d65ca5396f42c04d9ccfb29f8e450cc70a32d5c821",
+  "evidence_fixture_hash": "c63e79891eef07574ce6a10057d81659fd9a6eda",
+  "evidence_fixture_path": "data/providers.json",
+  "runs": [
+    {
+      "run_id": "relay-qa-hashed-1",
+      "provider_ordering": ["firecrawl-x402-search", "agentutility-search", "anicca-web-search", "agent-judgment-search", "you-x402-search", "tavily-x402-search"],
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "attempts": {"firecrawl-x402-search": 0, "agentutility-search": 0, "anicca-web-search": 0, "agent-judgment-search": 0, "you-x402-search": 0, "tavily-x402-search": 0},
+      "effective_cost_per_acceptable_result": {"firecrawl-x402-search": null, "agentutility-search": null, "anicca-web-search": null, "agent-judgment-search": null, "you-x402-search": null, "tavily-x402-search": null},
+      "customer_deliverable": "No paid-performance winner can be reported from the locked evidence. All six candidate providers have zero observed paid attempts, so effective cost per acceptable result is unobserved for every provider.",
+      "provider_ranking": null,
+      "limitations": ["No provider has real paid acceptable-result evidence in the locked fixture.", "Live quote, latency, settlement and paid-result observations remain unobserved where absent; no values were synthesized."],
+      "support_or_failure_disposition": "INSUFFICIENT_EVIDENCE: preserve evidence record; do not charge customer; do not claim a winner."
+    },
+    {
+      "run_id": "relay-qa-hashed-2",
+      "provider_ordering": ["firecrawl-x402-search", "agentutility-search", "anicca-web-search", "agent-judgment-search", "you-x402-search", "tavily-x402-search"],
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "attempts": {"firecrawl-x402-search": 0, "agentutility-search": 0, "anicca-web-search": 0, "agent-judgment-search": 0, "you-x402-search": 0, "tavily-x402-search": 0},
+      "effective_cost_per_acceptable_result": {"firecrawl-x402-search": null, "agentutility-search": null, "anicca-web-search": null, "agent-judgment-search": null, "you-x402-search": null, "tavily-x402-search": null},
+      "customer_deliverable": "No paid-performance winner can be reported from the locked evidence. All six candidate providers have zero observed paid attempts, so effective cost per acceptable result is unobserved for every provider.",
+      "provider_ranking": null,
+      "limitations": ["No provider has real paid acceptable-result evidence in the locked fixture.", "Live quote, latency, settlement and paid-result observations remain unobserved where absent; no values were synthesized."],
+      "support_or_failure_disposition": "INSUFFICIENT_EVIDENCE: preserve evidence record; do not charge customer; do not claim a winner."
+    }
+  ],
+  "repeatability_comparison": {
+    "same_request_fixture_hash": true,
+    "same_evidence_fixture_hash": true,
+    "provider_ordering_identical": true,
+    "classification_identical": true,
+    "attempts_identical": true,
+    "effective_cost_fields_identical": true,
+    "customer_deliverable_identical": true,
+    "result": "PASS"
+  },
+  "machine_evidence_record": {
+    "providers_evaluated": 6,
+    "providers_with_observed_paid_attempts": 0,
+    "paid_performance_winner": null,
+    "settled_spend": 0,
+    "synthetic_observations_promoted": 0
+  },
+  "truthfulness": "This is a zero-spend deterministic dry-run execution over locked repository evidence. It is not paid benchmark evidence, customer traction, revenue, or approval for a paid pilot."
+}
