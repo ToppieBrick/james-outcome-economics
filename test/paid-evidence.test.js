@@ -6,11 +6,11 @@ const { validatePaidEvidence, ingestPaidEvidence } = require('../lib/paid-eviden
 
 function valid(overrides = {}) {
   return {
-    schema_version: '1.0.0', observation_id: 'obs-00001',
+    schema_version: '1.1.0', observation_id: 'obs-00001',
     observed_at: '2026-08-31T00:00:00Z', task_fingerprint: 'task-0001',
     provider_canonical_key: 'provider-a', endpoint: 'https://example.com/search',
     pay_to: '0xabc', quote_observed_at: '2026-08-31T00:00:00Z',
-    quoted_amount: 0.01, settled_amount: 0.01,
+    quoted_amount: 0.01, settlement_state: 'SETTLED', settled_amount: 0.01,
     settlement_receipt_or_tx_reference: 'tx-observed-1', attempt_number: 1,
     paid_latency_ms: 250, deterministic_acceptance_pass: true,
     acceptance_failure_reason: null, retry_reason: null, evidence_kind: 'OBSERVED_PAID',
@@ -18,9 +18,24 @@ function valid(overrides = {}) {
   };
 }
 
-test('accepts complete observed paid evidence', () => {
+test('accepts complete observed settled evidence', () => {
   assert.equal(validatePaidEvidence(valid()).ok, true);
   assert.equal(ingestPaidEvidence([valid()]).length, 1);
+});
+
+test('accepts verified but explicitly unsettled attempt without inventing spend', () => {
+  assert.equal(validatePaidEvidence(valid({
+    settlement_state: 'VERIFIED_NOT_SETTLED', settled_amount: 0,
+    settlement_receipt_or_tx_reference: null,
+    deterministic_acceptance_pass: false,
+    acceptance_failure_reason: 'upstream search failed'
+  })).ok, true);
+});
+
+test('rejects contradictory settlement claims', () => {
+  assert.equal(validatePaidEvidence(valid({ settlement_state: 'SETTLED', settled_amount: 0 })).ok, false);
+  assert.equal(validatePaidEvidence(valid({ settlement_state: 'VERIFIED_NOT_SETTLED', settled_amount: 0.01 })).ok, false);
+  assert.equal(validatePaidEvidence(valid({ settlement_state: 'VERIFIED_NOT_SETTLED', settled_amount: 0, settlement_receipt_or_tx_reference: 'tx-impossible' })).ok, false);
 });
 
 test('rejects unpaid or synthetic evidence before ingestion', () => {
