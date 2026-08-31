@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-09-01T00:52:40+10:00",
+  "venture": "Outcome Economics Intelligence",
+  "gate_status": "BLOCKED_FOR_PAYMENT",
+  "purpose": "Zero-spend deterministic request-to-deliverable-to-evidence dry run required before limited paid pilot approval.",
+  "task_class": "structured web research/search",
+  "execution_mode": "locked-observed-evidence-only",
+  "payment_allowed": false,
+  "customer_payment_allowed": false,
+  "required_runs": 2,
+  "repeatability_rule": "Both runs consume byte-identical locked evidence and request fixture and must produce identical provider ordering, PASS/FAIL classification, attempts, and effective-cost fields. Timestamps and run IDs may differ.",
+  "required_input_fields": ["task_id","request_fixture_hash","evidence_fixture_hash","provider","listed_price","live_quoted_price","latency_ms","attempts","acceptance_criteria","settled_spend"],
+  "acceptance_criteria": [
+    "No synthetic observation may be promoted to observed paid evidence",
+    "Missing live quote, latency, settlement or paid result remains null/unobserved",
+    "Provider PASS requires every deterministic task criterion to pass",
+    "Effective cost per acceptable result is calculated only from actual settled spend and acceptable results",
+    "No payment path is invoked during this dry run",
+    "Customer-facing deliverable states evidence limitations and does not imply paid execution"
+  ],
+  "required_outputs": ["customer_deliverable","machine_evidence_record","provider_ranking","limitations","support_or_failure_disposition"],
+  "failure_handling": {
+    "invalid_or_incomplete_evidence": "fail closed; no ranking claim beyond available observed evidence",
+    "no_acceptable_provider": "return no acceptable provider and evidence reasons",
+    "delivery_failure": "record failure; no customer charge; preserve evidence record",
+    "refund_policy_dry_run": "not applicable because customer payment is prohibited before APPROVED_FOR_LIMITED_PILOT"
+  },
+  "approval_effect": "Passing this dry run can support repeatability, delivery/failure handling, truthful-claims and end-to-end dry-run criteria only. It cannot satisfy the separate real non-synthetic paid benchmark or isolated-signer criteria.",
+  "truthfulness": "This specification is deployed test infrastructure, not evidence that either dry run has executed or passed."
+}
