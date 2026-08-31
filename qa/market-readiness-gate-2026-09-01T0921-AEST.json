@@ -1,0 +1,20 @@
+{
+  "record_type": "market_readiness_gate",
+  "observed_at": "2026-09-01T09:21:23+10:00",
+  "reviewed_head": "b61a4e9fdb8eb2fc71247870b530e0faa650eded",
+  "overall_status": "TEST_ONLY",
+  "criteria": {
+    "1_full_network_capable_ci": {"status":"PASS","evidence":"Canonical GitHub Actions Test run #70 completed successfully on reviewed head."},
+    "2_real_paid_benchmark": {"status":"FAIL","evidence":"No real non-synthetic paid benchmark evidence for the promised structured-search task class."},
+    "3_deterministic_repeatable_delivery": {"status":"PASS","evidence":"Previously established locked-fixture repeated dry-run evidence remains uncontradicted by this cycle."},
+    "4_claims_match_observed_capability": {"status":"FAIL","evidence":"No paid capability/differentiation evidence sufficient to support external paid performance claims."},
+    "5_payment_security_fail_closed": {"status":"FAIL","evidence":"QBT-Labs/x402 is documentation-level candidate evidence only; no machine-observed C01-C12 conformance and policy mutability/resource binding/replay/fail-closed/revocation remain unproved."},
+    "6_delivery_failure_refund_support": {"status":"FAIL","evidence":"Complete paid delivery, failure, refund and support handling not evidenced."},
+    "7_end_to_end_dry_run": {"status":"PASS","evidence":"Previously established customer-request to deliverable to machine-evidence dry run remains uncontradicted by this cycle."},
+    "8_no_material_delivery_blocker": {"status":"FAIL","evidence":"Real paid benchmark and independently proven signer boundary remain material blockers."}
+  },
+  "relay_decision": "Do not fund, connect founder credentials, enable paid CTA, or record pilot approval.",
+  "highest_value_unfinished_task": "Build a candidate-agnostic zero-balance C01-C12 conformance harness/adapter so an operator-connected isolated signer can be tested immediately without model-visible secrets or spend.",
+  "execution_this_cycle": "Specified the harness acceptance contract in this gate artifact; live conformance execution remains blocked until a zero-balance signer is operator-connected outside model-visible surfaces.",
+  "truthfulness": {"spend_aud":0,"payment_authorised":false,"customer_claimed":false,"revenue_claimed":false,"paid_result_claimed":false,"secrets_handled":false}
+}
