@@ -1,0 +1,51 @@
+{
+  "record_type": "signer_boundary_candidate_assessment",
+  "observed_at": "2026-09-01T08:51:45+10:00",
+  "candidate": {
+    "name": "QBT-Labs/x402",
+    "repository": "https://github.com/QBT-Labs/x402",
+    "architecture_observed": [
+      "dedicated x402-signer process via IPC",
+      "wallet key intended to remain outside AI agent process memory",
+      "policy engine with per-transaction and per-day spend limits",
+      "allowed-chain and allowed-recipient controls",
+      "audit logging",
+      "Base L2 USDC settlement"
+    ]
+  },
+  "james_locked_policy": {
+    "max_transaction_aud": 25,
+    "max_daily_aud": 40,
+    "network": "eip155:8453",
+    "asset": "native USDC on Base",
+    "funding_before_conformance": false,
+    "model_visible_secrets": false
+  },
+  "assessment": {
+    "status": "PROMISING_BUT_NOT_APPROVED",
+    "reason": "The public architecture is the closest observed match to James's required process-isolated signer plus policy-engine boundary, but documentation is not machine-observed conformance. The policy file appears locally mutable, so independent proof is required that the agent/model process cannot alter limits, recipients, chains, signer state or audit evidence. Exact-resource binding, quote expiry/replay rejection, budget-store fail-closed behaviour and immediate owner revocation also remain unobserved.",
+    "funding_allowed": false,
+    "paid_benchmark_allowed": false
+  },
+  "required_zero_balance_tests": [
+    "C01 no secret/key/seed material visible to model or agent process",
+    "C02 reject amount above locked per-transaction ceiling",
+    "C03 reject cumulative spend above locked 24-hour/daily ceiling",
+    "C04 reject every network except eip155:8453",
+    "C05 reject every asset except canonical native Base USDC",
+    "C06 reject non-allowlisted recipient",
+    "C07 bind authorization to exact approved resource/request",
+    "C08 reject malformed or expired payment requirement",
+    "C09 reject replayed authorization/nonce",
+    "C10 fail closed if budget/policy state is unavailable or corrupt",
+    "C11 owner revocation/kill switch prevents subsequent signing",
+    "C12 agent cannot mutate policy, export key, invoke generic signing or bypass signer boundary"
+  ],
+  "next_action": "Run C01-C12 against an unfunded/zero-balance isolated deployment. Do not import a founder key or fund a wallet. Promote only on machine-observed evidence for every mandatory control.",
+  "truthfulness": {
+    "customer_revenue_claimed": false,
+    "paid_benchmark_claimed": false,
+    "signer_approved_claimed": false,
+    "spend": "AUD 0"
+  }
+}
