@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "1.0",
+  "observedAt": "2026-08-31T00:50:53Z",
+  "taskClass": "structured_web_research_search",
+  "provider": "Otto AI",
+  "canonicalHost": "x402.ottoai.services",
+  "endpoint": {
+    "method": "GET",
+    "url": "https://x402.ottoai.services/web-search",
+    "queryParameters": ["query"],
+    "listedOutput": {
+      "structuredJson": true,
+      "fieldsObservedInDescription": [
+        "title",
+        "url",
+        "published_date",
+        "author",
+        "relevance_score",
+        "text_snippet"
+      ],
+      "upstream": "Exa"
+    }
+  },
+  "listedPriceUsd": 0.009,
+  "liveQuotedPriceUsd": null,
+  "paymentEvidence": {
+    "protocol": "x402",
+    "networkObservedAtServiceLevel": "eip155:137",
+    "networkName": "Polygon",
+    "asset": null,
+    "payTo": null,
+    "freshJamesHttp402Observed": false
+  },
+  "externalDemand": {
+    "source": "Agentic Market",
+    "window": "displayed last 30 days",
+    "endpointSpecific": true,
+    "calls": 14,
+    "payers": 5,
+    "rankingEligible": false
+  },
+  "benchmarkEligibility": {
+    "zeroSpendWatch": true,
+    "paidBenchmarkEligibleUnderCurrentPolicy": false,
+    "reason": "Current James payment policy is Base-mainnet only. The observed service-level network is Polygon (eip155:137). A fresh authoritative HTTP 402 from the exact endpoint would still be required even if payment policy were later expanded."
+  },
+  "paidOutcomeEvidence": {
+    "paidExecutionObserved": false,
+    "latencyMs": null,
+    "attempts": 0,
+    "deterministicPass": null,
+    "settledCostUsd": 0,
+    "effectiveCostPerAcceptableResultUsd": null
+  },
+  "sources": [
+    {
+      "url": "https://agentic.market/services/x402-ottoai-services",
+      "observations": [
+        "service host x402.ottoai.services",
+        "service-level network EIP155:137",
+        "GET /web-search",
+        "listed price US$0.009",
+        "query parameter",
+        "structured result description",
+        "14 calls / 5 payers in displayed last-30-day window"
+      ]
+    }
+  ],
+  "evidenceBoundary": "Catalogue/schema and marketplace endpoint-demand evidence only. Do not treat listed price as a live execution quote, marketplace calls as James attempts, or service-level network metadata as a route-specific payment challenge."
+}
