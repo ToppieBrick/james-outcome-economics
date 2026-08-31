@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-08-31T20:20:00+10:00",
+  "evidence_type": "competitor_route_demand_comparison",
+  "scope": "x402 structured/web search",
+  "observations": [
+    {
+      "provider": "AgentUtility",
+      "route": "POST https://x402.agentutility.ai/search",
+      "source": "Agenstry current indexed route metadata",
+      "listed_price_usd": null,
+      "displayed_30d_calls": 4,
+      "displayed_30d_unique_payers": 1,
+      "caveat": "Route metadata is third-party catalogue evidence. Seller-wide AgentUtility volume is not attributable to this route and Agenstry separately flags shared settlement wallet / insufficient independent-payer evidence."
+    },
+    {
+      "provider": "Tavily",
+      "route": "POST https://x402.tavily.com/search",
+      "source": "LavoLoop Coinbase Bazaar-derived catalogue snapshot, sync dated 2026-08-03",
+      "listed_price_usd": 0.01,
+      "displayed_30d_calls": 60307,
+      "displayed_30d_unique_payers": 422,
+      "caveat": "Third-party marketplace telemetry, not James-direct execution evidence; snapshot is not current enough to establish today's executable price or current 30-day totals."
+    }
+  ],
+  "decision": "Do not use AgentUtility seller-wide transaction totals as search-route demand. Current observed route-attributed evidence is directionally much stronger for Tavily than AgentUtility search, so external-demand preparation should treat Tavily as the stronger demand control while retaining AgentUtility as a benchmark candidate only after direct 402/request-equivalence evidence.",
+  "ranking_eligible": false,
+  "paid_call_performed": false,
+  "settled_spend_usd": 0,
+  "fabricated_paid_results": false
+}
