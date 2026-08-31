@@ -1,0 +1,48 @@
+{
+  "artifact": "isolated-x402-signer-boundary-conformance-contract",
+  "date": "2026-09-01",
+  "venture": "Outcome Economics Intelligence",
+  "status": "BLOCKED_UNTIL_CONFORMANCE_PASS",
+  "purpose": "Define the evidence required before any founder funding, secret handling, or paid benchmark execution.",
+  "architecture": "model/benchmark harness -> purpose-specific purchase request -> deterministic policy boundary -> isolated signer/wallet -> x402 settlement",
+  "secret_rule": "Private keys, seed phrases, wallet sessions, generic signing primitives and payment secrets MUST NOT be present in model context, prompts, tool arguments, application logs, repository content, or the benchmark process.",
+  "required_controls": {
+    "network": "Base mainnet only (eip155:8453)",
+    "asset": "native USDC only unless Relay/QA explicitly approves another asset",
+    "per_transaction_limit_aud": 25,
+    "daily_limit_aud": 40,
+    "budget_enforcement": "atomic reserve before signature; fail closed if counter state is unavailable or ambiguous",
+    "recipient_policy": "explicit allowlist/pinning to approved benchmark provider payment recipients; changed recipient fails closed",
+    "resource_policy": "payment authorization bound to the registered benchmark endpoint/resource and canonical request digest",
+    "quote_policy": "fresh x402 challenge must be independently parsed and amount/network/asset/recipient/expiry verified before signing",
+    "replay_policy": "unique payment identifier/nonce and duplicate-settlement protection required",
+    "revocation": "operator can immediately freeze/revoke payment authority outside the model",
+    "audit": "append-only decision record must distinguish refused-before-signature, signed-not-settled, settled, ambiguous and reconciled outcomes",
+    "authority": "benchmark/model process cannot raise limits, change allowlists, change network/asset policy, export signing material, fund the wallet, or invoke a generic transfer/sign primitive"
+  },
+  "pre_funding_conformance_tests": [
+    {"id":"C01","test":"request above A$25 equivalent","expected":"REFUSE_BEFORE_SIGNATURE"},
+    {"id":"C02","test":"cumulative daily request above A$40 equivalent","expected":"REFUSE_BEFORE_SIGNATURE"},
+    {"id":"C03","test":"recipient not allowlisted or recipient differs from pinned provider","expected":"REFUSE_BEFORE_SIGNATURE"},
+    {"id":"C04","test":"network other than eip155:8453","expected":"REFUSE_BEFORE_SIGNATURE"},
+    {"id":"C05","test":"asset other than approved native USDC","expected":"REFUSE_BEFORE_SIGNATURE"},
+    {"id":"C06","test":"resource URL or canonical request digest differs from approved benchmark request","expected":"REFUSE_BEFORE_SIGNATURE"},
+    {"id":"C07","test":"expired/malformed/ambiguous x402 challenge","expected":"REFUSE_BEFORE_SIGNATURE"},
+    {"id":"C08","test":"duplicate nonce/payment identifier or replayed settlement reference","expected":"REFUSE_OR_RETURN_PRIOR_IDEMPOTENT_RESULT_WITH_NO_NEW_PAYMENT"},
+    {"id":"C09","test":"budget store/counter unavailable","expected":"REFUSE_BEFORE_SIGNATURE"},
+    {"id":"C10","test":"operator freeze/revocation active","expected":"REFUSE_BEFORE_SIGNATURE"},
+    {"id":"C11","test":"attempt by benchmark/model process to alter policy or request generic signing/export","expected":"CAPABILITY_NOT_EXPOSED_OR_DENIED"},
+    {"id":"C12","test":"allowed zero-value/test-vector authorization using non-funded test fixture","expected":"POLICY_PASS_WITH_AUDIT_RECORD; NO_REAL_VALUE_SETTLEMENT"}
+  ],
+  "approval_rule": "All C01-C12 must have machine-observed evidence and Relay/QA must record signer_boundary=PASS before founder funding or any real paid benchmark. Self-declared configuration is insufficient.",
+  "market_readiness_rule": "Signer PASS alone does not authorize customer payment. APPROVED_FOR_LIMITED_PILOT additionally requires real non-synthetic paid benchmark evidence, deterministic repeatability, delivery/failure/refund/support handling, truthful claims, full relevant CI, and end-to-end dry run.",
+  "public_reference_observations": [
+    "x402 Foundation MCP guidance documents pre-signature spend controls/policies.",
+    "tx402 publicly documents atomic reservation before signer invocation plus network/recipient controls, but also states it does not isolate a signer from a fully compromised application; therefore it is not sufficient alone for James's no-secret boundary.",
+    "x402api publicly documents a purpose-specific purchase-tool architecture with policy engine and wallet service, keeping keys and generic signing primitives outside model/agent surfaces. These are candidate design references, not evidence that James has a connected approved signer."
+  ],
+  "spend_to_date_aud": 0,
+  "funding_authorized": false,
+  "paid_benchmark_authorized": false,
+  "customer_payment_authorized": false
+}
