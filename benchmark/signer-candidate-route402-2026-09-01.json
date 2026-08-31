@@ -1,0 +1,37 @@
+{
+  "artifact": "signer-candidate-route402",
+  "date": "2026-09-01",
+  "venture": "Outcome Economics Intelligence",
+  "status": "PROMISING_BUT_NOT_APPROVED",
+  "source": "https://route402.dev/wallet",
+  "observed_public_claims": [
+    "Remote MCP wallet for paid APIs; policy is stored outside agent context.",
+    "Six-tool surface with one spending tool.",
+    "Policy enforcement occurs before signature.",
+    "Documents hard per-call, session and daily budgets.",
+    "Documents known-service/counterparty controls and unknown-counterparty blocking.",
+    "Documents owner approval threshold and immediate revocation.",
+    "Current public product states x402 v2 settlement on Flare, not Base."
+  ],
+  "c01_c12_mapping": {
+    "C01_per_transaction_hard_stop": "DOCUMENTED_CANDIDATE_NOT_MACHINE_OBSERVED",
+    "C02_daily_hard_stop": "DOCUMENTED_CANDIDATE_NOT_MACHINE_OBSERVED",
+    "C03_recipient_allowlist": "DOCUMENTED_CANDIDATE_NOT_MACHINE_OBSERVED",
+    "C04_base_only_network": "FAIL_PUBLIC_PRODUCT_CURRENTLY_FLARE",
+    "C05_native_usdc_only": "UNOBSERVED",
+    "C06_resource_request_digest_binding": "UNOBSERVED",
+    "C07_expired_malformed_quote_rejection": "UNOBSERVED",
+    "C08_replay_idempotency": "UNOBSERVED",
+    "C09_budget_store_fail_closed": "UNOBSERVED",
+    "C10_immediate_revocation": "DOCUMENTED_CANDIDATE_NOT_MACHINE_OBSERVED",
+    "C11_no_policy_mutation_generic_signing_key_export": "PARTIAL_DOCUMENTATION_ONLY",
+    "C12_zero_value_test_vector_audit": "UNOBSERVED"
+  },
+  "decision": "DO_NOT_FUND_OR_CONNECT_FOR_MAINNET_TESTING. Route402 is architecturally relevant because it combines remote key isolation with pre-signature budgets and counterparty policy, but the currently documented Flare settlement fails James's mandatory Base-only C04 control. Retain on competitor/signer watch for Base support or use only as a design reference.",
+  "security_rule": "No founder key, seed phrase, payment secret, wallet session or generic signing capability is requested or stored.",
+  "spend_aud": 0,
+  "funding_authorized": false,
+  "paid_benchmark_authorized": false,
+  "customer_payment_authorized": false,
+  "next_action": "Continue candidate search for a remote/isolated signer that combines route402-style hard daily/per-call/counterparty controls with Base mainnet native USDC and machine-testable C01-C12 behavior."
+}
