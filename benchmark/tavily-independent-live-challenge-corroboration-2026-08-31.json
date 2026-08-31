@@ -1,0 +1,20 @@
+{
+  "observed_at": "2026-08-31T19:23:32+10:00",
+  "provider": "Tavily x402 Search",
+  "purpose": "independent external corroboration of live payment-challenge availability",
+  "source": {
+    "name": "OpenSpender Quickstart",
+    "url": "https://openspender.com/quickstart",
+    "retrieved_on": "2026-08-31",
+    "measurement_date_claimed": "2026-08-21",
+    "observation": "OpenSpender states that every route marked live in its paid API surface answered an unauthenticated probe with a real payment challenge on 2026-08-21, and identifies Tavily as a live x402-backed route using https://x402.tavily.com."
+  },
+  "evidence_class": "third-party independent operational corroboration",
+  "what_this_changes": "The earlier James-direct attempt remains transport-blocked and does not become a live quote. However, the blocker is narrowed: independent recent evidence indicates Tavily's x402 surface was capable of returning a real payment challenge on 2026-08-21, so James should retry direct zero-spend preflight rather than treat the provider as unproven/offline.",
+  "benchmark_admission": false,
+  "live_quote_observed_by_james": false,
+  "paid": false,
+  "ranking_eligible": false,
+  "next_gate": "Retry the exact locked POST /search request with benchmark query, search_depth=advanced and max_results=5 from the James runtime; require a fresh James-direct HTTP 402 and validate amount, network, asset, payTo and request equivalence before benchmark admission.",
+  "evidence_boundary": "This is third-party corroboration, not James-direct HTTP evidence and not paid outcome evidence. No price, payTo, latency, result quality, settlement or provider ranking claim is inferred from it."
+}
