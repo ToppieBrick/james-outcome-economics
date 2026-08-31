@@ -20,6 +20,31 @@
         }
       ],
       "evidence": "Exact-schema structured-search comparator admitted to zero-spend preflight only. James must capture its own fresh policy-compliant HTTP 402 immediately before any future paid admission."
+    },
+    {
+      "provider": "OpenWeb Ninja",
+      "endpoint": "https://x402.openwebninja.com/realtime-web-search/search",
+      "method": "GET",
+      "listedPriceUsd": 0.003,
+      "listedPriceStatus": "official-provider-catalogue-most-endpoints-tier",
+      "liveQuoteObservedByJames": false,
+      "paidExecutionObserved": false,
+      "executionEligibility": "watch-only-until-result-count-equivalence-is-provable",
+      "evidenceSources": [
+        {
+          "type": "official-provider-launch-post",
+          "url": "https://www.openwebninja.com/blog/x402-agentic-payments",
+          "checked": "2026-08-31",
+          "note": "Provider states all 40+ APIs, including Web Search, are available through x402.openwebninja.com; most endpoints cost US$0.003/call; native USDC is supported on Base, Polygon and Arbitrum; successful calls are charged; x402 uses an exact EIP-3009 authorization and returns settlement receipt metadata after payment. The post demonstrates a real HTTP 402 on JSearch, not on the Web Search route, so no Web Search live quote is claimed."
+        },
+        {
+          "type": "official-web-search-documentation",
+          "url": "https://www.openwebninja.com/api/real-time-web-search",
+          "checked": "2026-08-31",
+          "note": "Web Search returns structured organic results including title, URL, snippet and position and documents q as the query parameter. Public documentation does not expose a deterministic top-5 result-count parameter."
+        }
+      ],
+      "evidence": "Price/Base compatibility make OpenWeb Ninja a serious low-cost comparator, but it is excluded from the locked executable cohort until James can prove an outbound top-5 result-count contract without post-hoc truncation. No latency, PASS/FAIL, attempts or effective-cost values are inferred from provider marketing or documentation."
     }
   ]
 }
