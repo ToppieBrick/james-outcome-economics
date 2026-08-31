@@ -1,0 +1,21 @@
+{
+  "observed_at": "2026-08-31T19:53:55+10:00",
+  "evidence_type": "external_demand_authenticity_caveat",
+  "provider": "AgentUtility",
+  "provider_host": "x402.agentutility.ai",
+  "source": {
+    "name": "Agenstry",
+    "url": "https://agenstry.com/agents/x402.agentutility.ai",
+    "observed_summary": "Agenstry reports a 30-day window with 11,016 total transactions at the service level, but its payment-authenticity assessment is insufficient_evidence_of_independent_payers (1/5). For the assessed inflow slice it reports $18.00 across 685 transactions, does not hold payer identities, and flags shared_settlement_wallet among the evidence caveats."
+  },
+  "benchmark_implication": "Do not treat raw seller-level transaction counts or revenue as proof of independent external demand. Demand evidence used by Outcome Economics Intelligence must carry provenance and payer-independence confidence separately from task-quality evidence.",
+  "ranking_eligible": false,
+  "live_quoted_price_usd": null,
+  "provider_latency_ms": null,
+  "attempts": 0,
+  "acceptance_result": null,
+  "settled_spend_usd": 0,
+  "effective_cost_per_acceptable_result_usd": null,
+  "paid_call_performed": false,
+  "fabricated_paid_results": false
+}
