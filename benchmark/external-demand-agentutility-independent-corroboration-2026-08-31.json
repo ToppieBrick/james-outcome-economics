@@ -1,0 +1,38 @@
+{
+  "observedAt": "2026-08-31T15:23:45+10:00",
+  "taskClass": "structured-web-research-search",
+  "provider": "AgentUtility",
+  "evidenceType": "external-demand-corroboration-independent-source",
+  "source": {
+    "name": "Agenstry",
+    "url": "https://agenstry.com/agents/x402.agentutility.ai",
+    "retrievedDate": "2026-08-31",
+    "measurementDateReported": "2026-08-27"
+  },
+  "observations": {
+    "settlementNetwork": "Base",
+    "settlementAsset": "USDC",
+    "settlementWallet": "0x6c0752c09e7f6fa6526fcdf40e456a159ebb5621",
+    "displayed30dWalletInflowsUsd": 281.42,
+    "displayed30dWalletTransfers": 11016,
+    "displayedLast7dCalls": 0,
+    "displayedLast7dRevenueUsd": 0,
+    "independentPayerEvidenceRating": "insufficient_evidence_of_independent_payers",
+    "independentPayerEvidenceScore": "1/5",
+    "sharedSettlementWallet": true,
+    "routeAttributionAvailable": false
+  },
+  "interpretation": "This independently corroborates that the settlement wallet associated with AgentUtility has substantial recent Base USDC transfer activity, but it does not independently corroborate Talkshi's /search or /web-search route-level call counts. Agenstry explicitly warns that the wallet is shared with other indexed agents and that payer identities are unavailable, so the inflow cannot be attributed to AgentUtility alone or treated as evidence of independent customer demand. Its displayed last-7-day agent activity is zero. The correct demand conclusion is therefore narrower: Talkshi provides route-level demand corroboration; Agenstry corroborates wallet activity only and materially weakens any inference that the observed wallet inflow proves route-specific or independent-buyer demand.",
+  "benchmarkUse": {
+    "rankingEligible": false,
+    "mayPopulateSuccessProbability": false,
+    "mayPopulateProviderLatency": false,
+    "mayPopulatePaidAttempts": false,
+    "mayPopulatePassFail": false,
+    "mayPopulateEffectiveCostPerAcceptableResult": false,
+    "mayBeUsedAsExternalDemandProof": false,
+    "reason": "Shared-wallet and payer-attribution limitations prevent defensible provider- or route-level demand attribution."
+  },
+  "decision": "TEST",
+  "nextGate": "Preserve Talkshi route-level observations as third-party demand corroboration only. Do not aggregate Agenstry wallet inflows into AgentUtility route demand. Seek a second route-attributed source or direct marketplace route metrics before claiming independently corroborated /search or /web-search demand."
+}
