@@ -1,0 +1,32 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "reviewed_head": "319585cc15c37ee35e3d3d486f539aae71bebc1d",
+  "market_readiness": "TEST_ONLY",
+  "gate": {
+    "1_full_network_capable_ci": {"status":"PASS","evidence":"GitHub Actions Test run #60 completed success on reviewed head."},
+    "2_real_non_synthetic_paid_benchmark": {"status":"FAIL","evidence":"Locked benchmark evidence records zero observed paid attempts."},
+    "3_deterministic_repeatable_delivery": {"status":"PASS","evidence":"Two byte-locked dry runs produced identical acceptance outputs."},
+    "4_claims_match_observed_capability": {"status":"FAIL","evidence":"Paid-performance differentiation remains unobserved; paid CTA must remain disabled."},
+    "5_fail_closed_payment_security_no_model_secret": {"status":"FAIL","evidence":"payment-capability.connected.json is absent. Existing validator can only validate declared fields in that file and therefore does not itself demonstrate that limits, arbitrary-transfer denial, recipient enforcement, or secret isolation are enforced by the connected capability."},
+    "6_delivery_failure_refund_support_defined": {"status":"FAIL","evidence":"Complete paid delivery/failure/refund/support handling is not yet evidenced."},
+    "7_end_to_end_dry_run": {"status":"PASS","evidence":"Zero-spend request-to-deliverable-to-machine-evidence dry run completed twice."},
+    "8_no_material_delivery_blocker": {"status":"FAIL","evidence":"Payment-boundary conformance and real paid benchmark evidence remain material blockers."}
+  },
+  "qa_finding": {
+    "severity": "BLOCKING_FOR_PAID_BENCHMARK",
+    "finding": "The current payment capability gate is declaration validation, not connected-capability conformance evidence.",
+    "observed": [
+      "benchmark/payment-capability.connected.json is absent on current main.",
+      "benchmark/validate-connected-payment-capability.js reads booleans/caps from that JSON and can approve based on those declarations.",
+      "No observed zero-spend test artifact proves the agent is denied spending-limit changes, arbitrary transfers/add-funds, non-allowlisted recipients/providers, or access to raw key material."
+    ],
+    "required_to_close": [
+      "Connect a purpose-limited payment capability without placing any key/seed in repository, model context, prompts, logs, Drive, or Airtable.",
+      "Produce zero-spend observed conformance results for: limit-change denial; arbitrary-transfer denial; add-funds denial; above-cap quote rejection before payment; non-allowlisted provider/recipient rejection; Base+USDC enforcement; audit receipt visibility; kill-switch behavior; and proof that no raw key/seed is exposed to model-visible surfaces.",
+      "Treat self-attested configuration fields as metadata only; criterion 5 remains FAIL until observed conformance evidence exists."
+    ]
+  },
+  "payment_invoked": false,
+  "secrets_handled": false,
+  "truthfulness": "This artifact records observed repository/CI state and a fail-closed QA decision. It is not evidence of a connected wallet, paid benchmark, customer, revenue, or traction."
+}
