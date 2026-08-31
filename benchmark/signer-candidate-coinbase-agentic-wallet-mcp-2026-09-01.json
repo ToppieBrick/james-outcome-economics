@@ -1,0 +1,38 @@
+{
+  "observed_at": "2026-09-01T05:54:12+10:00",
+  "venture": "Outcome Economics Intelligence",
+  "candidate": "Coinbase Agentic Wallet MCP / Agentic Wallet CLI",
+  "purpose": "Pre-funding evidence mapping against the isolated x402 signer boundary. This is documentation evidence only, not observed conformance.",
+  "status": "PROMISING_BUT_NOT_APPROVED",
+  "first_party_observations": {
+    "private_key_isolation": "Coinbase documentation states private keys stay in Coinbase infrastructure and agents do not access them.",
+    "x402_only_mcp_payment_surface": "MCP payment tools support x402 requests; the MCP documentation states agents cannot transfer funds to arbitrary addresses.",
+    "founder_only_funding": "Funding/onramp is available only through the wallet UI and cannot be initiated by the agent.",
+    "founder_only_limits": "Max per-call and max per-session spending limits are configured in the wallet UI and cannot be changed by the agent.",
+    "prepayment_quote_check": "The MCP exposes a check-payment-requirements operation that checks endpoint cost without paying.",
+    "network_scope": "Documentation supports Base, Polygon and Solana; therefore Base-only enforcement is not established by the MCP documentation.",
+    "daily_cap": "Documentation describes per-call and per-session caps, not the required hard A$40 rolling/calendar daily cap.",
+    "failed_payment_semantics": "FAQ states failed payments deduct no funds.",
+    "request_capability": "CLI x402 pay supports a caller-provided --max-amount limit."
+  },
+  "conformance_mapping": {
+    "C01_transaction_cap_AUD25": "PARTIAL_DOCUMENTED: per-call cap exists; AUD-denominated hard enforcement and FX treatment not observed.",
+    "C02_daily_cap_AUD40": "NOT_DOCUMENTED: only per-session cap observed in first-party MCP docs.",
+    "C03_base_native_usdc_only": "FAIL_AS_DOCUMENTED_DEFAULT: product supports Base, Polygon and Solana; no Base-only founder lock observed.",
+    "C04_recipient_allowlist": "PARTIAL: MCP says no arbitrary transfers, but exact provider-recipient allowlist enforcement before signing is not evidenced.",
+    "C05_exact_resource_binding": "NOT_OBSERVED",
+    "C06_malformed_quote_rejection": "NOT_OBSERVED",
+    "C07_expired_quote_rejection": "NOT_OBSERVED",
+    "C08_replay_protection": "NOT_OBSERVED",
+    "C09_budget_store_fail_closed": "NOT_OBSERVED",
+    "C10_immediate_revocation": "NOT_OBSERVED",
+    "C11_agent_cannot_mutate_policy": "DOCUMENTED for wallet-UI spending limits; broader policy mutation surface still requires machine test.",
+    "C12_no_generic_signing_or_key_export": "PARTIAL_DOCUMENTED: private keys are isolated and MCP restricts sensitive actions; generic signing absence must be machine-tested on the exact connected surface."
+  },
+  "decision": "Do not fund. Candidate is materially closer to the required no-secret boundary than an in-process signer, but it cannot pass Relay/QA until C01-C12 are machine-observed. The largest documented gaps are daily-cap semantics, Base-only pinning, exact recipient/resource binding, replay/expiry handling and revocation.",
+  "next_action": "If this candidate is connected outside model-visible surfaces, configure the lowest possible per-call/session limits, leave balance at zero, then execute C01-C12 as zero-spend negative tests before any funding.",
+  "spend_aud": 0,
+  "secrets_handled": false,
+  "payment_invoked": false,
+  "truthfulness": "No wallet was connected, funded or exercised in this observation. Documentation claims are not treated as conformance evidence."
+}
