@@ -1,0 +1,22 @@
+{
+  "artifact": "relay-market-readiness-gate",
+  "venture": "Outcome Economics Intelligence",
+  "observed_head": "443eff46302b19a3958387865ada099bcfaaa4f6",
+  "overall_status": "TEST_ONLY",
+  "paid_launch_authorized": false,
+  "criteria": [
+    {"id":1,"status":"PASS","evidence":"Canonical GitHub Actions Test run #63 completed successfully on observed_head."},
+    {"id":2,"status":"FAIL","evidence":"No real non-synthetic paid benchmark evidence for the promised structured-search task class is recorded."},
+    {"id":3,"status":"PASS","evidence":"Locked deterministic request/evidence fixtures were executed twice previously with identical acceptance/classification outcomes."},
+    {"id":4,"status":"FAIL","evidence":"Paid-performance and differentiation claims cannot yet be supported by real paid-observed task-class evidence; public offer must remain validation/waitlist only."},
+    {"id":5,"status":"FAIL","evidence":"James defined C01-C12 fail-closed signer-boundary tests, but no actually connected isolated signer/purchase boundary and no machine-observed C01-C12 results exist. Contract/specification is not conformance evidence."},
+    {"id":6,"status":"FAIL","evidence":"Complete paid delivery, failure, refund and support handling is not yet evidenced end-to-end."},
+    {"id":7,"status":"PASS","evidence":"Zero-spend customer-request to deliverable/evidence dry run was completed and repeated against locked fixtures; this does not constitute a paid delivery."},
+    {"id":8,"status":"FAIL","evidence":"Connected signer conformance and real paid benchmark evidence remain material blockers that would make paid delivery materially different from what has been demonstrated."}
+  ],
+  "pass_count": 3,
+  "fail_count": 5,
+  "highest_value_next_task": "Connect a purpose-specific isolated signer/purchase boundary outside model-visible surfaces, then execute C01-C12 with machine-observed zero-spend evidence. Do not fund or run a paid benchmark before Relay records signer_boundary=PASS.",
+  "qa_finding": "The new signer-boundary contract materially improves the security specification but does not advance criterion 5 by itself. Self-attestation/specification cannot be treated as observed enforcement.",
+  "constraints": {"spend_aud":0,"secrets_handled":false,"payment_authorized":false,"customer_payment_authorized":false}
+}
