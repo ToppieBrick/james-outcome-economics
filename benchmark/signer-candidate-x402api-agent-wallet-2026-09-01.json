@@ -1,0 +1,40 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "observed_at": "2026-09-01",
+  "candidate": "x402api Agent Wallet CLI",
+  "classification": "PROMISING_NOT_APPROVED",
+  "purpose": "Assess a no-secret isolated x402 signer boundary before any founder funding or key handling.",
+  "observed_public_capabilities": {
+    "agent_key_exposure": "Documentation states agents should use a narrow purchase tool and that private keys, seed phrases, wallet sessions and generic signing capabilities remain outside prompts/tool arguments/logs/source repositories/agent process.",
+    "boundary": "Purpose-specific merchant tool -> deterministic policy engine -> wallet service/CLI.",
+    "challenge_validation": ["product", "URL", "HTTP method", "body", "network", "asset", "amount", "recipient", "expiration"],
+    "authorization": "Owner-only credential-free request envelope is authorized by the Agent Wallet CLI.",
+    "spend_bounding": "Documentation states local maximumPaymentAtomic and funded stablecoin balance bound spend authority.",
+    "network_isolation": "Separate network wallets are documented; Base USDC is supported.",
+    "key_storage": "Persistent locally encrypted wallet; owner-only password input/file. Documentation warns encryption does not protect against a compromised process running as the same local user.",
+    "release_warning": "Version 0.2.4 documentation says mainnet evidence remains gated and users should not bypass operation_not_supported results."
+  },
+  "james_C01_C12_assessment": {
+    "C01_per_transaction_AUD25_hard_stop": "UNPROVEN: maximumPaymentAtomic exists, but James-specific A$25-equivalent enforcement has not been observed.",
+    "C02_daily_AUD40_hard_stop": "UNPROVEN: durable daily aggregate hard-stop evidence not yet observed.",
+    "C03_Base_native_USDC_only": "PARTIAL: Base USDC supported and separate wallets documented; James-specific Base-only policy not observed.",
+    "C04_recipient_allowlist": "PARTIAL: recipient validation documented; allowlist enforcement not observed by James.",
+    "C05_exact_resource_binding": "DOCUMENTED_NOT_OBSERVED: URL/method/body/product validation documented.",
+    "C06_expired_quote_rejection": "DOCUMENTED_NOT_OBSERVED: expiration validation documented.",
+    "C07_malformed_quote_rejection": "DOCUMENTED_NOT_OBSERVED: exact challenge fields are validated.",
+    "C08_replay_protection": "UNPROVEN by James.",
+    "C09_budget_store_failure_fails_closed": "UNPROVEN by James.",
+    "C10_immediate_revocation": "UNPROVEN by James.",
+    "C11_policy_mutation_denied_to_agent": "ARCHITECTURALLY_PROMISING but not observed by James.",
+    "C12_no_generic_signing_or_key_export_to_agent": "DOCUMENTED_NOT_OBSERVED; same-local-user compromise warning prevents approval without isolation testing."
+  },
+  "decision": "Do not fund. Candidate advances to zero-balance conformance testing only. Approval requires machine-observed C01-C12 evidence, including an independently enforced A$40 daily aggregate limit and proof the model/agent cannot reach key material or generic signing surfaces.",
+  "security_rule": "Never request or expose private keys, seed phrases, wallet passwords, keystores, MPC shares, complete payment artifacts or payment secrets.",
+  "spend": {"aud": 0, "payment_invoked": false},
+  "market_readiness": "TEST_ONLY / BLOCKED_FOR_PAYMENT",
+  "sources": [
+    "https://x402api.com/docs/payments/x402/agents",
+    "https://x402api.com/docs/payments/x402/agent-wallet",
+    "https://x402api.com/docs/payments/x402/quickstart"
+  ]
+}
