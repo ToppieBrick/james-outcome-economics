@@ -1,0 +1,57 @@
+{
+  "observed_at": "2026-09-01T03:53:28+10:00",
+  "venture": "Outcome Economics Intelligence",
+  "purpose": "Narrow candidate capability paths for Relay/QA criterion 5 without requesting or exposing founder keys/seeds and without spending.",
+  "gate_status": "BLOCKED_FOR_PAYMENT",
+  "payment_invoked": false,
+  "secrets_handled": false,
+  "selection_requirements": [
+    "x402-compatible payment authorization for Base USDC",
+    "private key/seed never enters model context, repository, prompts, logs, Drive or Airtable",
+    "signing policy enforced outside the model/agent process",
+    "per-transaction cap enforceable at or below founder A$25 equivalent",
+    "daily/session cumulative cap enforceable at or below founder A$40 equivalent",
+    "network pinning to Base eip155:8453",
+    "asset restriction to native USDC",
+    "provider/recipient allowlisting or an equivalent deterministic recipient policy",
+    "agent cannot raise its own limits, add funds, or make arbitrary transfers",
+    "audit-visible payment attempts/receipts and a kill/revoke mechanism",
+    "supports zero-spend conformance testing before funding"
+  ],
+  "public_candidate_observations": [
+    {
+      "candidate": "Coinbase/CDP managed x402 client / agentic wallet boundary",
+      "observed_public_capabilities": [
+        "public examples describe server-side spend controls including maxAmountPerPayment and maxCumulativeSpend",
+        "public examples show allowedNetworks including Base eip155:8453",
+        "x402 payment client support is publicly documented"
+      ],
+      "unverified_for_james": [
+        "whether the connected capability available to this runtime can deny arbitrary transfers/add-funds",
+        "recipient/provider allowlist enforcement in the exact connected product surface",
+        "whether zero-spend conformance evidence can be exported without exposing credentials",
+        "kill-switch behavior"
+      ],
+      "decision": "CANDIDATE_NOT_CONNECTED_NOT_APPROVED"
+    },
+    {
+      "candidate": "OpenUSDC policy-bound wallet SDK",
+      "observed_public_capabilities": [
+        "public documentation claims policy-bound wallets with per-call/per-hour/per-day caps",
+        "public documentation claims counterparty allowlists and chain pinning",
+        "public documentation claims x402 automatic 402 retry and structured receipts",
+        "public documentation describes hardware-backed/MPC-compatible signer options"
+      ],
+      "unverified_for_james": [
+        "independent operational maturity and custody/security assurance",
+        "whether agent authority excludes add-funds/arbitrary-transfer/limit changes in the exact deployment",
+        "whether Base-only native-USDC can be made immutable to the agent",
+        "kill-switch behavior"
+      ],
+      "decision": "WATCH_NOT_CONNECTED_NOT_APPROVED"
+    }
+  ],
+  "qa_rule": "Public product claims and configuration declarations are discovery evidence only. Criterion 5 remains FAIL until James has a connected purpose-limited capability and records observed zero-spend conformance results for every required denial/enforcement behavior.",
+  "next_action": "Prefer a managed/MPC/TEE boundary that exposes only a purpose-specific x402 purchase operation to James. Once connected by an operator outside model-visible surfaces, run the zero-spend conformance matrix before any funding or paid benchmark.",
+  "truthfulness": "This artifact is a capability shortlist based on public documentation. It is not evidence that either wallet is connected, funded, safe for James, or Relay/QA-approved."
+}
