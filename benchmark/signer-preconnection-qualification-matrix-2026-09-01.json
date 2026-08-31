@@ -1,0 +1,52 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "purpose": "Fail-closed paper qualification before any signer is connected, funded, or exposed to James.",
+  "market_readiness_dependency": "criterion_5_payment_security",
+  "rules": {
+    "all_mandatory_requirements_must_be_documented_before_connection": true,
+    "documentation_is_not_conformance_evidence": true,
+    "zero_balance_c01_c12_machine_tests_required_after_connection_before_funding": true,
+    "founder_private_keys_seed_phrases_or_payment_secrets_requested": false,
+    "funding_authorized": false
+  },
+  "mandatory_requirements": [
+    "Base mainnet eip155:8453 support and enforceable Base-only policy",
+    "native USDC settlement",
+    "signer/private key isolated from model-visible and application-agent context",
+    "hard pre-signature per-transaction cap <= A$25 equivalent",
+    "hard pre-signature rolling/calendar daily cap <= A$40 equivalent",
+    "recipient binding and exact-resource/request binding",
+    "expired/malformed quote rejection",
+    "replay protection",
+    "budget/policy state failure defaults to deny",
+    "immediate revocation/disable capability outside agent authority",
+    "agent cannot mutate policy, export keys, request generic signatures, add funds or make arbitrary transfers",
+    "machine-observable audit evidence sufficient to execute C01-C12 at zero balance"
+  ],
+  "candidates": {
+    "qbt_x402": {
+      "status": "PAPER_QUALIFICATION_INCOMPLETE",
+      "reason": "Promising dedicated signer/IPC architecture and documented Base USDC/spend controls, but evidence currently does not establish every mandatory item, especially immutable-outside-agent policy authority, exact-resource binding, replay/expiry behavior, fail-closed budget-state behavior and immediate revocation.",
+      "connection_allowed": false
+    },
+    "coinbase_agentic_wallet_mcp": {
+      "status": "PAPER_QUALIFICATION_INCOMPLETE",
+      "reason": "Key isolation and restricted agent capabilities are promising, but current evidence does not prove James-required hard A$40 daily enforcement, Base-only lock, exact-resource binding, replay/expiry rejection, fail-closed budget state and immediate revocation.",
+      "connection_allowed": false
+    },
+    "x402api_agent_wallet": {
+      "status": "PAPER_QUALIFICATION_INCOMPLETE",
+      "reason": "Purpose-specific authorization boundary is promising, but local same-OS-user compromise limitation and unproven mandatory controls prevent connection.",
+      "connection_allowed": false
+    },
+    "route402": {
+      "status": "REJECTED_CURRENTLY",
+      "reason": "Current documented settlement fails mandatory Base-only requirement.",
+      "connection_allowed": false
+    }
+  },
+  "decision": "NO_SIGNER_CURRENTLY_QUALIFIES_FOR_CONNECTION",
+  "next_action": "Only advance a candidate when public/first-party evidence satisfies every paper requirement; then connect at zero balance outside model-visible surfaces and execute C01-C12. Do not fund until all C01-C12 pass.",
+  "spend_aud": 0,
+  "revenue_aud": 0
+}
