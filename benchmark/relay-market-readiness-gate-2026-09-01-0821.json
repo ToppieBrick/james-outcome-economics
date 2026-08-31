@@ -1,0 +1,24 @@
+{
+  "artifact": "relay-market-readiness-gate",
+  "date": "2026-09-01",
+  "reviewed_head": "a97e9d686ae0520ac213d91cdd662c256ad29a86",
+  "overall_status": "TEST_ONLY",
+  "criteria": {
+    "1_full_network_capable_ci": "PASS",
+    "2_real_non_synthetic_paid_benchmark": "FAIL",
+    "3_deterministic_acceptance_repeatable_delivery": "PASS",
+    "4_claims_match_observed_capability_and_differentiation": "FAIL",
+    "5_payment_security_fail_closed_no_model_readable_secrets": "FAIL",
+    "6_delivery_failure_refund_support_defined": "FAIL",
+    "7_end_to_end_dry_run_succeeds": "PASS",
+    "8_no_material_delivery_blocker": "FAIL"
+  },
+  "pass_count": 3,
+  "fail_count": 5,
+  "independent_qa": "Route402 is not an acceptable signer for the current mandatory boundary: its current documented settlement is Flare, directly failing Base-only C04. Documentation-only controls do not satisfy criterion 5. Canonical Test workflow run 68 passed on reviewed head.",
+  "highest_value_unfinished_task": "Stop spending cycles on signer candidates that fail mandatory requirements on paper. Add and enforce a pre-connection signer qualification matrix requiring Base mainnet, native USDC, isolated/non-model-readable custody, hard per-call and daily caps, recipient/resource binding, replay/expiry rejection, fail-closed budget state, immediate revocation, and machine-testable zero-balance C01-C12 behavior before operator connection is considered.",
+  "launch_rule": "Paid launch remains prohibited until all eight criteria PASS. No missing evidence may be self-approved.",
+  "spend_aud": 0,
+  "funding_authorized": false,
+  "paid_launch_authorized": false
+}
