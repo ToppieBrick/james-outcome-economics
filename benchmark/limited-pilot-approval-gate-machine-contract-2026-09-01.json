@@ -1,24 +1,32 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "venture": "Outcome Economics Intelligence",
   "owner_agent": "James Clarkson",
   "created_at": "2026-09-01T15:53:28+10:00",
-  "purpose": "Prevent customer payment or delivery promises unless independent Relay/QA has recorded APPROVED_FOR_LIMITED_PILOT and every mandatory evidence predicate is satisfied.",
+  "corrected_at": "2026-09-01T16:49:47+10:00",
+  "purpose": "Prevent customer payment or delivery promises unless the eight founder readiness criteria pass and independent Relay/QA separately records APPROVED_FOR_LIMITED_PILOT.",
   "default_status": "BLOCKED",
   "approval_authority": "independent_relay_qa_only",
   "self_approval_prohibited": true,
-  "required_predicates": [
+  "required_readiness_predicates": [
     {"id":"G01","name":"network_capable_full_relevant_test_suite","required":true,"evidence_type":"machine_observed","status":"UNVERIFIED"},
     {"id":"G02","name":"real_non_synthetic_paid_benchmark_for_promised_task_class","required":true,"evidence_type":"external_paid_transaction_and_result_record","status":"UNVERIFIED"},
     {"id":"G03","name":"deterministic_acceptance_and_repeatability","required":true,"evidence_type":"machine_observed","status":"UNVERIFIED"},
-    {"id":"G04","name":"delivery_failure_refund_support_handling","required":true,"evidence_type":"machine_observed_dry_run_plus_policy","status":"UNVERIFIED"},
-    {"id":"G05","name":"claims_not_exceed_observed_capability","required":true,"evidence_type":"claims_to_evidence_mapping","status":"UNVERIFIED"},
-    {"id":"G06","name":"payment_security_controls_fail_closed","required":true,"evidence_type":"C01_C12_machine_observed_conformance","status":"UNVERIFIED"},
+    {"id":"G04","name":"claims_not_exceed_observed_capability","required":true,"evidence_type":"claims_to_evidence_mapping","status":"UNVERIFIED"},
+    {"id":"G05","name":"payment_security_controls_fail_closed","required":true,"evidence_type":"C01_C12_machine_observed_conformance","status":"UNVERIFIED"},
+    {"id":"G06","name":"delivery_failure_refund_support_handling","required":true,"evidence_type":"machine_observed_dry_run_plus_policy","status":"UNVERIFIED"},
     {"id":"G07","name":"end_to_end_request_to_deliverable_and_evidence_dry_run","required":true,"evidence_type":"machine_observed","status":"UNVERIFIED"},
-    {"id":"G08","name":"independent_relay_qa_decision","required":true,"required_value":"APPROVED_FOR_LIMITED_PILOT","status":"UNVERIFIED"}
+    {"id":"G08","name":"no_unresolved_blocker_materially_changes_sold_delivery","required":true,"evidence_type":"relay_qa_assessment_of_remaining_blockers","status":"UNVERIFIED"}
   ],
+  "independent_approval_predicate": {
+    "id":"A01",
+    "name":"independent_relay_qa_decision",
+    "required":true,
+    "required_value":"APPROVED_FOR_LIMITED_PILOT",
+    "status":"UNVERIFIED"
+  },
   "checkout_rule": {
-    "enabled_only_if": "ALL(G01..G08 == PASS) AND G08.value == APPROVED_FOR_LIMITED_PILOT",
+    "enabled_only_if": "ALL(G01..G08 == PASS) AND A01.value == APPROVED_FOR_LIMITED_PILOT",
     "otherwise": "DENY_CHECKOUT",
     "on_missing_or_unreadable_evidence": "DENY_CHECKOUT",
     "on_stale_or_conflicting_gate_record": "DENY_CHECKOUT"
@@ -31,5 +39,6 @@
   "machine_payment_limits": {"max_aud_per_transaction":25,"max_aud_per_day":40,"fail_closed":true},
   "security": {"private_keys_seed_phrases_payment_secrets_in_agent_context":"PROHIBITED","signer_funding_before_C01_C12_pass":"PROHIBITED"},
   "current_effect": "DENY_CHECKOUT",
+  "correction_basis": "Independent Relay/QA 2026-09-01 16:19 AEST identified that v1.0 incorrectly substituted approval authority for founder criterion 8. v1.1 restores criterion 8 and makes approval a separate predicate.",
   "notes": "This contract does not grant approval and cannot be edited into approval by James. Relay/QA evidence remains authoritative."
 }
