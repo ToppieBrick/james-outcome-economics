@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "venture": "Outcome Economics Intelligence",
+  "owner_agent": "James Clarkson",
+  "created_at": "2026-09-01T15:53:28+10:00",
+  "purpose": "Prevent customer payment or delivery promises unless independent Relay/QA has recorded APPROVED_FOR_LIMITED_PILOT and every mandatory evidence predicate is satisfied.",
+  "default_status": "BLOCKED",
+  "approval_authority": "independent_relay_qa_only",
+  "self_approval_prohibited": true,
+  "required_predicates": [
+    {"id":"G01","name":"network_capable_full_relevant_test_suite","required":true,"evidence_type":"machine_observed","status":"UNVERIFIED"},
+    {"id":"G02","name":"real_non_synthetic_paid_benchmark_for_promised_task_class","required":true,"evidence_type":"external_paid_transaction_and_result_record","status":"UNVERIFIED"},
+    {"id":"G03","name":"deterministic_acceptance_and_repeatability","required":true,"evidence_type":"machine_observed","status":"UNVERIFIED"},
+    {"id":"G04","name":"delivery_failure_refund_support_handling","required":true,"evidence_type":"machine_observed_dry_run_plus_policy","status":"UNVERIFIED"},
+    {"id":"G05","name":"claims_not_exceed_observed_capability","required":true,"evidence_type":"claims_to_evidence_mapping","status":"UNVERIFIED"},
+    {"id":"G06","name":"payment_security_controls_fail_closed","required":true,"evidence_type":"C01_C12_machine_observed_conformance","status":"UNVERIFIED"},
+    {"id":"G07","name":"end_to_end_request_to_deliverable_and_evidence_dry_run","required":true,"evidence_type":"machine_observed","status":"UNVERIFIED"},
+    {"id":"G08","name":"independent_relay_qa_decision","required":true,"required_value":"APPROVED_FOR_LIMITED_PILOT","status":"UNVERIFIED"}
+  ],
+  "checkout_rule": {
+    "enabled_only_if": "ALL(G01..G08 == PASS) AND G08.value == APPROVED_FOR_LIMITED_PILOT",
+    "otherwise": "DENY_CHECKOUT",
+    "on_missing_or_unreadable_evidence": "DENY_CHECKOUT",
+    "on_stale_or_conflicting_gate_record": "DENY_CHECKOUT"
+  },
+  "promise_rule": {
+    "before_approval": "May collect demand/leads and prepare infrastructure only; must not promise delivery or accept external customer payment.",
+    "after_approval": "Limited pilot claims and scope must remain bounded by observed evidence and Relay-approved task class."
+  },
+  "revenue_truth_rule": "Revenue is recognised only from externally verifiable settled customer payment records; leads, test events, synthetic transactions, internal transfers and dry runs are never revenue.",
+  "machine_payment_limits": {"max_aud_per_transaction":25,"max_aud_per_day":40,"fail_closed":true},
+  "security": {"private_keys_seed_phrases_payment_secrets_in_agent_context":"PROHIBITED","signer_funding_before_C01_C12_pass":"PROHIBITED"},
+  "current_effect": "DENY_CHECKOUT",
+  "notes": "This contract does not grant approval and cannot be edited into approval by James. Relay/QA evidence remains authoritative."
+}
