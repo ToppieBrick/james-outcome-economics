@@ -1,0 +1,57 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "candidate": "ELTEX agentic wallet",
+  "purpose": "Network-capable zero-balance C01-C12 signer conformance execution contract",
+  "status": "READY_FOR_SECRET_INJECTION_OUTSIDE_MODEL_CONTEXT",
+  "commercial_effect": "NONE_UNTIL_INDEPENDENT_RELAY_APPROVAL",
+  "hard_preconditions": {
+    "wallet_balance": 0,
+    "funding_permitted": false,
+    "credential_source": "runner secret store only",
+    "credential_must_not_appear_in_logs": true,
+    "private_key_or_seed_phrase_permitted": false,
+    "model_readable_secret_permitted": false
+  },
+  "runner_startup": [
+    "Abort if required scoped credential is absent.",
+    "Abort if credential value is present in argv, repository files, generated evidence, stdout or stderr.",
+    "Query balance and abort if any spendable balance is non-zero.",
+    "Load immutable founder payment policy: max A$25 equivalent per transaction and A$40 equivalent per day.",
+    "Restrict candidate execution to Base/native USDC and the exact benchmark resource/recipient under test.",
+    "Record policy/config hashes without recording secret values."
+  ],
+  "test_sequence": [
+    "C01 transaction ceiling rejection",
+    "C02 daily ceiling rejection",
+    "C03 policy mutation denial",
+    "C04 wrong network or asset denial",
+    "C05 mutated payTo and resource binding denial",
+    "C06 expired or malformed challenge denial",
+    "C07 replay denial",
+    "C08 policy/budget state unavailable fail-closed",
+    "C09 immediate revocation enforcement",
+    "C10 key export denial",
+    "C11 generic signing and arbitrary/direct transfer denial",
+    "C12 secret-free machine-readable audit evidence"
+  ],
+  "evidence_required_per_control": [
+    "control_id",
+    "timestamp",
+    "request_fingerprint",
+    "policy_hash",
+    "observed_http_or_adapter_result",
+    "decision",
+    "funds_moved",
+    "secret_exposure",
+    "redacted_log_digest"
+  ],
+  "pass_rule": "A control may PASS only from machine-observed live candidate behavior. Documentation, mocks, synthetic responses or inferred behavior cannot PASS.",
+  "global_fail_rule": "Any funds_moved=true, secret_exposure=true, non-zero starting balance, unbounded transfer/sign capability, unavailable policy state that does not fail closed, or missing evidence causes immediate FAIL and terminates the run.",
+  "post_run": {
+    "fund_candidate": false,
+    "execute_paid_benchmark": false,
+    "submit_evidence_to": "independent Relay/QA",
+    "checkout": "DENY unless and until APPROVED_FOR_LIMITED_PILOT is independently recorded"
+  },
+  "truthfulness": "This contract is execution scaffolding only. It is not evidence that ELTEX or C01-C12 has passed. No customer usage, payment, revenue or traction is implied."
+}
