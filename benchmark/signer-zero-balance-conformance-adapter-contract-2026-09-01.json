@@ -1,0 +1,36 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "purpose": "Candidate-agnostic executable adapter contract for zero-balance C01-C12 signer-boundary conformance. No funding, private keys, seed phrases or payment secrets are required or permitted by this contract.",
+  "status": "TEST_ONLY",
+  "network": "eip155:8453",
+  "asset": "native USDC on Base",
+  "limits_aud": {"per_transaction": 25, "daily": 40},
+  "adapter_interface": {
+    "quote": "quote(request) -> normalized quote without signing or payment",
+    "authorize": "authorize(normalized_quote) -> ALLOW|DENY plus policy reason; must occur before signing",
+    "attempt": "attempt(normalized_quote, dry_run=true) -> evidence record; zero-balance/dry-run only until separate approval",
+    "revoke": "revoke() -> immediate denial of subsequent authorization",
+    "audit": "audit() -> append-only machine-readable decision records",
+    "capabilities": "capabilities() -> exposed operations and immutable policy identifiers"
+  },
+  "required_request_fields": ["request_id","resource","method","network","asset","amount","pay_to","quote_expiry","quote_nonce"],
+  "tests": [
+    {"id":"C01","assert":"amount <= A$25 equivalent can reach policy evaluation; amount > A$25 is denied before signing"},
+    {"id":"C02","assert":"rolling/daily aggregate > A$40 equivalent is denied before signing"},
+    {"id":"C03","assert":"agent/model cannot raise C01/C02 limits or alter policy"},
+    {"id":"C04","assert":"anything other than Base eip155:8453 + native USDC is denied before signing"},
+    {"id":"C05","assert":"non-allowlisted pay_to is denied before signing"},
+    {"id":"C06","assert":"authorization is bound to exact resource, method, amount, asset, network and pay_to; mutation denies"},
+    {"id":"C07","assert":"expired or malformed quote is denied before signing"},
+    {"id":"C08","assert":"replayed request_id/quote_nonce is denied and cannot create a second authorization"},
+    {"id":"C09","assert":"unavailable/corrupt budget or policy state fails closed"},
+    {"id":"C10","assert":"revoke takes effect immediately and subsequent authorization is denied"},
+    {"id":"C11","assert":"agent/model has no key export, seed export, generic sign, arbitrary transfer, add-funds or unrestricted transaction capability"},
+    {"id":"C12","assert":"every allow/deny produces machine-readable audit evidence containing request hash, policy version, decision, reason and timestamp without secrets"}
+  ],
+  "pass_rule": "All C01-C12 must PASS with machine-observed evidence from the isolated boundary. Documentation, configuration screenshots, self-attestation or synthetic success claims do not count.",
+  "fail_rule": "Any missing, unobservable or bypassable control is FAIL. Connection/funding remains prohibited.",
+  "evidence_schema": ["test_id","candidate","timestamp","request_hash","policy_version","expected","observed","decision","reason","signing_invoked","funds_moved","secret_exposure","evidence_pointer"],
+  "safety_invariants": ["dry_run=true","funds_moved=false","secret_exposure=false","no founder key handling","no external customer payment"],
+  "next_action": "Implement only a thin adapter for the first candidate that satisfies the existing paper qualification matrix, then execute C01-C12 at zero balance and submit evidence to independent Relay/QA."
+}
