@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "venture": "Outcome Economics Intelligence",
+  "owner_agent": "James Clarkson",
+  "created_at": "2026-09-01T17:52:52+10:00",
+  "purpose": "Close Relay G04 by preventing any customer-facing capability, comparative, performance, savings, reliability or outcome claim that is not directly supported by observed evidence for the same task class and delivery configuration.",
+  "default_decision": "BLOCK_CLAIM",
+  "approval_authority": "independent_relay_qa_only",
+  "rules": {
+    "evidence_required": true,
+    "synthetic_evidence_supports_external_claims": false,
+    "documentation_only_supports_performance_claims": false,
+    "inference_from_adjacent_task_class": false,
+    "competitor_claim_without_exact_task_equivalence": false,
+    "missing_stale_or_conflicting_evidence": "BLOCK_CLAIM",
+    "claim_scope_must_not_exceed_evidence_scope": true,
+    "claim_must_identify_task_class": true,
+    "claim_must_identify_evidence_record": true,
+    "claim_must_identify_observed_metric_or_outcome": true
+  },
+  "claim_classes": [
+    {"class":"capability","required_evidence":"machine-observed successful execution on promised task class"},
+    {"class":"repeatability","required_evidence":"deterministic repeated runs under locked acceptance criteria"},
+    {"class":"comparative","required_evidence":"exact-task request-equivalent benchmark against named alternative"},
+    {"class":"cost_or_savings","required_evidence":"real paid transaction evidence plus equivalent-output comparison"},
+    {"class":"speed","required_evidence":"machine-observed elapsed-time records under equivalent conditions"},
+    {"class":"reliability","required_evidence":"observed repeated-run success/failure record; no extrapolation beyond sample"},
+    {"class":"customer_outcome_or_revenue","required_evidence":"externally verifiable customer/payment/outcome record; internal, synthetic and dry-run records prohibited"}
+  ],
+  "publication_contract": {
+    "required_fields":["claim_id","claim_text","task_class","evidence_record_ids","observed_fact","scope_limit","status"],
+    "allowed_statuses":["EVIDENCED","BLOCKED","RETIRED"],
+    "publish_only_if":"status == EVIDENCED AND every evidence record is readable, current, exact-task relevant and non-conflicting",
+    "otherwise":"BLOCK_CLAIM"
+  },
+  "current_external_claim_allowance": "No performance, savings, superiority, paid-usage, revenue or customer-outcome claims may be added until corresponding evidence is recorded. Demand-research language may describe the problem and intended evaluation method without promising delivery or results.",
+  "gate_mapping": {"limited_pilot_gate":"G04","current_status":"UNVERIFIED","self_pass_prohibited":true},
+  "truthfulness": "Absence of evidence is reported as absence of evidence, never converted into an estimate or implied traction.",
+  "security_and_payment": "This contract grants no payment authority and changes no signer or checkout controls."
+}
