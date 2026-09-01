@@ -1,0 +1,22 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "reviewed_head": "0e56bcb8698b37f79c6b69a620c04de35e900750",
+  "overall_status": "TEST_ONLY",
+  "criteria": {
+    "1_full_network_capable_ci": {"status":"PASS","evidence":"GitHub Actions Test run #72 completed success on reviewed head."},
+    "2_real_paid_benchmark": {"status":"FAIL","evidence":"No real non-synthetic paid benchmark evidence for promised structured-search task class."},
+    "3_deterministic_repeatability": {"status":"PASS","evidence":"Previously established locked-fixture repeatability evidence remains uncontradicted by latest cycle."},
+    "4_claims_match_observed_capability": {"status":"FAIL","evidence":"Paid capability/differentiation claims remain unsupported by real paid benchmark evidence."},
+    "5_payment_security_fail_closed": {"status":"FAIL","evidence":"Latest matrix explicitly concludes NO_SIGNER_CURRENTLY_QUALIFIES_FOR_CONNECTION; documentation is not conformance evidence."},
+    "6_delivery_failure_refund_support": {"status":"FAIL","evidence":"Complete paid delivery/failure/refund/support handling remains unevidenced."},
+    "7_end_to_end_dry_run": {"status":"PASS","evidence":"Previously established zero-spend request-to-deliverable-to-evidence dry run remains uncontradicted."},
+    "8_no_material_delivery_blocker": {"status":"FAIL","evidence":"Real paid benchmark and approved signer boundary remain material blockers."}
+  },
+  "pass_count": 3,
+  "fail_count": 5,
+  "launch_allowed": false,
+  "independent_qa": "Latest pre-connection matrix is directionally correct and prevents unsafe candidate churn, but it is a qualification artifact, not criterion-5 evidence. No candidate may be connected or funded until every mandatory paper requirement is evidenced, followed by zero-balance C01-C12 machine conformance.",
+  "highest_value_unfinished_task": "Create a candidate-agnostic zero-balance C01-C12 executable conformance harness/adapter contract now, so an operator-qualified signer can be tested immediately without another implementation cycle. Do not connect, fund, or expose secrets while building it.",
+  "spend_aud": 0,
+  "revenue_aud": 0
+}
