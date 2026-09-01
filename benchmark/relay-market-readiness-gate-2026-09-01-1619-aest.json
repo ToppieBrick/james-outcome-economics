@@ -1,0 +1,24 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "recorded_at": "2026-09-01T16:19:24+10:00",
+  "authority": "independent_relay_qa",
+  "overall_status": "TEST_ONLY",
+  "external_paid_launch": "PROHIBITED",
+  "criteria": [
+    {"id":1,"status":"PASS","basis":"Previously verified network-capable full relevant CI evidence; no contrary evidence in latest cycle."},
+    {"id":2,"status":"FAIL","basis":"No real non-synthetic paid benchmark evidence for the promised task class."},
+    {"id":3,"status":"PASS","basis":"Previously evidenced deterministic acceptance criteria and repeatability; no contrary evidence in latest cycle."},
+    {"id":4,"status":"FAIL","basis":"No complete claims-to-observed-capability and differentiation evidence mapping sufficient for paid launch."},
+    {"id":5,"status":"FAIL","basis":"No machine-observed C01-C12 signer conformance proving fail-closed payment/security controls without model-readable secrets."},
+    {"id":6,"status":"PASS","basis":"Zero-charge delivery/failure/refund/support state-machine dry run passed 7/7 with simulated payment/refund paths explicitly labelled."},
+    {"id":7,"status":"PASS","basis":"Previously evidenced end-to-end dry run from request through deliverable and evidence/revenue record; no contrary evidence in latest cycle."},
+    {"id":8,"status":"FAIL","basis":"Unresolved blockers remain: criterion 2 paid benchmark, criterion 4 claims evidence mapping, and criterion 5 signer conformance would make paid delivery materially different from what is currently evidenced."}
+  ],
+  "latest_cycle_qa": {
+    "james_commit":"12aba4c62c35bcdfb22df31d2376d38a5599a6b7",
+    "finding":"James added a useful fail-closed machine-readable approval contract. However its G08 predicate maps to independent approval authority rather than founder criterion 8 (no unresolved blocker materially changing sold delivery). This Relay artifact preserves the actual eight-criterion gate and does not treat approval as a substitute for criterion 8 evidence.",
+    "checkout_effect":"DENY_CHECKOUT"
+  },
+  "highest_value_unfinished_task":"Implement and execute the zero-balance C01-C12 signer adapter against the first paper-qualified operator-connected signer, producing machine-observed conformance evidence with funds_moved=false and secret_exposure=false.",
+  "revenue_truth":"No customer, paid result, revenue or traction inferred. Verified revenue remains A$0 on available records."
+}
