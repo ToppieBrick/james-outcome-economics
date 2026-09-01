@@ -1,0 +1,60 @@
+{
+  "record_type": "signer_zero_balance_adapter_spec",
+  "date": "2026-09-01",
+  "candidate": "ELTEX Agentic Wallet",
+  "status": "IMPLEMENTATION_READY_NOT_EXECUTED",
+  "purpose": "Translate the candidate-agnostic C01-C12 signer conformance contract into ELTEX API operations without funding, private-key handling, seed phrases, or model-visible payment secrets.",
+  "first_party_surface": {
+    "base_url": "https://eltexlabs.com/v1",
+    "read_scope": "wallet:read",
+    "spend_scope": "wallet:spend",
+    "operations": [
+      "GET /v1/agentic-wallet/balance?agent_id={agent_id}",
+      "POST /v1/agentic-wallet/preflight",
+      "POST /v1/agentic-wallet/x402/fetch",
+      "POST /v1/agentic-wallet/transfer"
+    ],
+    "documented_boundary": "one agent identity + one dedicated Agentic Wallet API key + one immutable policy version"
+  },
+  "founder_limits_aud": {"per_transaction": 25, "daily": 40},
+  "mandatory_setup": {
+    "wallet_balance": "ZERO",
+    "network": "Base only",
+    "asset": "USDC only",
+    "transfer_permission": false,
+    "direct_transfer_recipients": [],
+    "x402_domains": "benchmark target only",
+    "policy_mutation_from_agent": "DENY",
+    "key_export": "DENY",
+    "generic_signing": "DENY",
+    "funding": "PROHIBITED_UNTIL_C01_C12_PASS"
+  },
+  "test_mapping": {
+    "C01": "preflight request below and above A$25 equivalent; above-cap must fail before signature/payment",
+    "C02": "simulate/reserve cumulative requests below and above A$40 daily equivalent; over-budget must fail closed",
+    "C03": "attempt agent-side policy mutation/version substitution; immutable active policy must remain unchanged",
+    "C04": "submit wrong-network and wrong-asset payment requirements; only Base/native USDC may be eligible",
+    "C05": "mutate x402 payTo/counterparty from approved requirement; mismatch must reject",
+    "C06": "mutate exact resource/domain/path from approved requirement; mismatch must reject",
+    "C07": "submit expired and malformed requirements; both must reject",
+    "C08": "repeat identical authorization/idempotency context; replay/duplicate spend must not create a second payable action",
+    "C09": "make policy/budget state unavailable or indeterminate in harness; result must be deny/indeterminate-not-pay",
+    "C10": "pause/revoke grant then retry same preflight; spending eligibility must terminate immediately",
+    "C11": "probe direct transfer, arbitrary recipient, generic signing and key export surfaces; all must be unavailable/denied",
+    "C12": "capture secret-free request IDs, policy version, verdicts, reason codes and timestamps sufficient for independent replay/audit"
+  },
+  "evidence_rules": {
+    "pass_requires": "machine-observed result",
+    "documentation_only": "NOT_PASS",
+    "synthetic_payment": "NOT_PAID_EVIDENCE",
+    "secret_redaction": "mandatory",
+    "no_funds_moved": true
+  },
+  "execution_blockers": [
+    "Dedicated ELTEX Agentic Wallet credential/grant must be provisioned outside model-visible context.",
+    "Owner authorization, if required, must occur outside model-visible context.",
+    "Network-capable runner must execute the adapter against the live ELTEX API with zero balance."
+  ],
+  "launch_effect": "NONE: checkout remains denied and Relay/QA approval remains required.",
+  "truth": {"spend_aud": 0, "revenue_aud": 0, "funding_aud": 0, "customer_payment_enabled": false}
+}
