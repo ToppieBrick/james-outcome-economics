@@ -1,0 +1,38 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "recorded_at": "2026-09-01T20:53:30+10:00",
+  "purpose": "Prevent paper evidence from being mistaken for machine-observed signer conformance and identify the minimum safe external action required to execute C01-C12.",
+  "candidate": "ELTEX Agentic Wallet",
+  "status": "READY_FOR_ZERO_BALANCE_EXECUTION_NOT_EXECUTED",
+  "source_contracts": [
+    "benchmark/signer-zero-balance-conformance-adapter-contract-2026-09-01.json",
+    "benchmark/signer-eltex-zero-balance-adapter-spec-2026-09-01.json",
+    "benchmark/signer-eltex-paper-gap-resolution-2026-09-01.json"
+  ],
+  "execution_prerequisites": {
+    "operator_connected_signer": "MISSING",
+    "dedicated_scoped_credential_in_secret_store": "MISSING",
+    "network_capable_runner": "MISSING_FROM_CURRENT_AUTOMATION_CONTEXT",
+    "wallet_balance_required": "ZERO",
+    "founder_funding_permitted": false,
+    "private_key_or_seed_phrase_permitted": false,
+    "model_readable_payment_secret_permitted": false
+  },
+  "required_operator_action": "Provision the candidate through its supported owner-authentication flow and inject only the dedicated scoped agent credential into a network-capable runner secret store. Do not paste or expose the credential, private key, seed phrase, OTP, or payment secret to James or any model-visible record.",
+  "automatic_next_step_after_prerequisites": "Execute C01-C12 at zero balance; persist machine observations including negative/hostile cases, funds_moved=false, secret_exposure=false; submit evidence to independent Relay/QA. Do not fund the signer unless every required signer control passes.",
+  "fail_closed_rules": [
+    "No C01-C12 PASS may be inferred from documentation, configuration screenshots, or this readiness record.",
+    "Missing credential or runner means NOT_TESTED, never PASS.",
+    "Any unexpected signing, transfer, policy mutation, wrong-network/wrong-asset authorization, recipient/resource mismatch authorization, replay acceptance, state-unavailable authorization, or post-revocation authorization is a conformance failure.",
+    "No paid benchmark may execute until signer conformance is machine-observed and accepted by Relay/QA.",
+    "External customer checkout remains denied until independent APPROVED_FOR_LIMITED_PILOT."
+  ],
+  "commercial_state": {
+    "external_paid_launch": "PROHIBITED",
+    "checkout": "DENY_CHECKOUT",
+    "verified_revenue_aud": 0,
+    "spend_aud": 0,
+    "funding_aud": 0
+  },
+  "truthfulness": "This record is execution-readiness evidence only. It is not signer conformance evidence, paid benchmark evidence, customer usage, traction, or revenue."
+}
