@@ -1,0 +1,95 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "date": "2026-09-01",
+  "purpose": "Zero-charge implementation-level dry-run evidence for delivery/failure/refund/support handling. This record does not represent a customer, payment, refund, revenue, or Relay approval.",
+  "market_status": "TEST_ONLY",
+  "payment_enabled": false,
+  "real_money_moved_aud": 0,
+  "verified_revenue_aud": 0,
+  "approval_required": "APPROVED_FOR_LIMITED_PILOT",
+  "state_machine": {
+    "states": ["REQUEST_RECEIVED","PREPAYMENT_VALIDATION","PAYMENT_ELIGIBLE","PAYMENT_CONFIRMED","DELIVERY_RUNNING","DELIVERED_ACCEPTED","DELIVERY_FAILED","REFUND_REQUIRED","REFUND_CONFIRMED","SUPPORT_OPEN","CLOSED"],
+    "fail_closed_rules": [
+      "No transition to PAYMENT_ELIGIBLE unless Relay status is machine-verifiably APPROVED_FOR_LIMITED_PILOT.",
+      "Out-of-scope or non-deterministically-gradable requests terminate before payment.",
+      "Indeterminate payment state cannot start delivery and requires reconciliation.",
+      "Post-payment delivery failure or inability to prove acceptance requires a full refund.",
+      "Duplicate charge evidence requires refund/reversal of the duplicate.",
+      "Every terminal state retains request, payment, delivery, evidence, refund and support identifiers without secrets."
+    ]
+  },
+  "dry_run_cases": [
+    {
+      "id": "DR01_GATE_BLOCK",
+      "input": {"relay_status":"TEST_ONLY","request_scope":"exact benchmark task","synthetic_payment_attempt_aud":49},
+      "expected": "BLOCK_BEFORE_PAYMENT",
+      "observed": "BLOCK_BEFORE_PAYMENT",
+      "result": "PASS",
+      "money_moved_aud": 0
+    },
+    {
+      "id": "DR02_OUT_OF_SCOPE",
+      "input": {"relay_status":"APPROVED_FOR_LIMITED_PILOT_SIMULATED_ONLY","request_scope":"outside promised task class"},
+      "expected": "REJECT_BEFORE_PAYMENT",
+      "observed": "REJECT_BEFORE_PAYMENT",
+      "result": "PASS",
+      "money_moved_aud": 0
+    },
+    {
+      "id": "DR03_SUCCESS_PATH",
+      "simulation_only": true,
+      "input": {"relay_status":"APPROVED_FOR_LIMITED_PILOT_SIMULATED_ONLY","payment_state":"CONFIRMED_SIMULATED","delivery_evidence":"deterministic acceptance satisfied"},
+      "expected": ["PAYMENT_CONFIRMED","DELIVERY_RUNNING","DELIVERED_ACCEPTED","CLOSED"],
+      "observed": ["PAYMENT_CONFIRMED","DELIVERY_RUNNING","DELIVERED_ACCEPTED","CLOSED"],
+      "result": "PASS",
+      "money_moved_aud": 0
+    },
+    {
+      "id": "DR04_POST_PAYMENT_DELIVERY_FAILURE",
+      "simulation_only": true,
+      "input": {"payment_state":"CONFIRMED_SIMULATED","delivery_state":"FAILED_SIMULATED"},
+      "expected": ["DELIVERY_FAILED","REFUND_REQUIRED","REFUND_CONFIRMED","CLOSED"],
+      "observed": ["DELIVERY_FAILED","REFUND_REQUIRED","REFUND_CONFIRMED","CLOSED"],
+      "result": "PASS",
+      "refund_amount": "100% simulated charge",
+      "money_moved_aud": 0
+    },
+    {
+      "id": "DR05_INDETERMINATE_PAYMENT",
+      "simulation_only": true,
+      "input": {"payment_state":"INDETERMINATE_SIMULATED"},
+      "expected": "NO_DELIVERY_RECONCILE",
+      "observed": "NO_DELIVERY_RECONCILE",
+      "result": "PASS",
+      "money_moved_aud": 0
+    },
+    {
+      "id": "DR06_DUPLICATE_CHARGE",
+      "simulation_only": true,
+      "input": {"payment_state":"DUPLICATE_SIMULATED"},
+      "expected": ["REFUND_REQUIRED","REFUND_CONFIRMED","CLOSED"],
+      "observed": ["REFUND_REQUIRED","REFUND_CONFIRMED","CLOSED"],
+      "result": "PASS",
+      "money_moved_aud": 0
+    },
+    {
+      "id": "DR07_SUPPORT_ESCALATION",
+      "simulation_only": true,
+      "input": {"terminal_state":"DELIVERY_FAILED","customer_dispute":"SIMULATED"},
+      "expected": ["SUPPORT_OPEN","evidence bundle linked","resolution recorded"],
+      "observed": ["SUPPORT_OPEN","evidence bundle linked","resolution recorded"],
+      "result": "PASS",
+      "money_moved_aud": 0
+    }
+  ],
+  "summary": {"cases":7,"passed":7,"failed":0},
+  "truthfulness": {
+    "synthetic_or_simulated": true,
+    "paid_benchmark_evidence": false,
+    "customer_usage": false,
+    "customer_payment": false,
+    "refund_executed": false,
+    "relay_pass_claimed": false
+  },
+  "relay_submission_note": "This closes only the zero-charge dry-run design/evidence step for handling logic. Independent Relay/QA must decide whether criterion 6 changes status. Real non-synthetic paid benchmark evidence and machine-observed signer conformance remain mandatory blockers before paid launch."
+}
