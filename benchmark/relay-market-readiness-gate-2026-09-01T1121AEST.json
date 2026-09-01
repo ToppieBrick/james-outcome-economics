@@ -1,0 +1,48 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "relay_reviewed_head": "d3d69bae441a04a5204f78e464de959583a48b71",
+  "reviewed_change": "ELTEX Agentic Wallet paper qualification",
+  "overall_status": "TEST_ONLY",
+  "paid_launch_allowed": false,
+  "gate": {
+    "1_full_relevant_network_capable_ci": {"status":"PASS","evidence":"Canonical GitHub Actions Test run #74 completed success on reviewed head."},
+    "2_real_non_synthetic_paid_benchmark": {"status":"FAIL","evidence":"No real paid benchmark evidence for the promised structured-search task class is recorded."},
+    "3_deterministic_acceptance_repeatability": {"status":"PASS","evidence":"Previously established locked-fixture two-run repeatability remains uncontradicted by this change."},
+    "4_customer_claims_match_observed_capability": {"status":"FAIL","evidence":"Paid outcome-economics differentiation still lacks real paid observations; customer-facing paid-performance claims cannot be substantiated."},
+    "5_payment_security_fail_closed_no_model_secrets": {"status":"FAIL","evidence":"ELTEX controls are documentation-only. No connected zero-balance capability has machine-observed C01-C12 conformance."},
+    "6_delivery_failure_refund_support_defined": {"status":"FAIL","evidence":"Complete paid delivery, failure, refund and support handling remains unevidenced."},
+    "7_end_to_end_dry_run": {"status":"PASS","evidence":"Previously established request-to-deliverable-to-evidence dry run remains uncontradicted by this change."},
+    "8_no_material_delivery_blocker": {"status":"FAIL","evidence":"Real paid benchmark evidence and machine-observed signer conformance remain material blockers."}
+  },
+  "independent_qa": {
+    "finding":"ELTEX is materially stronger on paper than prior candidates because it documents immutable policy versioning, per-transaction/daily limits, Base USDC x402, domain restrictions, expiry, pause/revoke and agent-isolated signer sessions. This does not satisfy criterion 5 without observed negative tests.",
+    "decision":"Do not connect, fund, accept customer payment, or record pilot approval from documentation alone."
+  },
+  "highest_value_unfinished_task": {
+    "task":"Freeze a candidate-agnostic zero-balance C01-C12 executable adapter contract so ELTEX or any successor can be tested immediately after an operator connects it outside model-visible surfaces.",
+    "executed_this_cycle":true,
+    "adapter_contract": {
+      "input":"policy snapshot + proposed x402 request + expected decision",
+      "output":"decision, reason_code, policy_version, request_id, audit_event_id; never secret/key material",
+      "required_negative_tests":[
+        "C01 deny amount above A$25 equivalent",
+        "C02 deny when cumulative daily amount would exceed A$40 equivalent",
+        "C03 deny non-native-USDC asset",
+        "C04 deny non-Base network",
+        "C05 deny recipient/payTo outside exact allowed binding",
+        "C06 deny URL/method/body/resource mismatch",
+        "C07 deny expired or malformed authorization",
+        "C08 deny replay/idempotency-key reuse without second settlement",
+        "C09 deny when budget/policy state is unavailable or indeterminate",
+        "C10 deny immediately after external pause/revoke",
+        "C11 deny policy mutation, key export, generic signing, add-funds and arbitrary transfer from agent scope",
+        "C12 emit machine-verifiable audit evidence for every allow/deny"
+      ],
+      "pass_rule":"All C01-C12 must be machine-observed PASS against the connected capability with zero balance/zero settlement. Self-declared configuration and vendor documentation never count as PASS.",
+      "funding_rule":"No funding or paid benchmark until signer_boundary=PASS."
+    }
+  },
+  "spend_aud":0,
+  "revenue_aud":0,
+  "fabricated_traction":false
+}
