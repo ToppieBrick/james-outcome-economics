@@ -1,0 +1,57 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "candidate": "ELTEX Agentic Wallet",
+  "assessment_date": "2026-09-01",
+  "evidence_type": "FIRST_PARTY_DOCUMENTATION_ONLY_NOT_MACHINE_CONFORMANCE",
+  "source": "https://eltexlabs.com/docs",
+  "decision": "ADVANCE_TO_ZERO_BALANCE_CONFORMANCE_SETUP_NOT_APPROVED_NOT_FUNDED",
+  "material_findings": {
+    "credential_boundary": "Agentic Wallet requires a dedicated API key; OAuth tokens are rejected on wallet routes. wallet:read reads policy/balances/reservations; wallet:spend requests policy-controlled x402 payments or direct transfers.",
+    "policy_boundary": "One agent identity is bound to one dedicated key and one immutable policy version. Policies control networks, per-transaction/daily/monthly USDC limits, approval thresholds, expiry, pause/revoke state, optional x402 domains and optional direct-transfer recipient restrictions.",
+    "x402_request_binding": "x402/fetch accepts agentId, network, URL, HTTP method and maxValue. Domain restrictions can narrow destinations. This improves request binding evidence but does not document exact payTo binding or prove that a malicious/mismatched 402 response cannot redirect settlement.",
+    "transfer_surface": "A generic direct-USDC transfer endpoint exists under wallet:spend but requires permissions.transfer=true. James configuration MUST set permissions.transfer=false and machine-negative-test the transfer endpoint.",
+    "replay_and_indeterminate": "Stable Idempotency-Key is supported. Reusing the same key with a different body returns idempotency_key_reused; in-progress identical actions return idempotency_request_in_progress. Individual authorizations expire after ten minutes and indeterminate provider submissions remain submitting to prevent duplicate payment.",
+    "signer_isolation": "For Base, the owner authorizes a Thirdweb User Wallet by email OTP for the grant. ELTEX states it encrypts the session and never exposes it to the agent. This remains a vendor assertion until negative tests show the James credential has no key/session export or generic-sign capability.",
+    "network_asset": "Documentation describes USDC authority and Base/Solana policy controls. James must configure Base only and machine-negative-test Solana/other-network and non-USDC attempts.",
+    "failure_semantics": "agent_wallet_policy_denied is documented as a stop condition when the active policy does not authorize a request; spending_authorization_required is also a stop condition. Budget/policy-state outage or unreadable-state fail-closed behavior remains machine-test-only.",
+    "audit": "Every /v1 response includes X-Request-ID; wallet surfaces expose policy, balances/reservations and preflight. Sufficiency for C12 still requires captured zero-balance machine evidence."
+  },
+  "c01_c12_updated_paper_mapping": {
+    "C01_per_transaction_cap_le_aud25": "DOCUMENTED_CONFIGURABLE_REQUIRES_OBSERVED_DENIAL_OVER_CAP",
+    "C02_daily_cap_le_aud40": "DOCUMENTED_CONFIGURABLE_REQUIRES_OBSERVED_CUMULATIVE_DENIAL",
+    "C03_native_usdc_only": "DOCUMENTED_USDC_AUTHORITY_REQUIRES_NEGATIVE_ASSET_TEST",
+    "C04_base_only": "DOCUMENTED_NETWORK_POLICY_REQUIRES_NEGATIVE_NETWORK_TEST",
+    "C05_recipient_binding": "UNRESOLVED_FOR_X402_EXACT_PAYTO_MACHINE_TEST_MANDATORY",
+    "C06_exact_resource_request_binding": "URL_METHOD_MAXVALUE_AND_DOMAIN_CONTROLS_DOCUMENTED_REQUIRES_MUTATION_TESTS",
+    "C07_expired_malformed_rejection": "AUTH_EXPIRY_DOCUMENTED_MALFORMED_AND_EXPIRED_MACHINE_TESTS_REQUIRED",
+    "C08_replay_protection": "STRONG_DOCUMENTED_IDEMPOTENCY_SEMANTICS_MACHINE_REPLAY_TEST_REQUIRED",
+    "C09_budget_policy_state_failure_deny": "UNRESOLVED_MACHINE_TEST_MANDATORY",
+    "C10_immediate_revocation": "PAUSE_REVOKE_DOCUMENTED_MACHINE_REVOCATION_TEST_REQUIRED",
+    "C11_no_agent_policy_mutation_key_export_generic_signing_add_funds_arbitrary_transfer": "DEDICATED_SCOPES_AND_TRANSFER_PERMISSION_DOCUMENTED_TRANSFER_MUST_BE_FALSE_AND_ALL_NEGATIVE_TESTS_REQUIRED",
+    "C12_machine_audit_evidence": "REQUEST_ID_PREFLIGHT_POLICY_BALANCE_RESERVATION_SURFACES_DOCUMENTED_CAPTURE_REQUIRED"
+  },
+  "zero_balance_setup_requirements": {
+    "wallet_balance": 0,
+    "network_allowlist": ["base"],
+    "asset_allowlist": ["USDC"],
+    "permissions_transfer": false,
+    "x402_domains": "exact benchmark provider only",
+    "per_transaction_cap": "<= A$25 equivalent with conservative FX buffer",
+    "daily_cap": "<= A$40 equivalent with conservative FX buffer",
+    "agent_credential": "dedicated wallet-scoped credential only; never record credential value in repo/model/shared logs",
+    "founder_authorization": "email OTP only outside model-visible surfaces if/when setup is approved; no private key or seed phrase",
+    "funding": "PROHIBITED until C01-C12 machine conformance passes"
+  },
+  "remaining_hard_unknowns_before_funding": [
+    "Exact x402 payTo/settlement-recipient binding under a hostile or mutated 402 response",
+    "Fail-closed behavior when budget/policy state cannot be read or validated",
+    "Observed inability of the wallet credential to mutate policy, export signer/session material, generic-sign, add funds, or direct-transfer when transfer permission is false",
+    "Observed Base-only and USDC-only rejection",
+    "Observed immediate revocation and replay rejection"
+  ],
+  "next_action": "Attach an ELTEX-specific thin adapter to the existing candidate-agnostic C01-C12 zero-balance harness and execute only after a zero-balance grant can be created without exposing secrets. Do not fund. Any C01-C12 failure returns candidate to NOT_APPROVED.",
+  "spend_aud": 0,
+  "revenue_aud": 0,
+  "customer_payment_allowed": false,
+  "funding_authorized": false
+}
