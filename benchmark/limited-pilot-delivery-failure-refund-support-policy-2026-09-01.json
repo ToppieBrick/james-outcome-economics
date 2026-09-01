@@ -1,0 +1,79 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "status": "PRELAUNCH_POLICY_ONLY",
+  "effective_only_after": "APPROVED_FOR_LIMITED_PILOT",
+  "purpose": "Close Relay gate criterion 6 at the policy/design level without enabling payment or promising external delivery.",
+  "customer_payment_gate": {
+    "checkout_enabled_before_approval": false,
+    "required_shared_record_status": "APPROVED_FOR_LIMITED_PILOT",
+    "fail_closed": true,
+    "rule": "If approval cannot be machine-verified at checkout time, do not create or expose a payable checkout path."
+  },
+  "limited_pilot_scope": {
+    "product": "Outcome Economics Intelligence structured-search outcome comparison",
+    "claims_rule": "Only claims directly supported by recorded real paid benchmark evidence may appear in customer-facing copy.",
+    "request_equivalence_rule": "Customer task must map to the benchmarked task class using the locked request-equivalence controls; otherwise reject before payment.",
+    "acceptance_rule": "Acceptance criteria must be deterministic and recorded with the request before payment."
+  },
+  "delivery": {
+    "payment_state": "paid only after gate approval",
+    "workflow": [
+      "validate task equivalence and deterministic acceptance criteria before checkout",
+      "record request_id and policy/gate version",
+      "after successful payment, execute only the approved task class",
+      "produce deliverable plus evidence record",
+      "run acceptance checks",
+      "mark DELIVERED only if every required acceptance check passes"
+    ],
+    "no_partial_success_claim": true
+  },
+  "failure_handling": {
+    "states": ["REJECTED_PREPAYMENT", "PROCESSING", "DELIVERED", "FAILED_REFUND_REQUIRED", "REFUND_SUBMITTED", "REFUNDED", "SUPPORT_REQUIRED"],
+    "prepayment_failure": "Reject request and collect no payment.",
+    "postpayment_failure": "Do not substitute a weaker deliverable. Mark FAILED_REFUND_REQUIRED and initiate full refund through the original payment rail.",
+    "indeterminate_failure": "Treat as failure; do not claim delivery or retry in a way that risks duplicate charge without idempotency proof.",
+    "evidence_failure": "If required evidence record is missing or acceptance cannot be proven, treat as FAILED_REFUND_REQUIRED."
+  },
+  "refund_policy": {
+    "amount": "100% of customer charge for failed/non-accepted pilot delivery",
+    "method": "original payment method/payment rail",
+    "automatic_trigger_conditions": [
+      "deliverable misses any deterministic acceptance criterion",
+      "approved task class cannot be completed",
+      "required evidence record cannot be produced",
+      "security/payment control enters indeterminate or failed state after charge",
+      "duplicate charge is detected"
+    ],
+    "no_refund_condition": "A deliverable that passes the pre-recorded deterministic acceptance criteria is not automatically refundable under this failure policy; statutory/customer rights remain unaffected.",
+    "truthfulness": "Never record REFUNDED until the payment provider confirms refund submission/completion as appropriate."
+  },
+  "support": {
+    "required_before_paid_launch": true,
+    "minimum_customer_surface": [
+      "a monitored support contact",
+      "request_id included with every delivery",
+      "plain-language failure/refund statement visible before checkout",
+      "method to report missing/incorrect delivery or duplicate charge"
+    ],
+    "handling_rule": "Support cases must be linked to request_id, payment reference without exposing secrets, delivery evidence and resolution state.",
+    "claims_rule": "Do not advertise response-time SLAs until they have been operationally validated."
+  },
+  "audit_record_minimum": [
+    "request_id",
+    "gate_version",
+    "task_equivalence_result",
+    "acceptance_criteria_hash_or_version",
+    "payment_status_and_provider_reference",
+    "delivery_status",
+    "evidence_record_reference",
+    "acceptance_result",
+    "refund_status_if_applicable",
+    "support_resolution_if_applicable"
+  ],
+  "dry_run_requirement": "Before APPROVED_FOR_LIMITED_PILOT, execute an end-to-end zero-charge dry run exercising success and post-payment-failure simulation through the same state machine, with no external customer and no fabricated payment event.",
+  "relay_rule": "This file defines handling; it does not itself make criterion 6 PASS. Independent Relay/QA must verify the implemented state machine, customer surfaces and dry-run evidence before approval.",
+  "spend_aud": 0,
+  "revenue_aud": 0,
+  "customer_payment_enabled": false,
+  "fabricated_traction": false
+}
