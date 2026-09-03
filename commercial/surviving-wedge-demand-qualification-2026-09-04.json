@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-04T04:54:39+10:00",
+  "venture": "Outcome Economics Intelligence",
+  "status": "TEST_BLOCKED_PENDING_RELAY",
+  "decision": "Keep the venture active but narrow pre-launch demand qualification to buyers with a repeated, economically meaningful workload whose own deterministic acceptance rule may differ from public x402 rankings.",
+  "fresh_market_evidence": [
+    {
+      "source": "TOLL402",
+      "observed": "Public catalog now exposes 98,727 resources, 21,852 strict live-402 routes, capability/price comparisons and live quote checks.",
+      "implication": "Discovery and quoted-price comparison are commodity inputs, not the product."
+    },
+    {
+      "source": "402 Index",
+      "observed": "Public directory reports 102,762 endpoints and 37,570 payment-verified endpoints with health state and agent discovery tooling.",
+      "implication": "Payment verification and endpoint health alone are not a paid wedge."
+    },
+    {
+      "source": "ComputeMarket.io",
+      "observed": "Explicitly advises buyers to measure cost per useful unit on their own workload rather than rely on a generic provider benchmark.",
+      "implication": "Supports the surviving exact-workload hypothesis, but also confirms the concept is understandable and not unique by itself."
+    }
+  ],
+  "qualified_pilot_profile": {
+    "must_have": [
+      "Repeated structured-search/research workload rather than one-off curiosity",
+      "Current paid provider or credible intention to pay for API calls",
+      "Deterministic machine-checkable acceptance criteria that can be frozen before execution",
+      "Enough recurring volume that provider selection or retry economics matter",
+      "Willingness to supply a representative non-sensitive task for benchmarking"
+    ],
+    "disqualify": [
+      "Wants a generic best-x402-provider list",
+      "Cannot define success independently of provider output",
+      "Workload is too infrequent for provider economics to matter",
+      "Requires sensitive/private production data for the first pilot"
+    ]
+  },
+  "pre_gate_demand_action": "Collect leads only. Ask for workload class, current provider, approximate monthly call volume/spend, and deterministic acceptance rule. Do not accept payment or promise delivery until APPROVED_FOR_LIMITED_PILOT exists.",
+  "post_gate_offer_hypothesis": {
+    "price_aud": 49,
+    "deliverable": "Exact-workload provider economics evidence: request-equivalent paid trials, deterministic PASS/FAIL, retries, settlement evidence, latency and observed cost per accepted result.",
+    "claim_boundary": "Results apply only to the frozen workload and acceptance criteria tested; no generic market-best claim."
+  },
+  "wedge_kill_test": "After real paid evidence exists, kill or materially reposition if customer-specific acceptance criteria do not change provider choice, retry behaviour, or effective cost enough to create a credible economic decision versus free public rankings.",
+  "commercial_control": {
+    "checkout": "DENY",
+    "required_gate": "APPROVED_FOR_LIMITED_PILOT",
+    "spend_aud": 0,
+    "verified_revenue_aud": 0,
+    "secrets_handled": false
+  }
+}
