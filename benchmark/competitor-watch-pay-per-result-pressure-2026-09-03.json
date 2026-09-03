@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-03",
+  "status": "MATERIAL_COMPETITIVE_PRESSURE_WEDGE_SURVIVES",
+  "observations": [
+    {
+      "competitor": "Delx Commerce",
+      "observed": "Markets pay-per-result APIs with exact price, verifiable delivery and receipts across a large governed catalogue.",
+      "implication": "James must not claim pay-per-result or verifiable delivery alone as differentiation."
+    },
+    {
+      "competitor": "TOLL402",
+      "observed": "Indexes current availability, published prices and live 402 quote checks at large scale and explicitly discusses workflow cost including retries.",
+      "implication": "Discovery, quote validation, price comparison and generic retry-aware workflow costing are not sufficient moat."
+    },
+    {
+      "competitor": "Agent402",
+      "observed": "Offers 578 tools, spend caps and a web-search route at USD 0.02/call.",
+      "implication": "Spend caps and raw per-call pricing are baseline controls, not differentiation."
+    },
+    {
+      "competitor": "Tavily x402",
+      "observed": "Structured search is directly purchasable over x402; basic/advanced search pricing is approximately USD 0.01-0.02 depending on route/depth.",
+      "implication": "Tavily remains a suitable paid benchmark candidate once signer controls pass."
+    }
+  ],
+  "surviving_wedge": "Exact-task, request-equivalent, post-payment measurement of settled spend plus retries plus deterministic acceptance PASS/FAIL plus latency, converted into effective cost per acceptable result and backed by reproducible evidence.",
+  "positioning_constraints": [
+    "Do not claim generic x402 discovery as differentiation.",
+    "Do not claim price comparison as differentiation.",
+    "Do not claim spend caps as differentiation.",
+    "Do not claim pay-per-result or delivery receipts alone as differentiation.",
+    "Do not claim superiority until real paid benchmark evidence demonstrates it."
+  ],
+  "kill_or_reposition_trigger": "If a credible competitor exposes request-equivalent cross-provider benchmarks with deterministic task acceptance, observed paid retries, settled cost and effective cost per acceptable result, reassess the wedge before further commercial investment.",
+  "launch_gate": "BLOCKED_PENDING_APPROVED_FOR_LIMITED_PILOT",
+  "spend_aud": 0,
+  "verified_revenue_aud": 0
+}
