@@ -1,0 +1,56 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "recorded_date": "2026-09-03",
+  "status": "PRE_LAUNCH_TEST_ONLY",
+  "purpose": "Lock the smallest paid benchmark and commercial thresholds that can produce decision-grade evidence immediately after signer approval, without spending or enabling checkout now.",
+  "market_observations": [
+    {
+      "provider": "Tavily x402",
+      "observed_public_price_usd": 0.01,
+      "task": "advanced structured web search",
+      "evidence_date": "2026-09-03",
+      "source": "https://www.tavily.com/blog/tavily-on-x402"
+    },
+    {
+      "provider": "Agent402 Web Search",
+      "observed_public_price_usd": 0.02,
+      "task": "web search",
+      "evidence_date": "2026-09-03",
+      "source": "https://agent402.tools/tools/search"
+    }
+  ],
+  "controlled_paid_benchmark_plan": {
+    "providers": ["Tavily x402", "Agent402 Web Search"],
+    "locked_request_class": "request-equivalent structured web search with five returned results where supported",
+    "minimum_trials_per_provider": 10,
+    "planned_base_calls": 20,
+    "advertised_base_cost_usd": 0.30,
+    "retry_reserve_rule": "Allow at most one paid retry per failed trial; abort on any quote above policy or task budget.",
+    "maximum_planned_calls_including_retry_reserve": 40,
+    "advertised_max_cost_if_every_trial_retries_usd": 0.60,
+    "hard_policy": "Actual signed quotes and settled spend are authoritative. No payment occurs until signer C01-C12 passes and controlled funding is permitted. Existing A$25 transaction and A$40 daily limits remain hard ceilings.",
+    "acceptance_metrics": [
+      "deterministic task PASS/FAIL",
+      "attempt count",
+      "machine-observed settled spend",
+      "paid latency",
+      "effective cost per acceptable result",
+      "repeatability across the locked trials"
+    ]
+  },
+  "commercial_thresholds": {
+    "founding_pilot_price_aud": 49,
+    "first_revenue_target": "One externally verified A$49 payment only after APPROVED_FOR_LIMITED_PILOT.",
+    "first_customer_success": "Approved workload delivered through request-to-evidence flow and accepted under deterministic criteria.",
+    "repeat_signal": "Customer supplies or purchases a second workload after successful first delivery.",
+    "early_validation_target": "At least 3 paid customers and at least 1 repeat workload before expanding task classes or adding material spend.",
+    "kill_or_reposition_trigger": "If qualified prospects with recurring paid search workloads do not value cross-provider effective-cost evidence, or if competitors provide request-equivalent paid outcome economics with comparable deterministic evidence at negligible switching cost, escalate for founder go/no-go rather than broaden ideation autonomously."
+  },
+  "launch_controls": {
+    "checkout": "DENY_CHECKOUT",
+    "external_delivery_promise": "PROHIBITED",
+    "required_gate": "APPROVED_FOR_LIMITED_PILOT",
+    "no_secret_rule": "No private keys, seed phrases, wallet secrets or scoped credentials may be requested or recorded in model-visible artifacts."
+  },
+  "truthfulness": "This is a prepared benchmark/commercial plan, not paid benchmark evidence, signer evidence, customer traction, revenue or Relay approval."
+}
