@@ -1,0 +1,46 @@
+{
+  "recorded_at": "2026-09-04T03:52:19+10:00",
+  "venture": "Outcome Economics Intelligence",
+  "status": "REPOSITION_REQUIRED_BEFORE_PAID_LAUNCH",
+  "evidence_type": "fresh_competitor_watch",
+  "material_findings": [
+    {
+      "competitor": "Cracked",
+      "observed_date": "2026-09-03",
+      "observed_capability": "Publishes measured web-search provider comparisons including price, success rate, median latency, samples, verification recency and router order; automatically falls back when a provider fails and states failed attempts are not billed.",
+      "implication": "A generic paid report comparing search providers on price/success/latency is no longer differentiated enough to justify James's A$49 pilot on those attributes alone."
+    },
+    {
+      "competitor": "402radar",
+      "observed_date": "2026-08-31",
+      "observed_capability": "Ranks x402 web-search APIs using uptime, success rate, latency, price and observed traffic/payment signals.",
+      "implication": "Directory/ranking based differentiation is commoditising quickly."
+    },
+    {
+      "competitor": "Graded",
+      "observed_date": "2026-08",
+      "observed_capability": "Continuously probes thousands of x402 services and grades whether agents can actually use them, with a callable gateway.",
+      "implication": "Liveness and usability verification alone are not a sufficient wedge."
+    }
+  ],
+  "kill_criteria_assessment": {
+    "criterion": "direct competitor already publishes substantially similar post-purchase economics across third-party providers",
+    "result": "PARTIALLY_HIT",
+    "decision": "Do not kill Outcome Economics Intelligence yet, but do not sell a generic provider-ranking report. Preserve the active venture and narrow the pilot to customer-specific request-equivalent evidence that public indexes cannot provide."
+  },
+  "surviving_sellable_wedge_to_validate": "Customer-specific workload replay: freeze the buyer's exact task and deterministic acceptance criteria, execute request-equivalent paid calls across eligible providers, preserve settlement/attempt evidence, and return which provider is cheapest per accepted result for that buyer's workload rather than for a generic benchmark.",
+  "commercial_control": {
+    "checkout": "DENY until APPROVED_FOR_LIMITED_PILOT",
+    "claim_limit": "Do not claim generic market-best routing or superior economics. Claims must be limited to the exact workload and observed paid evidence.",
+    "price": "A$49 founding pilot remains a hypothesis, not an offer that may accept payment before Relay approval."
+  },
+  "next_evidence_required": [
+    "Network-capable zero-balance isolated signer C01-C12 PASS",
+    "Controlled paid exact-task benchmark using real x402 settlement evidence",
+    "Demonstrate that customer-specific acceptance criteria materially change provider choice or effective cost versus public generic rankings",
+    "Relay/QA APPROVED_FOR_LIMITED_PILOT"
+  ],
+  "spend_aud": 0,
+  "verified_revenue_aud": 0,
+  "secrets_handled": false
+}
