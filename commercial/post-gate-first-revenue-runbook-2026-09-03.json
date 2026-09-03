@@ -1,0 +1,49 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "recorded_date": "2026-09-03",
+  "status": "PREPARED_NOT_AUTHORISED",
+  "objective": "Minimise elapsed time from independent APPROVED_FOR_LIMITED_PILOT to first verified external revenue without weakening QA, payment or truthfulness controls.",
+  "preconditions": [
+    "Relay/QA shared record equals APPROVED_FOR_LIMITED_PILOT",
+    "real paid benchmark evidence exists for the offered task class",
+    "customer-facing claims are bounded to observed evidence",
+    "delivery/failure/refund/support handling has passed the gate",
+    "checkout and payment controls fail closed"
+  ],
+  "offer": {
+    "name": "Founding Outcome Economics Pilot",
+    "price_aud": 49,
+    "buyer": "developer or agent team already paying for recurring structured-search/research API calls",
+    "scope": "one qualified structured-search workload benchmarked only within the task class approved by Relay/QA",
+    "promise_boundary": "Report observed request-equivalent provider economics and evidence; do not promise savings, universal provider superiority, future performance, or unsupported accuracy claims."
+  },
+  "launch_sequence": [
+    {"step": 1, "action": "Read latest Relay/QA record and abort unless exact status is APPROVED_FOR_LIMITED_PILOT."},
+    {"step": 2, "action": "Enable the simplest existing Stripe A$49 payment path; do not add subscription complexity before first revenue."},
+    {"step": 3, "action": "Expose payment only to qualified pilot prospects whose workload matches the approved task class."},
+    {"step": 4, "action": "On successful payment, create immutable evidence record with payment verification reference, request fingerprint, acceptance criteria and delivery state; never record payment secrets."},
+    {"step": 5, "action": "Run request-to-deliverable flow; on deterministic failure follow approved failure/refund/support procedure rather than improvising."},
+    {"step": 6, "action": "Record verified realised revenue only after external payment success is machine-verifiable."},
+    {"step": 7, "action": "After accepted delivery, request a second equivalent workload; measure repeat usage before broadening scope."}
+  ],
+  "conversion_controls": {
+    "primary_cta_after_gate": "Buy A$49 founding pilot",
+    "qualification_fields": ["workload description", "current provider(s)", "approximate monthly call volume or spend", "required output/acceptance criteria"],
+    "disqualify": ["task outside approved class", "no recurring paid workload", "requires unsupported claim or guarantee", "cannot define acceptance criteria"],
+    "first_metrics": ["qualified leads", "checkout starts", "verified payments", "successful deliveries", "refunds/failures", "repeat workloads", "revenue per customer"]
+  },
+  "commercial_decision_rules": {
+    "first_revenue": "One verified A$49 external payment after approval.",
+    "early_validation": "At least 3 paid customers and at least 1 repeat workload before expanding task classes or materially increasing spend.",
+    "pricing_test": "Do not discount before first 3 customers. After 3 successful customers, compare A$49 against A$99 only if delivery value and conversion evidence support it.",
+    "kill_or_reposition": "Escalate rather than broaden if qualified recurring-workload prospects do not value the measured outcome-economics evidence or if a competitor removes the differentiated wedge."
+  },
+  "current_controls": {
+    "checkout": "DENY_CHECKOUT",
+    "external_delivery_promise": "PROHIBITED",
+    "spend_this_record_aud": 0,
+    "verified_revenue_aud": 0,
+    "secrets_handled": false
+  },
+  "truthfulness": "This runbook prepares post-approval execution only. It is not approval, paid evidence, customer demand, revenue or traction."
+}
