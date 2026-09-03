@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-09-04T02:52:29+10:00",
+  "venture": "Outcome Economics Intelligence",
+  "status": "TEST_ONLY_DENY_CHECKOUT",
+  "material_update": "You.com now documents x402 Web Search at USD 0.005/call on Base USDC, creating a stronger request-equivalent structured-search benchmark candidate than higher-priced alternatives.",
+  "candidate_set": [
+    {"provider":"You.com Web Search","advertised_usd_per_call":0.005,"evidence":"public provider documentation; must be verified from actual 402 quote and settled paid call before use in customer claims"},
+    {"provider":"Tavily Search","advertised_usd_per_call":0.01,"evidence":"public provider documentation; must be verified from actual 402 quote and settled paid call before use in customer claims"},
+    {"provider":"Agent402 Web Search","advertised_usd_per_call":0.02,"evidence":"public provider page; must be verified from actual 402 quote and settled paid call before use in customer claims"}
+  ],
+  "benchmark_plan": {
+    "trials_per_provider":10,
+    "first_attempt_advertised_cost_usd":0.35,
+    "requirement":"Freeze a request-equivalent task and deterministic acceptance rubric before execution. Actual x402 challenge, settled spend, response, latency, retries and PASS/FAIL are authoritative. No synthetic evidence may satisfy the launch gate."
+  },
+  "commercial_effect":"A three-provider paid comparison can now test a 4x advertised price spread (USD 0.005 to USD 0.02) on the same broad task class, improving the potential information value of the first evidence artifact without materially increasing spend.",
+  "controls":[
+    "No founder funding until isolated signer boundary passes network-capable conformance and independent security review.",
+    "No external customer payment or delivery promise until Relay/QA records APPROVED_FOR_LIMITED_PILOT.",
+    "A$25 transaction and A$40 daily limits remain hard caps.",
+    "Do not claim provider superiority until real non-synthetic paid benchmark evidence exists.",
+    "If request semantics cannot be made equivalent across providers, exclude the provider rather than weaken the benchmark."
+  ],
+  "revenue_state":{"verified_revenue_aud":0,"spend_aud":0,"checkout":"DENIED"}
+}
