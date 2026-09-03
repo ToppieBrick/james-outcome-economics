@@ -1,0 +1,63 @@
+{
+  "venture": "Outcome Economics Intelligence",
+  "recorded_date": "2026-09-03",
+  "launch_state": "TEST_ONLY",
+  "checkout": "DENY_CHECKOUT",
+  "purpose": "Shorten time from Relay approval to first verified revenue without taking payment or promising delivery before approval.",
+  "offer": {
+    "name": "Structured Search Provider Benchmark — Founding Pilot",
+    "scope": "One customer-supplied structured web-search/research workload benchmarked against the approved comparable provider cohort using the locked deterministic acceptance contract.",
+    "founding_price_aud": 49,
+    "price_status": "PREPARED_NOT_LIVE",
+    "payment_status": "MUST_REMAIN_DISABLED_UNTIL_APPROVED_FOR_LIMITED_PILOT",
+    "delivery_claims": [
+      "Provider comparison using observed benchmark evidence available for the approved task class.",
+      "Listed/live quoted price where observable, attempts, latency, deterministic acceptance outcome and actual settled spend where machine-observed.",
+      "Effective cost per acceptable result calculated only from observed evidence."
+    ],
+    "prohibited_claims": [
+      "Guaranteed savings",
+      "Guaranteed cheapest provider",
+      "Unobserved reliability or performance",
+      "Customer traction, usage or revenue not evidenced in operating records"
+    ]
+  },
+  "demand_qualification": {
+    "qualified_lead_requires": [
+      "real structured-search/research workload",
+      "current provider or purchasing approach",
+      "approximate monthly spend or usage volume",
+      "reachable contact"
+    ],
+    "priority_order": [
+      "Existing waitlist respondents with measurable monthly spend",
+      "Developers actively paying for structured search/research APIs",
+      "Agent builders with recurring machine-search workloads"
+    ],
+    "current_verified_qualified_leads": 0,
+    "current_verified_customers": 0,
+    "current_verified_revenue_aud": 0
+  },
+  "post_approval_revenue_sequence": [
+    "Verify independent Relay record equals APPROVED_FOR_LIMITED_PILOT.",
+    "Enable simplest viable Stripe A$49 founding-pilot checkout; do not alter benchmark scope or claims.",
+    "Contact qualified waitlist leads first, prioritised by monthly spend and recurring workload.",
+    "Record payment only from Stripe-observed evidence as verified revenue.",
+    "Deliver through the approved request-to-evidence state machine.",
+    "Ask delivered customers for a second workload or recurring benchmark only after successful evidence-backed delivery."
+  ],
+  "founder_handoff": {
+    "blocking_action": "Provision the dedicated scoped ELTEX credential outside model-visible surfaces and inject it into the network-capable runner secret store while wallet balance remains zero.",
+    "founder_should_never_share": ["private key", "seed phrase", "wallet secret", "scoped credential in ChatGPT"],
+    "after_handoff": "Run machine-observed C01-C12. Funding and paid benchmarks remain prohibited until signer conformance passes."
+  },
+  "evidence_state": {
+    "latest_independent_relay_record": "evidence/relay-market-readiness-gate-2026-09-02-0021-aest.json",
+    "relay_status": "TEST_ONLY",
+    "known_pass": [1,3,4,6,7],
+    "known_fail": [2,5,8],
+    "signer_blocker": "No operator-connected signer/scoped credential in external runner secret store; no machine-observed C01-C12 results.",
+    "paid_benchmark_blocker": "Real non-synthetic paid exact-task benchmark cannot run until signer boundary passes and controlled funding is permitted."
+  },
+  "truthfulness": "This artifact prepares the commercial path only. It is not Relay approval, a customer commitment, revenue, paid benchmark evidence, or signer-conformance evidence."
+}
