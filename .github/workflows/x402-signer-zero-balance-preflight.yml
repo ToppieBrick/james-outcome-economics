@@ -42,7 +42,7 @@ jobs:
         run: |
           rm -f "$RUNNER_TEMP/james-wallet-secret/password"
           test ! -e "$RUNNER_TEMP/james-wallet-secret/password"
-      - name: Upload non-secret evidence
+      - name: Upload non-secret pass evidence
         if: success()
         uses: actions/upload-artifact@v4
         with:
@@ -50,8 +50,17 @@ jobs:
           path: benchmark/x402-signer-zero-balance-preflight-latest.json
           if-no-files-found: error
           retention-days: 14
+      - name: Upload sanitized fail-closed diagnostic
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: x402-signer-zero-balance-preflight-diagnostic
+          path: benchmark/x402-balance-response-schema-latest.json
+          if-no-files-found: error
+          retention-days: 14
 
 # SECURITY / MARKET-READINESS CONTROL:
 # - The password is randomly generated inside the ephemeral runner and never supplied by the founder/model.
 # - The wallet must remain at zero spendable balance; the harness fails closed otherwise.
+# - Failure diagnostics contain response field paths/types only; no values, addresses, balances, tokens, keys or seed material.
 # - No funding, payment authorization, customer checkout or APPROVED_FOR_LIMITED_PILOT status is created by this workflow.
