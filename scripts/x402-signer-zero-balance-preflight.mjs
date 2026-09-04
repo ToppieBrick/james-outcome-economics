@@ -4,6 +4,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 
 const evidencePath = process.env.EVIDENCE_PATH || 'benchmark/x402-signer-zero-balance-preflight-latest.json';
 const wallet = process.env.X402_PREFLIGHT_WALLET || 'james-ci-zero-balance';
+const expectedNetwork = 'eip155:8453';
 
 function run(args) {
   const raw = execFileSync('x402api', [...args, '--json'], {
@@ -12,9 +13,6 @@ function run(args) {
   return { parsed: JSON.parse(raw), digest: createHash('sha256').update(raw).digest('hex') };
 }
 
-// Values are deliberately excluded. This records only JSON paths and primitive/container
-// types so CI can reveal the CLI response contract without leaking addresses, balances,
-// tokens, keys, seed material, or other potentially sensitive values.
 function structuralSchema(value, path = '$', out = []) {
   if (Array.isArray(value)) {
     out.push({ path, type: 'array' });
@@ -33,17 +31,11 @@ function structuralSchema(value, path = '$', out = []) {
 function writeDiagnostic(balance, error) {
   const diagnosticPath = process.env.X402_SCHEMA_DIAGNOSTIC_PATH || 'benchmark/x402-balance-response-schema-latest.json';
   const diagnostic = {
-    evidenceType: 'SANITIZED_BALANCE_RESPONSE_SCHEMA_ONLY',
-    status: 'FAIL_CLOSED_DIAGNOSTIC_ONLY',
-    capturedAt: new Date().toISOString(),
-    candidate: '@x402api/agent-wallet-cli@0.2.7',
-    network: 'eip155:8453',
-    responseSha256: balance.digest,
-    schema: structuralSchema(balance.parsed),
+    evidenceType: 'SANITIZED_BALANCE_RESPONSE_SCHEMA_ONLY', status: 'FAIL_CLOSED_DIAGNOSTIC_ONLY',
+    capturedAt: new Date().toISOString(), candidate: '@x402api/agent-wallet-cli@0.2.7', network: expectedNetwork,
+    responseSha256: balance.digest, schema: structuralSchema(balance.parsed),
     failureClass: String(error?.message || error).replace(/[\r\n]+/g, ' ').slice(0, 500),
-    valuesRecorded: false,
-    secretsRecorded: false,
-    customerPaymentAuthorized: false,
+    valuesRecorded: false, secretsRecorded: false, customerPaymentAuthorized: false,
     guardrail: 'Field paths and JSON types only. This artifact is not zero-balance proof, C01-C12 evidence, signer admission, benchmark evidence, or commercial approval.',
   };
   mkdirSync(diagnosticPath.split('/').slice(0, -1).join('/') || '.', { recursive: true });
@@ -51,30 +43,27 @@ function writeDiagnostic(balance, error) {
   console.error(JSON.stringify({ status: diagnostic.status, diagnosticPath, valuesRecorded: false }));
 }
 
-function numericBalance(obj) {
-  const preferred = /(^|_)(balance|spendable|amount)(atomic)?($|_)/i;
-  const queue = [obj];
-  const seen = new Set();
-  const candidates = [];
-  while (queue.length) {
-    const value = queue.shift();
-    if (!value || typeof value !== 'object' || seen.has(value)) continue;
-    seen.add(value);
-    for (const [key, child] of Object.entries(value)) {
-      if (preferred.test(key) && child !== null && child !== undefined && /^\d+$/.test(String(child))) candidates.push(BigInt(String(child)));
-      if (child && typeof child === 'object') queue.push(child);
-    }
+function parseAtomicString(value, field) {
+  if (typeof value !== 'string' || !/^(0|[1-9]\d*)$/.test(value)) {
+    throw new Error(`FAIL_CLOSED: ${field} must be a canonical unsigned base-10 integer string`);
   }
-  if (candidates.length === 1) return candidates[0];
-  if (candidates.length > 1 && candidates.every(v => v === candidates[0])) return candidates[0];
-  throw new Error(`FAIL_CLOSED: unable to identify one unambiguous integer atomic balance (candidates=${candidates.length})`);
+  return BigInt(value);
+}
+
+function proveZeroBalance(obj) {
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) throw new Error('FAIL_CLOSED: balance response must be an object');
+  if (obj.network !== expectedNetwork) throw new Error('FAIL_CLOSED: balance response network mismatch');
+  const assetAtomic = parseAtomicString(obj.assetAtomic, 'assetAtomic');
+  const nativeAtomic = parseAtomicString(obj.nativeAtomic, 'nativeAtomic');
+  if (assetAtomic !== 0n || nativeAtomic !== 0n) throw new Error('FAIL_CLOSED: asset or native balance is non-zero');
+  return { assetAtomic, nativeAtomic };
 }
 
 const startedAt = new Date().toISOString();
 const help = run(['help']);
 let created;
 try {
-  created = run(['wallet', 'create', '--name', wallet, '--network', 'eip155:8453', '--maximum-payment-atomic', '1']);
+  created = run(['wallet', 'create', '--name', wallet, '--network', expectedNetwork, '--maximum-payment-atomic', '1']);
 } catch (error) {
   const stderr = String(error?.stderr || '');
   if (!/already|exists/i.test(stderr)) throw error;
@@ -82,24 +71,25 @@ try {
 }
 const address = run(['wallet', 'address', '--wallet', wallet]);
 const balance = run(['wallet', 'balance', '--wallet', wallet]);
-let atomic;
+let zero;
 try {
-  atomic = numericBalance(balance.parsed);
+  zero = proveZeroBalance(balance.parsed);
 } catch (error) {
   writeDiagnostic(balance, error);
   throw error;
 }
-if (atomic !== 0n) throw new Error(`FAIL_CLOSED: wallet balance is non-zero (${atomic})`);
 
 const evidence = {
   evidenceType: 'ZERO_BALANCE_NETWORK_PREFLIGHT_ONLY', status: 'PASS_FOR_C01_C12_EXECUTION_PRECONDITION_ONLY',
-  startedAt, completedAt: new Date().toISOString(), candidate: '@x402api/agent-wallet-cli@0.2.7', network: 'eip155:8453',
-  rpcClass: 'credential-free HTTPS RPC supplied by CI', walletName: wallet, zeroSpendableBalanceObserved: true,
-  observedBalanceAtomic: atomic.toString(), commandOutputDigests: { helpSha256: help.digest, walletCreateSha256: created.digest, walletAddressSha256: address.digest, walletBalanceSha256: balance.digest },
+  startedAt, completedAt: new Date().toISOString(), candidate: '@x402api/agent-wallet-cli@0.2.7', network: expectedNetwork,
+  rpcClass: 'credential-free HTTPS RPC supplied by CI', walletName: wallet,
+  zeroAssetBalanceObserved: zero.assetAtomic === 0n, zeroNativeBalanceObserved: zero.nativeAtomic === 0n,
+  observedAssetAtomic: zero.assetAtomic.toString(), observedNativeAtomic: zero.nativeAtomic.toString(),
+  commandOutputDigests: { helpSha256: help.digest, walletCreateSha256: created.digest, walletAddressSha256: address.digest, walletBalanceSha256: balance.digest },
   publicAddressObservation: address.parsed, spendUsd: 0, fundsMoved: false, paidExecutionObserved: false,
   customerPaymentAuthorized: false, secretsRecorded: false,
   guardrail: 'This artifact is not C01-C12 conformance, signer admission, benchmark evidence, or commercial approval. It proves only that the pinned CLI can execute in network-capable CI against an isolated zero-balance wallet without founder secret material.',
 };
 mkdirSync(evidencePath.split('/').slice(0, -1).join('/') || '.', { recursive: true });
 writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, { mode: 0o600 });
-console.log(JSON.stringify({ status: evidence.status, evidencePath, zeroBalance: true }));
+console.log(JSON.stringify({ status: evidence.status, evidencePath, zeroAssetBalance: true, zeroNativeBalance: true }));
