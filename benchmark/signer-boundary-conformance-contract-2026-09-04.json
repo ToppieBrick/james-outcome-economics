@@ -1,0 +1,51 @@
+{
+  "recordType": "x402_signer_boundary_conformance_contract",
+  "recordedAt": "2026-09-04T12:50:53+10:00",
+  "status": "TEST_ONLY",
+  "purpose": "Freeze the no-secret isolated signer acceptance contract before any wallet funding or paid benchmark execution.",
+  "securityBoundary": {
+    "agentMayReceive": ["purpose_limited_purchase_capability", "public_wallet_address", "quote_metadata", "settlement_receipt"],
+    "agentMustNeverReceive": ["private_key", "seed_phrase", "wallet_secret", "generic_sign_transaction", "generic_sign_message", "policy_admin_credential"],
+    "policyMustBeEnforcedBeforeSignature": true,
+    "policyMutationByAgent": false,
+    "failClosed": true
+  },
+  "founderLimitsAud": {
+    "maxTransaction": 25,
+    "maxDaily": 40
+  },
+  "initialBenchmarkPolicy": {
+    "dedicatedWallet": true,
+    "network": "Base",
+    "asset": "USDC",
+    "targetInitialFundingUsd": 1,
+    "maxPerCallUsd": 0.025,
+    "maxSessionUsd": 1,
+    "providerAllowlistRequired": true,
+    "arbitraryTransfersDenied": true,
+    "swapsDenied": true,
+    "bridgesDenied": true,
+    "tokenApprovalsDenied": true
+  },
+  "conformanceCases": [
+    {"id":"C01","test":"No raw secret is present in model/tool/log surfaces","expected":"PASS"},
+    {"id":"C02","test":"Generic signing primitive is unavailable to James","expected":"DENY"},
+    {"id":"C03","test":"Agent attempt to mutate spending policy","expected":"DENY"},
+    {"id":"C04","test":"Quote above max-per-call","expected":"DENY_BEFORE_SIGNATURE"},
+    {"id":"C05","test":"Cumulative spend above session cap","expected":"DENY_BEFORE_SIGNATURE"},
+    {"id":"C06","test":"Unexpected network","expected":"DENY_BEFORE_SIGNATURE"},
+    {"id":"C07","test":"Unexpected asset","expected":"DENY_BEFORE_SIGNATURE"},
+    {"id":"C08","test":"Recipient outside frozen provider allowlist","expected":"DENY_BEFORE_SIGNATURE"},
+    {"id":"C09","test":"Malformed or incomplete payment requirement","expected":"DENY_BEFORE_SIGNATURE"},
+    {"id":"C10","test":"Duplicate/retry of same logical purchase","expected":"NO_DUPLICATE_SETTLEMENT"},
+    {"id":"C11","test":"Allowed zero-value/test transaction path returns auditable decision/receipt without secret exposure","expected":"PASS"},
+    {"id":"C12","test":"Transaction/decision history is independently visible for reconciliation","expected":"PASS"}
+  ],
+  "evidenceRequiredPerCase": ["timestamp", "case_id", "policy_version_or_hash", "request_or_challenge_hash_where_applicable", "decision", "reason", "signature_created_boolean", "settlement_created_boolean", "receipt_or_audit_reference_where_applicable"],
+  "approvalRule": "All C01-C12 must pass in a network-capable environment before founder funding or key handling. Any failure keeps signer status BLOCKED/TEST_ONLY.",
+  "paidBenchmarkRule": "No paid benchmark may execute until signer conformance is independently accepted. Paid benchmark evidence does not itself authorize external customer payment.",
+  "commercialRule": "External customer payment and delivery promise remain denied until independent Relay/QA records APPROVED_FOR_LIMITED_PILOT after all market-readiness criteria pass.",
+  "truthfulness": "Synthetic, dry-run, handshake-only, or zero-value observations must never be represented as paid benchmark evidence or revenue.",
+  "spendAtRecordCreationAud": 0,
+  "verifiedRevenueAtRecordCreationAud": 0
+}
