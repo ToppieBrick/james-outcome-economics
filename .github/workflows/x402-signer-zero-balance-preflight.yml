@@ -1,0 +1,57 @@
+name: x402 signer zero-balance preflight
+
+on:
+  push:
+    paths:
+      - 'scripts/x402-signer-zero-balance-preflight.mjs'
+      - '.github/workflows/x402-signer-zero-balance-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      X402API_BASE_RPC_URL: https://mainnet.base.org
+      EVIDENCE_PATH: benchmark/x402-signer-zero-balance-preflight-latest.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned signer candidate
+        run: npm install --global @x402api/agent-wallet-cli@0.2.7
+      - name: Create isolated CI-only unlock material
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/james-wallet-secret" "$RUNNER_TEMP/james-wallet-home"
+          openssl rand -hex 32 > "$RUNNER_TEMP/james-wallet-secret/password"
+          chmod 600 "$RUNNER_TEMP/james-wallet-secret/password"
+          echo "X402API_WALLET_PASSWORD_FILE=$RUNNER_TEMP/james-wallet-secret/password" >> "$GITHUB_ENV"
+          echo "HOME=$RUNNER_TEMP/james-wallet-home" >> "$GITHUB_ENV"
+      - name: Execute zero-balance network preflight
+        run: node scripts/x402-signer-zero-balance-preflight.mjs
+      - name: Remove unlock material before evidence handling
+        if: always()
+        shell: bash
+        run: |
+          rm -f "$RUNNER_TEMP/james-wallet-secret/password"
+          test ! -e "$RUNNER_TEMP/james-wallet-secret/password"
+      - name: Upload non-secret evidence
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: x402-signer-zero-balance-preflight-evidence
+          path: benchmark/x402-signer-zero-balance-preflight-latest.json
+          if-no-files-found: error
+          retention-days: 14
+
+# SECURITY / MARKET-READINESS CONTROL:
+# - The password is randomly generated inside the ephemeral runner and never supplied by the founder/model.
+# - The wallet must remain at zero spendable balance; the harness fails closed otherwise.
+# - No funding, payment authorization, customer checkout or APPROVED_FOR_LIMITED_PILOT status is created by this workflow.
