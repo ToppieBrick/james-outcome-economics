@@ -1,0 +1,38 @@
+{
+  "recordType": "x402_signer_boundary_conformance_evidence",
+  "status": "UNEXECUTED_TEST_ONLY",
+  "contractRef": "benchmark/signer-boundary-conformance-contract-2026-09-04.json",
+  "purpose": "Pre-structured evidence envelope for independent network-capable execution of C01-C12. This file is not evidence that any case has passed.",
+  "executionRules": {
+    "networkCapableEnvironmentRequired": true,
+    "walletMustRemainZeroBalanceForConformance": true,
+    "noFounderSecretMayEnterAgentModelToolOrLogSurface": true,
+    "noPaidBenchmarkUntilIndependentSignerAcceptance": true,
+    "failClosedOnMissingEvidence": true
+  },
+  "requiredRunMetadata": ["executed_at","executor","environment_reference","implementation_commit_sha","policy_hash","public_wallet_address","network","asset"],
+  "caseEvidenceSchema": {
+    "required": ["case_id","expected","observed_decision","reason","signature_created_boolean","settlement_created_boolean","evidence_reference","result"],
+    "resultEnum": ["PASS","FAIL","NOT_RUN"],
+    "defaultResult": "NOT_RUN"
+  },
+  "cases": [
+    {"case_id":"C01","expected":"PASS","result":"NOT_RUN"},
+    {"case_id":"C02","expected":"DENY","result":"NOT_RUN"},
+    {"case_id":"C03","expected":"DENY","result":"NOT_RUN"},
+    {"case_id":"C04","expected":"DENY_BEFORE_SIGNATURE","result":"NOT_RUN"},
+    {"case_id":"C05","expected":"DENY_BEFORE_SIGNATURE","result":"NOT_RUN"},
+    {"case_id":"C06","expected":"DENY_BEFORE_SIGNATURE","result":"NOT_RUN"},
+    {"case_id":"C07","expected":"DENY_BEFORE_SIGNATURE","result":"NOT_RUN"},
+    {"case_id":"C08","expected":"DENY_BEFORE_SIGNATURE","result":"NOT_RUN"},
+    {"case_id":"C09","expected":"DENY_BEFORE_SIGNATURE","result":"NOT_RUN"},
+    {"case_id":"C10","expected":"NO_DUPLICATE_SETTLEMENT","result":"NOT_RUN"},
+    {"case_id":"C11","expected":"PASS","result":"NOT_RUN"},
+    {"case_id":"C12","expected":"PASS","result":"NOT_RUN"}
+  ],
+  "automaticAcceptanceRule": "ACCEPTABLE_FOR_RELAY_REVIEW only when all 12 results are PASS, every required evidence field is populated, zero-balance status is independently confirmed, and secret-surface review is clean. Otherwise BLOCKED_TEST_ONLY.",
+  "currentDecision": "BLOCKED_TEST_ONLY",
+  "commercialEffect": "NONE. Customer payment and delivery promise remain denied unless Relay/QA separately records APPROVED_FOR_LIMITED_PILOT.",
+  "spendAud": 0,
+  "verifiedRevenueAud": 0
+}
